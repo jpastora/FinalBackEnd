@@ -1,11 +1,14 @@
-<aside class="barraLateral" id="Barra__Lateral">
+  <title><%= title %></title>
+</head>
+  <aside class="barraLateral" id="Barra__Lateral">
     <ul class="menuPerfil">
-      <li><a href="/admin/datos-personales">Datos Personales</a></li>
-      <li><a href="/admin/seguridad">Seguridad</a></li>
-      <li><a href="/admin/metodos-pago">Métodos de Pago</a></li>
-      <li><a href="/admin/usuarios">Administrar Usuarios</a></li>
-      <li><a href="/admin/editar-evento">Editor de Eventos</a></li>
-      <li><a href="/admin/crear-evento" class="activo">Crear</a></li>
-      <li><a href="../ayuda">Ayuda</a></li>
+      <li><a href="/admin/datos-personales" class="<%= currentUrl === '/admin/datos-personales' ? 'activo' : '' %>">Datos Personales</a></li>
+      <li><a href="/admin/seguridad" class="<%= currentUrl === '/admin/seguridad' ? 'activo' : '' %>">Seguridad</a></li>
+      <li><a href="/admin/metodos-pago" class="<%= currentUrl === '/admin/metodos-pago' ? 'activo' : '' %>">Métodos de Pago</a></li>
+      <li><a href="/admin/usuarios" class="<%= currentUrl === '/admin/usuarios' ? 'activo' : '' %>">Administrar Usuarios</a></li>
+      <li><a href="/admin/editar-evento" class="<%= currentUrl === '/admin/editar-evento' ? 'activo' : '' %>">Editor de Eventos</a></li>
+      <li><a href="/admin/crear-evento" class="<%= currentUrl === '/admin/crear-evento' ? 'activo' : '' %>">Crear</a></li>
+      <li><a href="/ayuda" class="<%= currentUrl === '/ayuda' ? 'activo' : '' %>">Ayuda</a></li>
     </ul>
   </aside>
+

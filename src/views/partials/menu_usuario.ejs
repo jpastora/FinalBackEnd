@@ -1,10 +1,10 @@
 <aside class="barraLateral" id="Barra__Lateral">
-    <ul class="menuPerfil">
-        <li><a href="/user/perfilDatosPers" class="activo">Datos Personales</a></li>
-        <li><a href="/user/perfilSeguridad">Seguridad</a></li>
-        <li><a href="/user/perfilMetodosPago">Métodos de Pago</a></li>
-        <li><a href="/user/perfilMisTickets">Mis Tickets</a></li>
-        <li><a href="/user/perfilEventosGuardados">Eventos Guardados</a></li>
-        <li><a href="../ayuda">Ayuda</a></li>
-    </ul>
+  <ul class="menuPerfil">
+    <li><a href="/perfil/datos-personales" class="<%= currentUrl === '/perfil/datos-personales' ? 'activo' : '' %>">Datos Personales</a></li>
+    <li><a href="/perfil/seguridad" class="<%= currentUrl === '/perfil/seguridad' ? 'activo' : '' %>">Seguridad</a></li>
+    <li><a href="/perfil/metodospago" class="<%= currentUrl === '/perfil/metodospago' ? 'activo' : '' %>">Métodos de Pago</a></li>
+    <li><a href="/perfil/eventos-guardados" class="<%= currentUrl === '/perfil/eventos-guardados' ? 'activo' : '' %>">Eventos Guardados</a></li>
+    <li><a href="/perfil/mis-tickets" class="<%= currentUrl === '/perfil/mis-tickets' ? 'activo' : '' %>">Mis Tickets</a></li>
+    <li><a href="/ayuda" class="<%= currentUrl === '/ayuda' ? 'activo' : '' %>">Ayuda</a></li>
+  </ul>
 </aside>
