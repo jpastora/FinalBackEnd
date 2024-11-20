@@ -1,0 +1,164 @@
+/* Definición de fuentes */
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "Montserrat-Hairline";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Estilos globales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat-regular", sans-serif;
+}
+
+/* Contenedor principal */
+.contenedorPrincipal {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    width: 90%;
+}
+
+/* Estilos para el título de la sección */
+.tituloSeccion h1 {
+    font-size: clamp(1.5em, 4vw, 2em);
+    color: #d94423;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-family: "Montserrat-Bold", sans-serif;
+}
+
+.tituloSeccion p {
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: "Montserrat-Light", sans-serif;
+}
+
+/* Lista de preguntas */
+.listaPreguntas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilos para cada ítem de pregunta */
+.preguntaItem {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de la pregunta */
+.preguntaTitulo {
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 100%;
+    padding: 15px 20px;
+    text-align: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.preguntaTitulo:hover {
+    background-color: #86a641;
+    color: #fff;
+}
+
+.preguntaTitulo.active {
+    background-color: #86a641;
+    color: #fff;
+}
+
+.preguntaTitulo span {
+    font-family: "Montserrat-light", sans-serif;
+}
+
+/* Icono de toggle para expandir/colapsar */
+.preguntaTitulo .iconoToggle::after {
+    content: "▼";
+    font-size: 0.9em;
+    transition: transform 0.3s;
+}
+
+.preguntaTitulo.active .iconoToggle::after {
+    transform: rotate(180deg);
+}
+
+/* Texto de la respuesta */
+.respuestaTexto {
+    display: none;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    color: #666;
+    font-size: 1em;
+    border-top: 1px solid #ddd;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.respuestaTexto p {
+    margin-bottom: 10px;
+    font-family: "Montserrat-light", sans-serif;
+}
+
+/* Estilo para cuando la respuesta está visible */
+.preguntaTitulo.active + .respuestaTexto {
+    display: block;
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+
+@media (max-width: 768px) {
+    .contenedorPrincipal {
+        margin: 20px auto;
+        padding: 15px;
+    }
+    
+    .preguntaTitulo {
+        font-size: 1em;
+        padding: 12px 15px;
+    }
+}

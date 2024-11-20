@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets</title>
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/bannerPerfil.css">
+    <link rel="stylesheet" href="css/menuLateral.css">
+    <link rel="stylesheet" href="css/perfilSeguridad.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+
+</head>
+
+<body>
+
+    <!-------------------------------------------Menú---------------------------------------------->
+
+    <%- include('../partials/auth') %> 
+    <%- include('../partials/menu') %>
+
+    <!-------------------------------------------FIN Menú---------------------------------------------->
+
+    <!-------------------------------------------Banner---------------------------------------------->
+
+    <section class="imagenHeroe" id="Imagen__Heroe">
+        <section>
+            <div class="heroe" id="Heroe__Principal">
+                <div class="titulo" id="Administrar__Usuarios">
+                    <h1>Perfil</h1>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-------------------------------------------FIN Banner---------------------------------------------->
+
+    <div class="contenedorPrincipal"> <!--Contenedor Principal-->
+
+        <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
+        <aside class="barraLateral" id="Barra__Lateral">
+            <ul class="menuPerfil">
+                <li><a href="adminDatosPers.html">Datos Personales</a></li>
+                <li><a href="adminSeguridad.html" class="activo">Seguridad</a></li>
+                <li><a href="adminMetodosPago.html">Métodos de Pago</a></li>
+                <li><a href="administrarUsuarios.html">Administrar Usuarios</a></li>
+                <li><a href="editarEventos.html">Editor de Eventos</a></li>
+                <li><a href="crearEvento.html">Crear</a></li>
+                <li><a href="ayuda.html">Ayuda</a></li>
+            </ul>
+        </aside>
+        <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
+
+        <!-------------------------------------------Contraseña--------------------------------------------->
+
+        <div class="perfilContrasena" id="Perfil__Usuario">
+            <form class="formularioContrasena" id="Formulario__Contrasena">
+                <div class="campoFormulario" id="Campo__Antigua">
+                    <label for="antiguaContrasena">Antigua contraseña:</label>
+                    <input type="password" id="antiguaContrasena">
+                </div>
+                <div class="campoFormulario" id="Campo__Nueva">
+                    <label for="nuevaContrasena">Nueva contraseña:</label>
+                    <input type="password" id="nuevaContrasena">
+                </div>
+                <div class="campoFormulario" id="Campo__Repetir">
+                    <label for="repetirContrasena">Repetir contraseña:</label>
+                    <input type="password" id="repetirContrasena">
+                </div>
+                <div class="botonesFormulario" id="Botones__Formulario">
+                    <button type="submit" class="botonEnviar" id="Boton__Enviar">Enviar</button>
+                    <button type="reset" class="botonBorrar" id="Boton__Borrar">Borrar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-------------------------------------------FIN Contraseña--------------------------------------------->
+
+    </div> <!--FIN Contenedor Principal-->
+
+    <!-------------------------------------------Footer---------------------------------------------->
+
+    <%- include('../partials/footer') %>
+
+    <!-------------------------------------------Fin Footer---------------------------------------------->
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+.barraLateral {
+    width: 25vh;
+    background-color: #0d0d0d;
+    padding: 20px;
+    color: #fff;
+    margin-left: 0%;
+}
+
+.menuPerfil {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menuPerfil li {
+    margin: 10px 0;
+}
+
+.menuPerfil a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.menuPerfil a:hover {
+    background-color: #2a2a2a;
+}
+
+.menuPerfil .activo {
+    color: #86a641;
+    font-weight: bold;
+    background-color: #2a2a2a;
+}

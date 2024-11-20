@@ -1,0 +1,210 @@
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  src: url("../fonts/Montserrat-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "Montserrat-Hairline";
+  src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora-Regular";
+  src: url("../fonts/Lora-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat-Regular", sans-serif;
+}
+
+
+.heroe {
+    background: url('../img/banner-heroe1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    position: relative;
+}
+
+.titulo {
+  color: #ffffff;
+  font-size: 2em;
+  text-align: left;
+  padding-top: 100px;
+  text-transform: uppercase;
+  margin-left: 10%;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.titulo h1:before {
+  display: block;
+  width: 5px;
+  height: 35px;
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 110px;
+  background: hsl(0, 0%, 100%);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.contenedorPrincipal {
+    display: flex;
+    flex: 1;
+}
+
+.contenedorSecundario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.seccionTickets {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+}
+
+.tituloEvento {
+    color: #e24d30; 
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.infoTicket {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.detalleTicket {
+    flex: 1;
+    color: #333;
+    font-weight: bold;
+}
+
+.botonVerTicket {
+    background-color: #83b943; 
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.botonVerTicket:hover {
+    background-color: #6b983a;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.formularioBusqueda {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto; 
+    padding: 25px;
+    text-align: center;
+    align-items: center; 
+    margin-left: -50px;
+  } 
+  
+  .etiquetaFormulario {
+    display: block;
+    padding: 10px 0px;
+    margin-bottom: 12px; 
+    text-align: center;
+    width: 90px;
+  }
+  
+  .campoInput {
+    width: 90%;
+    background: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+    font-size: 1em;
+    outline: none;
+    padding: 0px;
+    height: 45px; 
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .formulario_grupo_input select.campoInput {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0 8px;
+    width: 20vh;
+  }
+  
+  .botonBuscar {
+    padding: 8px 20px;
+    margin-top: 50px;
+    height: 45px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px;
+    border-style: ridge;
+    border-radius: 5px;
+    color: #d94423;
+    transition: 0.5s;
+    background-color: #ffffff;
+  }
+
+.grupoInput select.campoInput {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0 8px;
+    width: 20vh;
+}
+
+.grupoBusqueda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+
+.grupoBtnEnviar {
+    align-self: flex-end;
+    margin-top: -15px;
+}

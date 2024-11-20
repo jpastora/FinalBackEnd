@@ -1,0 +1,203 @@
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Montserrat-Light";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: bold;
+  }
+  
+  @font-face {
+    font-family: "Montserrat-Hairline";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat-Regular";
+}
+  
+
+/* Estilos Generales */
+body {
+
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+
+.heroe {
+    background: url('../img/banner-heroe1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    position: relative;
+  }
+  
+  .titulo {
+    color: #ffffff;
+    font-size: 2em;
+    text-align: left;
+    padding-top: 100px;
+    text-transform: uppercase;
+    margin-left: 10%;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: #33333352;
+  }
+  
+  .titulo h1:before {
+    display: block;
+    width: 5px;
+    height: 35px;
+    content: "";
+    position: absolute;
+    left: 8%;
+    top: 110px;
+    background: hsl(0, 0%, 100%);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  
+  }
+
+
+/* Barra de Proceso de Pago */
+.procesoCompra {
+    background-color: #000;
+    padding: 50px 0;
+    color: #fff;
+    text-align: center;
+    font-family: "Montserrat-Light";
+}
+
+.barraProceso {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.paso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.paso span {
+    font-size: 0.9em;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Montserrat-Bold";
+    margin-bottom: 8px;
+}
+
+.line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: #86a641; /* Color de la línea */
+    position: relative;
+}
+
+.circulo {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #86a641; /* Color por defecto */
+    border: 2px solid #86a641;
+    margin-top: -8px; /* Ajuste para alinear con la línea */
+}
+
+.paso.completed .circulo {
+    background-color: #86a641; /* Color de pasos completados */
+}
+
+.paso.active .circulo {
+    background-color: #d94423; /* Color del paso activo */
+}
+
+/* Formulario de Pago */
+.resumenCompra {
+    background-color: #fff;
+    padding: 40px;
+    max-width: 600px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-pago h2 {
+
+    color: #d94423;
+}
+
+.formulario-pago label {
+    display: block;
+    margin-top: 10px;
+    color: #333;
+}
+
+.formulario-pago input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+.fila-expiracion-seguridad {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.campo {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.campo:last-child {
+    margin-right: 0;
+}
+
+/* Botón Continuar */
+.boton-continuar {
+    background-color: #86a641;
+    color: #fff;
+    font-family: "Montserrat-Bold";
+    padding: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.boton-continuar:hover {
+    background-color: #74a534;
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - VibeTickets</title>
+    <link rel="stylesheet" type="text/css" href="/css/registro.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+</head>
+</head>
+
+<body>
+
+  <!-- Menú y Autenticación -->
+
+  <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+  <%- include('../partials/menu') %> <!-- Incluye el menú -->
+
+  <!-- Fin Menú y Autenticación -->
+
+  <!-------------------------------------------Banner---------------------------------------------->
+
+  <section class="heroeImangen" id="heroe__imangen">
+    <section>
+        <div class="heroe" id="heroe__principal">
+            <div class="titulo" id="administrarusuarios">
+            <h1>Eventos en el Carrito</h1>
+            </div>
+        </div>
+    </section>
+  </section>
+
+  <!-------------------------------------------FIN Banner---------------------------------------------->
+
+    <div class="contenedorAutenticacion">
+        <h2>REGISTRATE</h2>
+        <p>Crea tu cuenta</p>
+        <form action="register_process.php" method="post" id="registrationForm">
+            <label for="fullname">Nombre completo:</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Juan Pérez" required>
+            <span class="error-message" id="error-fullname"></span>
+
+            <label for="id">Identificación:</label>
+            <input type="text" id="id" name="id" placeholder="113456789" required>
+            <span class="error-message" id="error-id"></span>
+
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="juaperez@prueba.com" required>
+            <span class="error-message" id="error-email"></span>
+
+            <label for="confirm_email">Confirma tu correo electrónico:</label>
+            <input type="email" id="confirm_email" name="confirm_email" placeholder="juaperez@prueba.com" required>
+            <span class="error-message" id="error-confirm-email"></span>
+
+            <label for="password">Crea tu contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Contraseña válida" required>
+            <span class="error-message" id="error-password"></span>
+
+            <label for="confirm_password">Confirma tu contraseña:</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirma tu contraseña" required>
+            <span class="error-message" id="error-confirm-password"></span>
+
+            <label for="phone">Teléfono:</label>
+            <input type="text" id="phone" name="phone" placeholder="+506 88888888" required>
+            <span class="error-message" id="error-phone"></span>
+
+            <div class="tyc">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">Acepto Términos y Condiciones</label>
+                <span class="error-message" id="error-terms"></span>
+            </div>
+
+            <button type="submit">Crear Cuenta</button>
+        </form>
+    </div>
+
+   <!-- Footer -->
+   <%- include('../partials/footer') %>
+   <!-- Fin Footer -->
+ 
+
+    <script src="js/registro.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Montserrat-Light";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: bold;
+  }
+  
+  @font-face {
+    font-family: "Montserrat-Hairline";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat-Regular", sans-serif;
+  }
+  
+  .imagenHeroe {
+    /* ...existing styles... */
+  }
+
+  #Heroe__Principal {
+    background: url('../img/banner-heroe1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    position: relative;
+  }
+  
+  .titulo {
+    color: #ffffff;
+    font-size: 2em;
+    text-align: left;
+    padding-top: 100px;
+    text-transform: uppercase;
+    margin-left: 10%;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .titulo h1:before {
+    display: block;
+    width: 5px;
+    height: 35px;
+    content: "";
+    position: absolute;
+    left: 8%;
+    top: 110px;
+    background: hsl(0, 0%, 100%);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  }
+
+.contenedorPrincipal {
+    display: flex;
+    flex: 1;
+}
+
+.perfilContrasena {
+    padding: 20px;
+    background-color: #ffffff;
+    width: 20%;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.formularioContrasena {
+    display: flex;
+    flex-direction: column;
+}
+
+.campoFormulario {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.campoFormulario label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.campoFormulario input[type="password"]{
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.botonesFormulario {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.botonEnviar, .botonBorrar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.botonEnviar {
+    background-color: #86a641;
+}
+
+.botonBorrar {
+    background-color: #e63946;
+}

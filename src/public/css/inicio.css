@@ -1,0 +1,615 @@
+/* ----------------------------------------Fuentes---------------------------------------- */
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "Montserrat-Hairline";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ----------------------------------------Estilos generales---------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Montserrat-Regular";
+}
+
+body {
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ----------------------------------------Imagen héroe---------------------------------------- */
+.heroe {
+    background: url('../img/banner-heroe1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    position: relative;
+}
+
+.barraBusqueda {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    opacity: 80%;
+}
+
+.barraBusqueda input {
+    width: 75%;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px 0 0 30px;
+    outline: none;
+}
+
+#Boton__Busqueda {
+    width: 25%;
+    padding: 15px;
+    background-color: #d94423;
+    color: #fff;
+    border: none;
+    border-radius: 0 30px 30px 0;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* ----------------------------------------Línea de tiempo---------------------------------------- */
+.eventosHoy {
+    background: #0d0d0d;
+    padding: 70px;
+}
+
+.eventosHoy .cabeceraEventos {
+    margin: 0 0 35px;
+}
+
+.eventosHoy .cabeceraEventos h2 {
+    font-size: 22px;
+    line-height: 22px;
+    color: #d94423;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0 0 0 25px;
+    display: inline-block;
+}
+
+.eventosHoy .cabeceraEventos h2:before {
+    display: block;
+    width: 5px;
+    height: 16px;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    background: #d94423;
+}
+
+.eventosHoy .cabeceraEventos .fechaHoy {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 22px;
+    color: #d94423;
+    float: right;
+}
+
+.eventosHoy .cabeceraEventos .fechaHoy strong {
+    color: #fff;
+}
+
+.eventosHoy .cabeceraEventos .fechaHoy i {
+    margin: 0 15px 0 0;
+    font-size: 18px;
+}
+
+.eventosHoy .eventosContenido {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.eventosHoy .eventosContenido ul {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.eventosHoy .eventosContenido ul li {
+    flex: 1;
+    padding: 10px 25px;
+    border-bottom: 1px solid #464646;
+    position: relative;
+    height: auto;
+    text-align: center;
+}
+
+.eventosHoy .eventosContenido ul li.evento1 {
+    padding: 0 25px 20px 0;
+    margin: 0 0 0 30px;
+}
+
+.eventosHoy .eventosContenido ul li:after {
+    content: "";
+    width: 6px;
+    height: 10px;
+    background: url(../img/eventos-flecha.png);
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+.eventosHoy .eventosContenido ul li.evento4:after {
+    display: none;
+}
+
+.eventosHoy .eventosContenido ul li.evento1:before {
+    content: "";
+    width: 20px;
+    height: 19px;
+    background: url(../img/eventos-reloj.png);
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+}
+
+.eventosHoy .eventosContenido ul li.evento2:before,
+.eventosHoy .eventosContenido ul li.evento3:before,
+.eventosHoy .eventosContenido ul li.evento4:before {
+    content: "";
+    width: 7px;
+    height: 8px;
+    background: url(../img/eventos-punto.png);
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 35px;
+}
+
+.eventosHoy .eventosContenido .horaEvento {
+    font-size: 24px;
+    display: block;
+    color: #d7d7d7;
+}
+
+.eventosHoy .eventosContenido .horaEvento strong {
+    font-size: 12px;
+    color: #d7d7d7;
+}
+
+.eventosHoy .eventosContenido .nombreEvento {
+    font-size: 12px;
+    color: #d7d7d7;
+    display: block;
+    margin: 0 0 10px;
+}
+
+.eventosHoy .eventosContenido .comprarTicket {
+    font-size: 10px;
+    color: #fff;
+    padding: 5px 15px;
+    background: #d94423;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.eventosHoy .eventosContenido .comprarTicket:hover {
+    color: #d94423;
+    background: #fff;
+}
+
+.eventosHoy .eventosContenido .eventoAgotado {
+    font-size: 10px;
+    color: #d94423;
+    padding: 5px 15px;
+    background: none;
+    text-transform: uppercase;
+    border: 1px solid #d94423;
+    border-radius: 20px;
+    display: inline-block;
+    pointer-events: none;
+    cursor: default;
+}
+
+.etiquetaTodosEventos {
+    position: relative;
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.etiquetaTodosEventos a {
+    color: #d7d7d7;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+/* ----------------------------------------FIN Línea de tiempo---------------------------------------- */
+
+/* ----------------------------------------Eventos próximos---------------------------------------- */
+.seccionEventosFuturos {
+    padding: 70px 0 35px;
+    background: #fff;
+    text-align: center;
+}
+
+.seccionEventosFuturos .cabeceraSeccion {
+    display: block;
+    margin: 0 0 40px;
+    padding: 0 0 0 60px;
+    width: 90%;
+}
+
+.seccionEventosFuturos .cabeceraSeccion h2 {
+    font-size: 22px;
+    line-height: 22px;
+    color: #d94423;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0 0 0 25px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.seccionEventosFuturos .cabeceraSeccion h2:before {
+    display: block;
+    width: 5px;
+    height: 16px;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    background: #d94423;
+}
+
+.seccionEventosFuturos .cabeceraSeccion .filaInferior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seccionEventosFuturos .cabeceraSeccion p {
+    color: #6f6f6f;
+    font-size: 13px;
+    font-family: "Montserrat-Light";
+    line-height: 22px;
+    width: 70%;
+    margin: 0;
+    text-align: left;
+}
+
+.seccionEventosFuturos .cabeceraSeccion a {
+    font-size: 12px;
+    line-height: 12px;
+    color: #d94423;
+    padding: 10px 15px;
+    background: none;
+    text-transform: uppercase;
+    border: 2px solid #d94423;
+    border-radius: 20px;
+    font-weight: 700;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.seccionEventosFuturos .cabeceraSeccion a:hover {
+    background-color: #d94423;
+    color: #fff;
+}
+
+.seccionEventosFuturos .contenidoSeccion {
+    max-width: 1170px;
+    display: inline-flex;
+}
+
+.seccionEventosFuturos .contenidoSeccion .imagenEventoFuturo {
+    max-width: auto;
+    min-height: auto;
+    max-height: 230px;
+}
+
+.seccionEventosFuturos .contenidoSeccion ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.seccionEventosFuturos .contenidoSeccion ul li {
+    width: 33.333%;
+    position: relative;
+}
+
+.seccionEventosFuturos .contenidoSeccion .fecha {
+    padding: 15px;
+    background: #86a641;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 80%;
+}
+
+.seccionEventosFuturos .contenidoSeccion .fecha a {
+    color: #fff;
+}
+
+.seccionEventosFuturos .contenidoSeccion .fecha .dia {
+    font-size: 30px;
+    display: block;
+    font-family: "Montserrat-Bold";
+    margin: 0 0 5px;
+}
+
+.seccionEventosFuturos .contenidoSeccion .fecha .mes {
+    font-size: 10px;
+    display: block;
+    font-family: "Montserrat-Light";
+    margin: 0 0 5px;
+}
+
+.seccionEventosFuturos .contenidoSeccion .fecha .ano {
+    font-size: 10px;
+    display: block;
+    font-family: "Montserrat-Light";
+}
+
+.seccionEventosFuturos .contenidoSeccion .informacion {
+    padding: 50px 20px 25px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to bottom, #86a64100 0%, #86a6410c 1%, #86a6418f 100%);
+    display: flex;
+}
+
+.seccionEventosFuturos .contenidoSeccion .informacion p {
+    font-size: 16px;
+    font-family: "Montserrat-Regular";
+    color: #fff;
+    width: 65%;
+    float: left;
+    margin: 0;
+}
+
+.seccionEventosFuturos .contenidoSeccion .informacion p span {
+    display: block;
+    color: #b3b3b3;
+    font-size: 11px;
+    font-family: "Montserrat-Light";
+}
+
+.seccionEventosFuturos .contenidoSeccion .informacion .comprarTicket {
+    min-width: fit-content;
+    max-height: fit-content;
+    font-size: 12px;
+    line-height: 12px;
+    color: #fff;
+    padding: 10px 15px;
+    background: #86a641;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    width: 30%;
+    text-align: center;
+}
+
+.seccionEventosFuturos .contenidoSeccion .informacion .comprarTicket:hover {
+    background: #fff;
+    color: #86a641;
+}
+
+/* ----------------------------------------FIN Eventos próximos---------------------------------------- */
+
+/* ----------------------------------------Categorías---------------------------------------- */
+.seccionCategoriaEventos {
+    background: #fff;
+    padding: 35px 0 40px;
+    text-align: center;
+}
+
+.seccionCategoriaEventos .cabeceraSeccion {
+    display: block;
+    margin: 0 auto 40px;
+    padding-left: 60px;
+    width: 90%;
+}
+
+.seccionCategoriaEventos .cabeceraSeccion h2 {
+    font-size: 22px;
+    line-height: 22px;
+    color: #d94423;
+    text-transform: uppercase;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.seccionCategoriaEventos .cabeceraSeccion h2:before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: 4px;
+    background: #d94423;
+}
+
+.seccionCategoriaEventos .contenidoSeccion {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 250px; 
+    height: 250px; 
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 26px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.6);
+    transition: background 0.3s ease;
+    z-index: 1;
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria1 a {
+    background: linear-gradient(to right, #86a6417c, #86a641ee);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria1:hover a {
+    background: linear-gradient(to right, #86a64163, #86a6415d);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria2 a {
+    background: linear-gradient(to right, #d929297a, #d92929d5);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria2:hover a {
+    background: linear-gradient(to right, #d9292931, #d9292971);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria3 a {
+    background: linear-gradient(to right, #d9442344, #d94423e3);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria3:hover a {
+    background: linear-gradient(to right, #d9442321, #d944233d);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria4 a {
+    background: linear-gradient(to right, #f2911b69, #f2911bd8);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria4:hover a {
+    background: linear-gradient(to right, #f2911b49, #f2911b31);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria5 a {
+    background: linear-gradient(to right, #0084ff3f, #0084ffe3);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria5:hover a {
+    background: linear-gradient(to right, #0d0d0d3d, #0d0d0d42);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria6 a {
+    background: linear-gradient(to right, #a000fd4f, #a000fde3);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li.categoria6:hover a {
+    background: linear-gradient(to right, #a000fd2f, #a000fd42);
+}
+
+.seccionCategoriaEventos .contenidoSeccion ul li a span {
+    font-family: "Montserrat-Light";
+}
+
+/* ----------------------------------------FIN Categorías---------------------------------------- */
+
+@media (max-width: 760px) {
+    .eventoFuturo3 {
+        display: none;
+    }
+
+    .eventoFuturo2 {
+        display: none;
+    }
+
+    .eventosHoy .eventosContenido ul li.evento4 {
+        display: none;
+    }
+
+    .seccionEventosFuturos .contenidoSeccion .informacion {
+        min-width: 320px;
+        background: linear-gradient(to bottom, #86a64100 0%, #86a6410c 1%, #86a6418f 100%);
+    }
+}

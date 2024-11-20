@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es"></html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets - Ayuda</title>
+
+    <link rel="stylesheet" type="text/css" href="css/ayuda.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+</head>
+
+<body>
+
+<!-- Menú y Autenticación -->
+
+<%- include('partials/auth') %> <!-- Incluye el Auth -->
+<%- include('partials/menu') %> <!-- Incluye el menú -->
+
+<!-- Fin Menú y Autenticación -->
+
+    <!------------------------------------------- Sección Ayuda ---------------------------------------------->
+
+    <section id="Seccion__FAQ" class="faq seccionAyuda">
+        <div class="contenedorPrincipal">
+            <div class="tituloSeccion">
+                <h1>Preguntas Frecuentes</h1>
+                <p>Encuentra respuestas a las preguntas más comunes sobre la compra de boletos y los eventos disponibles.</p>
+            </div>
+            <div class="listaPreguntas">
+                <!-- Pregunta 1 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(1)">
+                        <span>1. ¿Cómo puedo comprar boletos para un evento?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__1">
+                        <p>Puedes comprar boletos directamente en nuestro sitio web seleccionando el evento deseado y eligiendo la cantidad de boletos que necesitas. Luego, sigue las instrucciones para completar el pago.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(2)">
+                        <span>2. ¿Cuáles son los métodos de pago disponibles?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__2">
+                        <p>Aceptamos pagos con tarjetas de crédito y débito (Visa, Mastercard, American Express), así como pagos a través de PayPal y otros métodos de pago locales.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(3)">
+                        <span>3. ¿Puedo obtener un reembolso si no puedo asistir al evento?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__3">
+                        <p>Nuestra política de reembolsos varía según el evento. Por lo general, no ofrecemos reembolsos a menos que el evento sea cancelado o reprogramado. Te recomendamos revisar las políticas de cada evento antes de realizar la compra.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 4 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(4)">
+                        <span>4. ¿Puedo transferir mi boleto a otra persona?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__4">
+                        <p>Sí, puedes transferir tu boleto a otra persona. Asegúrate de contactar al soporte para registrar el cambio de titularidad antes del evento.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(5)">
+                        <span>5. ¿Qué hago si pierdo mi boleto?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__5">
+                        <p>Si pierdes tu boleto, comunícate con nuestro equipo de soporte. Dependiendo del evento, podríamos emitir un reemplazo o ayudarte a localizar tu boleto digital en tu cuenta.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(6)">
+                        <span>6. ¿Cómo sé si mi compra de boletos fue exitosa?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__6">
+                        <p>Una vez que completes tu compra, recibirás un correo electrónico de confirmación con los detalles del evento y tu boleto adjunto. También puedes verificar tus compras en la sección "Mis Boletos" de tu cuenta.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(7)">
+                        <span>7. ¿Puedo cambiar la fecha o el horario de mi boleto?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__7">
+                        <p>Los boletos comprados generalmente son válidos solo para la fecha y el horario seleccionados. No se permiten cambios, así que asegúrate de verificar los detalles antes de comprar.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 8 -->
+                <div class="preguntaItem">
+                    <button class="preguntaTitulo" onclick="toggleRespuesta(8)">
+                        <span>8. ¿Qué pasa si el evento es cancelado o reprogramado?</span>
+                        <i class="iconoToggle"></i>
+                    </button>
+                    <div class="respuestaTexto" id="Respuesta__8">
+                        <p>Si un evento es cancelado, se te reembolsará el total del boleto. Si el evento es reprogramado, recibirás una notificación con la nueva fecha y tendrás la opción de asistir o solicitar un reembolso.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!------------------------------------------- Fin Sección Ayuda ---------------------------------------------->
+
+  <!-- Footer -->
+  <%- include('partials/footer') %>
+  <!-- Fin Footer -->
+
+    <script src="js/ayuda.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,235 @@
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  src: url("../fonts/Montserrat-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "Montserrat-Hairline";
+  src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora-Regular";
+  src: url("../fonts/Lora-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.heroe {
+  background: url('../img/banner-heroe1.png') no-repeat center center;
+  background-size: cover;
+  height: 300px;
+  position: relative;
+}
+
+.titulo {
+  color: #ffffff;
+  font-size: 2em;
+  text-align: left;
+  padding-top: 100px;
+  text-transform: uppercase;
+  margin-left: 10%;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.titulo h1:before {
+  display: block;
+  width: 5px;
+  height: 35px;
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 110px;
+  background: hsl(0, 0%, 100%);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+
+}
+
+/* Contenedor del formulario */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  /* Última columna para el botón de buscar */
+  gap: 15px;
+  padding: 25px;
+  text-align: center;
+  align-items: center;
+  /* Alinea verticalmente los elementos */
+}
+
+/* Estilo para las etiquetas */
+.formulario_label {
+  display: block;
+  padding: 10px 0px;
+  margin-bottom: 12px;
+  /* Espacio entre la etiqueta y el input */
+  text-align: center;
+}
+
+/* Estilo general de los inputs y selects */
+.formulario_input {
+  width: 100%;
+  background: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  font-size: 1em;
+  outline: none;
+  padding: 8px;
+  height: 45px;
+  /* Altura uniforme */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Estilo específico para los selects */
+.formulario_grupo_input select.formulario_input {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0 8px;
+}
+
+/* Botón de buscar alineado y con altura igual a los campos */
+.formulario_boton {
+  padding: 8px 20px;
+  margin-top: 50px;
+  height: 45px;
+  /* Altura uniforme para el botón */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px;
+  border-style: ridge;
+  border-radius: 5px;
+  color: #d94423;
+  transition: 0.5s;
+  background-color: #ffffff;
+}
+
+.formulario_boton:hover {
+  background-color: #86a641;
+}
+
+.boxdeafuera {
+  background-color: rgb(0, 0, 0);
+  padding: 25px 25px;
+  height: fit-content;
+  width: 100%;
+}
+
+.evento1,
+.evento2 {
+  height: 300px;
+  width: auto;
+  background-color: #ffffff;
+  margin: 50px 25px;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  border-radius: 10px;
+  z-index: 0;
+}
+
+.fotoevento {
+  background: url("../img/eventoCategoria3.png") no-repeat center center;
+  background-size: cover;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-bottom: 7px;
+}
+
+.fotoevento2 {
+  background: url("../img/eventoCategoria2.png") no-repeat center center;
+  background-size: cover;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-bottom: 7px;
+}
+
+.tituloevento {
+  color: #d94423;
+  padding: 25px 25px;
+  border-bottom: #d94423 3px;
+  border-style: solid;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin: 0px 25px;
+  margin-bottom: 225px;
+  grid-column: span 3;
+  display: inline-block;
+}
+
+.textoevento,
+.textoevento2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.comprar {
+  color: #86a641;
+  text-align: center;
+}
+
+.precio {
+  color: rgb(194, 192, 192);
+}
+
+.boton_comprar {
+  padding: 8px 20px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  height: 45px;
+  /* Altura uniforme para el botón */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px;
+  border-style: ridge;
+  border-radius: 5px;
+  color: #ffffff;
+  transition: 0.5s;
+  background-color: #86a641;
+  text-decoration: none;
+}
+
+.cuadrodeprecio {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.lugar,
+.fecha,
+.hora {
+  color: #000000;
+  margin-top: -165px;
+  text-align: center;
+}
+
+.hora h2,
+.lugar h2,
+.fecha h2 {
+  color: rgb(194, 192, 192);
+}

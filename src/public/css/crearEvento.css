@@ -1,0 +1,263 @@
+/* Definición de fuentes personalizadas */
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  src: url("../fonts/Montserrat-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "Montserrat-Hairline";
+  src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora-Regular";
+  src: url("../fonts/Lora-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Estilos generales de reinicio para todos los elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat-Regular", sans-serif;
+}
+
+/* Sección de héroe */
+.heroe {
+  background: url('../img/banner-heroe1.png') no-repeat center center;
+  background-size: cover;
+  height: 300px;
+  position: relative;
+}
+
+/* Estilo de título en la sección héroe */
+.titulo {
+  color: #ffffff;
+  font-size: 2em;
+  text-align: left;
+  padding-top: 100px;
+  text-transform: uppercase;
+  margin-left: 10%;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.titulo h1:before {
+  display: block;
+  width: 5px;
+  height: 35px;
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 110px;
+  background: hsl(0, 0%, 100%);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Contenedor de opciones en formato flex */
+.opciones {
+  display: flex;
+}
+
+/* Contenedor principal de la página */
+.contenedorPrincipal {
+  display: flex;
+  flex: 1;
+}
+
+/* Barra lateral de menú */
+.barraLateral {
+  width: 200px;
+  background-color: black;
+  padding: 20px;
+  color: #fff;
+  margin-bottom: -100px;
+}
+
+/* Estilos para el menú lateral */
+.menuLateral li {
+  list-style: none;
+  margin: 10px 0;
+}
+
+.menuLateral a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+.menuLateral .activo {
+  color: #d94423;
+  font-weight: bold;
+}
+
+/* Contenedor de contenido principal */
+.contenidoPrincipal {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.contenidoPrincipal h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.barraLateral :hover {
+  color: #d94423;
+  transition: 0.6s;
+}
+
+/* Estilo para el campo de nombre del evento */
+.nombreEvento {
+  width: 400px;
+}
+
+/* Formulario para crear o editar eventos */
+.editarEvento {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  margin-top: 100px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 70%;
+  margin-left: 8%;
+
+}
+
+
+.editarEventoFila {
+  display: flex;
+  flex: 1;
+}
+
+.editarEventoInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.editarEventoInput label {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.editarEventoInput .name {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.editarEventoInput input,
+.editarEventoInput select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.editarEventoInput input:focus,
+.editarEventoInput select:focus {
+  border-color: #86a641;
+  outline: none;
+}
+
+/* Botones en el formulario de edición de eventos */
+.editarEventoBotones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.editarEventoBotones > button {
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px solid #d94423;
+  color: #ffffff;
+  transition: 0.2s;
+  background-color: #d94423;
+  padding: 10px 20px;
+}
+
+.editarEventoBotones > button:hover {
+  background-color: #86a641;
+}
+
+/* Imagen de muestra de foto del evento */
+.subirFoto img {
+  width: 160px;
+  height: 160px;
+  margin-left: 0;
+  margin-top: 20px;
+  border-radius: 10%;
+  border: 2px solid #86a641;
+}
+
+/* Campo de precio del evento */
+.precio {
+  margin-top: 20px;
+}
+
+.precio label {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.precio input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.precio input:focus {
+  border-color: #86a641;
+  outline: none;
+}
+
+/* Estilos para los botones de envío y borrado en el formulario */
+.editarEventoBoton {
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px;
+  border-style: ridge;
+  color: #ffffff;
+  transition: 0.2s;
+  background-color: #d94423;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.editarEventoBoton:hover {
+  background-color: #86a641;
+}

@@ -1,0 +1,330 @@
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "Montserrat-Hairline";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat-Regular", sans-serif;
+}
+
+.heroe {
+    background: url('../img/banner-heroe1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    position: relative;
+}
+
+.titulo {
+    color: #ffffff;
+    font-size: 2em;
+    text-align: left;
+    padding-top: 100px;
+    text-transform: uppercase;
+    margin-left: 10%;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    }
+
+.titulo h1:before {
+    display: block;
+    width: 5px;
+    height: 35px;
+    content: "";
+    position: absolute;
+    left: 8%;
+    top: 110px;
+    background: hsl(0, 0%, 100%);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+
+}
+
+.contenedorPrincipal {
+    display: flex; 
+}
+
+.cajaExterna {
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f8f9fa;
+    border: 1px;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+}
+
+.tarjetaEvento {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.eventoVenta {
+    width: 100%;
+    padding: 15px;
+    background-color: #e0e0e0;
+}
+
+.textoEvento {
+    text-align: center;
+}
+
+.tituloEvento {
+    color: #d94423;
+    font-size: 20px;
+    border-bottom: 3px solid #d94423;
+    margin: 0px 25px 25px;
+}
+
+.evento1 .evento2 {
+    display: inline-flex; 
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px;
+}
+
+.eventoDatosVenta {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px;
+}
+
+
+.tituloevento {
+    color: #d94423;
+    font-size: 20px;
+    border-bottom: #d94423 3px;
+    border-style: solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin: 0px 25px;
+    margin-bottom: 25px;
+}
+
+.cuadrodeprecio {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.comprar {
+    color: #86a641;
+    text-align: center;
+}
+
+.precio {
+    color: rgb(194, 192, 192);
+
+}
+
+.infoEvento {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f8f9fa;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px;
+    
+}
+.lugar, .fecha, .hora {
+    color: #181818;
+    font-size: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    margin-right: 20px;
+
+}
+
+/* Eliminar el estilo antiguo .boton_comprar */
+
+.botonComprar {
+    padding: 8px 20px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    height: 45px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    color: #ffffff;
+    transition: 0.5s;
+    background-color: #86a641;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.botonComprar:hover {
+    background-color: #6f8f33;
+}
+
+.fotoevento {
+    max-width: 300px;
+    height: 300px;
+    padding: 10px;
+}
+
+.fotoevento img{  
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 10%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.boxdeafuera {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.evento1, .evento2 {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+/* Datos de venta */
+.eventoDatosVenta {
+    width: 100%;
+    padding: 15px;
+    background-color: #e0e0e0;
+}
+
+.textoevento {
+    text-align: center;
+}
+
+.tituloevento h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.cuadrodeprecio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.comprar {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.precio {
+    font-size: 2em;
+    color: #d94423;
+    margin: 5px 0;
+}
+
+.boton_comprar {
+    background-color: #86a641;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.boton_comprar:hover {
+    background-color: #6f8f33;
+}
+
+/* Información del evento */
+.infoEvento {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.infoEvento div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.infoEvento h1 {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.infoEvento h2 {
+    font-size: 1em;
+    color: #333;
+}
+
+/* Imagen del evento */
+.fotoevento img {
+    width: 100%;
+    height: auto;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

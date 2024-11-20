@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets</title>
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/bannerPerfil.css">
+    <link rel="stylesheet" href="css/menuLateral.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+
+    <link rel="stylesheet" href="css/perfilMetodosPago.css">
+</head>
+
+<body>
+
+    <!-------------------------------------------Menú---------------------------------------------->
+
+    <%- include('../partials/auth') %>
+    <%- include('../partials/menu') %>
+
+    <!-------------------------------------------FIN Menú---------------------------------------------->
+
+    <!-------------------------------------------Banner---------------------------------------------->
+
+    <section class="heroeImangen" id="heroe__imangen">
+        <section>
+            <div class="heroe" id="heroe__principal">
+                <div class="titulo" id="administrarusuarios">
+                    <h1>Perfil</h1>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-------------------------------------------FIN Banner---------------------------------------------->
+
+    <div class="contenedorPrincipal"> <!--Contenedor Principal-->
+
+        <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
+        <aside class="barraLateral" id="Barra__Lateral">
+            <ul class="menuPerfil">
+                <li><a href="adminDatosPers.html">Datos Personales</a></li>
+                <li><a href="adminSeguridad.html">Seguridad</a></li>
+                <li><a href="adminMetodosPago.html" class="activo">Métodos de Pago</a></li>
+                <li><a href="administrarUsuarios.html">Administrar Usuarios</a></li>
+                <li><a href="editarEventos.html">Editor de Eventos</a></li>
+                <li><a href="crearEvento.html">Crear</a></li>
+                <li><a href="ayuda.html">Ayuda</a></li>
+            </ul>
+        </aside>
+        <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
+
+        <!-------------------------------------------Metodos Pago---------------------------------------------->
+
+        <div class="metodosPago">
+            <table class="tablaTarjetas">
+                <thead>
+                    <tr>
+                        <th>Tarjeta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="datosTarjeta">
+                                <img src="img/masterCard.png" alt="MasterCard" class="iconoTarjeta">
+                                <span>XXXX - XXXX - XXXX - 6547</span>
+                                <p>JUAN VAINAS</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="accionesTarjeta">
+                                <img src="img/basura.png" alt="Delete" class="iconoAccion">
+                                <img src="img/lapiz.png" alt="Edit" class="iconoAccion">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="datosTarjeta">
+                                <img src="img/visa.png" alt="Visa" class="iconoTarjeta">
+                                <span>XXXX - XXXX - XXXX - 6547</span>
+                                <p>JUAN VAINAS</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="accionesTarjeta">
+                                <img src="img/basura.png" alt="Delete" class="iconoAccion">
+                                <img src="img/lapiz.png" alt="Edit" class="iconoAccion">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="agregarTarjeta">
+                <button class="botonAgregar">Agregar otro método</button>
+            </div>
+        </div>
+
+        <!-------------------------------------------FIN Metodos Pago---------------------------------------------->
+
+    </div> <!--FIN Contenedor Principal-->
+
+    <!-------------------------------------------Footer---------------------------------------------->
+
+    <%- include('../partials/footer') %>
+
+    <!-------------------------------------------Fin Footer---------------------------------------------->
+
+</body>
+
+</html>

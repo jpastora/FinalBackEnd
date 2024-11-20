@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets - Eventos</title>
+    
+    <!--CSS-->
+    <link rel="stylesheet" href="/css/evento.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css">
+    <script src="js/validacionEvento2.js"></script>
+</head>
+
+<body>
+
+<!-- Menú y Autenticación -->
+
+<%- include('../partials/auth') %> <!-- Incluye el Auth -->
+<%- include('../partials/menu') %> <!-- Incluye el menú -->
+
+<!-- Fin Menú y Autenticación -->
+
+ 
+
+  <section class="heroeImagen" id="Heroe__Imagen">
+    <section>
+        <div class="heroe" id="Heroe__Principal">
+            <div class="titulo" id="Titulo__Evento">
+                <h1>Show Hernan Jiménez</h1>
+            </div>
+        </div>
+    </section>
+  </section>
+
+  <!-------------------------------------------informacion del evento---------------------------------------------->
+  <div class="infoEvento">
+    <div class="lugar">
+      <h1>Lugar</h1>
+      <h2>Limón</h2>
+    </div>
+    <div class="fecha">
+      <h1>Fecha</h1>
+      <h2>28 de Septiembre, 2024.</h2>
+    </div>
+    <div class="hora">
+      <h1>Hora</h1>
+      <h2>12:30pm.</h2>
+    </div>
+  </div>
+
+  <!-------------------------------------------evento---------------------------------------------->
+  <div class="eventoCompleto">
+    <div class="fotoInfo">
+      <div class="imagenEvento">
+        <img src="/img/eventoCategoria2.png" alt="Imagen de evento">
+      </div>
+      <h3 class="descripcionEvento">
+        ¡No te pierdas el show de Hernán Jiménez en Limón! Ven y disfruta de
+        una experiencia única llena de humor el 28 de septiembre de 2024 a las
+        12:30 p.m. con entradas desde ₡45,000. Será una oportunidad
+        inolvidable para reír y compartir momentos especiales. ¡Compra ya tus
+        entradas y acompáñanos en este increíble evento!
+      </h3>
+    </div>
+    <div class="asientosGuardarReservar">
+      <div class="opcionesAsientos">
+        <h2>Seleccione la cantidad de asientos</h2>
+        <div class="asiento1">
+          <h1>Gramilla |</h1>
+          <h2>₡ 50.000</h2>
+          <input class="cantidadAsientos" type="number" />
+        </div>
+        <div class="asiento2">
+          <h1>Balcón Este |</h1>
+          <h2>₡ 100.000</h2>
+          <input class="cantidadAsientos" type="number" />
+        </div>
+        <div class="asiento3">
+          <h1>Balcón Oeste |</h1>
+          <h2>₡ 200.000</h2>
+          <input class="cantidadAsientos" type="number" /> 
+        </div>
+      </div>
+      <div class="botones">
+        <input type="submit" value="Guardar" class="boton" />
+        <input type="submit" value="Reservar" class="boton" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  <!-- Fin Footer -->
+
+</body>
+
+</html>

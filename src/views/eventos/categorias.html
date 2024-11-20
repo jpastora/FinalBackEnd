@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets - Categorias</title>
+
+    <link rel="stylesheet" href="/css/categorias.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+</head>
+
+<body>
+
+<!-- Menú y Autenticación -->
+
+<%- include('../partials/auth') %> <!-- Incluye el Auth -->
+<%- include('../partials/menu') %> <!-- Incluye el menú -->
+
+<!-- Fin Menú y Autenticación -->
+
+    <!-------------------------------------------Barra Buscador---------------------------------------------->
+
+    <section class="heroeImagen" id="Heroe__Imagen">
+        <div class="heroeImagen" id="Heroe__Principal">
+            <div class="barraBusqueda" id="Barra__Busqueda">
+                <input type="text" placeholder="Buscar Evento, Categoría...">
+                <button id="Boton__Busqueda">Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-------------------------------------------FIN Barra Buscador---------------------------------------------->
+
+<main class="contenedorCategoria">
+    <section class="categoriaSeccion">
+        <h2>Por Tipo de Evento</h2>
+        <div class="opcionesCategoria">
+            <li class="opcionItem teatro">Teatro</li>
+            <li class="opcionItem charlas">Charlas</li>
+            <li class="opcionItem conciertos">Conciertos</li>
+            <li class="opcionItem deportes">Deportes</li>
+            <li class="opcionItem festivales">Festivales</li>
+        </div>
+    </section>
+
+    <section class="categoriaSeccion">
+        <h2>Por Edad</h2>
+        <div class="opcionesCategoria edad">
+            <li class="opcionItem edadBusqueda">0 - 6</li>
+            <li class="opcionItem edadBusqueda">7 - 12</li>
+            <li class="opcionItem edadBusqueda">13 - 18</li>
+            <li class="opcionItem edadBusqueda">+18</li>
+        </div>
+    </section>
+
+    <section class="categoriaSeccion">
+        <h2>Por Provincia</h2>
+        <div class="opcionesCategoria">
+            <li class="opcionItem limon">Limón</li>
+            <li class="opcionItem alajuela">Alajuela</li>
+            <li class="opcionItem sanJose">San José</li>
+            <li class="opcionItem cartago">Cartago</li>
+            <li class="opcionItem heredia">Heredia</li>
+        </div>
+    </section>
+</main>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  <!-- Fin Footer -->
+
+</body>
+
+</html>

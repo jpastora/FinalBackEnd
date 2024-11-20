@@ -1,0 +1,142 @@
+/* Fuentes */
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lora";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Estilos Generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Enlaces de Autenticación */
+.enlacesAuth {
+    background-color: #86a641;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px 20px;
+}
+
+.enlacesAuth a {
+    color: #d94423;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+/* Encabezado Principal */
+header {
+    background-color: #000;
+    color: #fff;
+}
+
+.barraSuperior {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+}
+
+.logotipo img {
+    max-width: 300px;
+    height: auto;
+}
+
+/* Menú Principal */
+.navegacionPrincipal .menuPrincipal {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menuPrincipal li {
+    position: relative;
+}
+
+.menuPrincipal a {
+    color: #86a641;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+/* Submenú */
+.menuEventos .submenu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Posiciona el submenú debajo del elemento padre */
+    left: 0;
+    background-color: #333;
+    padding: 10px 0;
+    list-style: none;
+    min-width: 150px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.menuEventos .submenu li {
+    width: 100%;
+}
+
+.menuEventos .submenu a {
+    color: #fff;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.menuEventos .submenu a:hover {
+    background-color: #575757;
+}
+
+/* Mostrar el submenú al pasar el mouse */
+.menuEventos:hover .submenu {
+    display: block;
+}
+
+/* Opcional: transición suave para el submenú */
+.menuEventos .submenu {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menuEventos:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+}

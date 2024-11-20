@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets</title>
+    <link rel="stylesheet" href="../css//menu.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/bannerPerfil.css">
+    <link rel="stylesheet" href="../css/menuLateral.css">
+    <link rel="stylesheet" href="../css/perfilDatoPers.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+
+</head>
+
+<body>
+
+<!-- Menú y Autenticación -->
+
+<%- include('../partials/auth') %> <!-- Incluye el Auth -->
+<%- include('../partials/menu') %> <!-- Incluye el menú -->
+
+<!-- Fin Menú y Autenticación -->
+
+<!-------------------------------------------Banner---------------------------------------------->
+
+<section class="heroeImagen" id="Heroe__Imagen">
+    <section>
+        <div class="heroeContenido" id="Heroe__Contenido">
+            <div class="tituloPrincipal" id="Administrar__Usuarios">
+                <h1>Perfil</h1>
+            </div>
+        </div>
+    </section>
+</section>
+
+<!-------------------------------------------FIN Banner---------------------------------------------->
+
+<div class="contenedorPrincipal" id="Contenedor__Principal"> <!--Contenedor Principal-->
+
+<!-------------------------------------------Barra Lateral---------------------------------------------->
+
+<%- include('../partials/menu_usuario') %> <!-- Incluye el Auth -->
+
+<!-------------------------------------------FIN Barra Lateral---------------------------------------------->    
+    
+<!-------------------------------------------Formulario de Perfil--------------------------------------------->
+
+    <section class="perfilUsuario" id="Perfil__Usuario">
+        <form class="formularioPerfil" id="Formulario__Perfil">
+            <div class="campoPerfil" id="Campo__Nombre">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="Dato__Nombre" name="nombre" placeholder="Juan Perez">
+            </div>
+            <div class="campoPerfil" id="Campo__Email">
+                <label for="email">Email:</label>
+                <input type="email" id="Dato__Email" name="email" placeholder="juanp@prueba.com">
+            </div>
+            <div class="campoPerfil" id="Campo__Cedula">
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="Dato__Cedula" name="cedula" placeholder="113615689">
+            </div>
+            <div class="campoPerfil" id="Campo__Foto">
+                <label for="perfilImg">Cambiar foto de perfil:</label>
+                <input type="file" id="Perfil__Imagen" name="perfilImg" accept="image/*">
+            </div>
+            <div class="botonesPerfil" id="Botones__Perfil">
+                <button type="submit" class="botonEnviar" id="Boton__Enviar">Enviar</button>
+                <button type="reset" class="botonBorrar" id="Boton__Borrar">Borrar</button>
+            </div>
+        </form>
+        <div class="imagenPerfil" id="Imagen__Perfil">
+            <img src="../img/imagenPerfil.png" alt="Foto de perfil">
+        </div>
+    </section>
+
+<!-- Nueva sección de historial -->
+<section class="historialCambios" id="Historial__Cambios">
+    <h2>Historial de Cambios</h2>
+    <table class="tablaHistorial">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Tipo de Cambio</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2024-02-20</td>
+                <td>Actualización de Email</td>
+                <td>Cambio de correo electrónico</td>
+                <td>Completado</td>
+            </tr>
+            <tr>
+                <td>2024-02-15</td>
+                <td>Cambio de Foto</td>
+                <td>Actualización imagen de perfil</td>
+                <td>Completado</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-------------------------------------------FIN Formulario de Perfil--------------------------------------------->
+
+
+</div> <!--FIN Contenedor Principal-->
+
+    <!-- Footer -->
+    
+    <%- include('../partials/footer') %> <!-- Incluye el footer -->
+    
+    <!-- Fin Footer -->
+
+</body>
+
+</html>

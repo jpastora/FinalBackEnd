@@ -1,0 +1,166 @@
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url("../fonts/Montserrat-Light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "Montserrat-Hairline";
+    src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat-Regular", sans-serif;
+}
+
+.heroe {
+    background: url('../img/banner-heroe1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    position: relative;
+}
+
+.titulo {
+    color: #ffffff;
+    font-size: 2em;
+    text-align: left;
+    padding-top: 100px;
+    text-transform: uppercase;
+    margin-left: 10%;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    }
+
+.titulo h1:before {
+    display: block;
+    width: 5px;
+    height: 35px;
+    content: "";
+    position: absolute;
+    left: 8%;
+    top: 110px;
+    background: hsl(0, 0%, 100%);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.metodosPago {
+    padding: 20px;
+    background-color: #f8f9fa;
+    width: calc(100% - 250px);
+    margin: 25px;
+}
+
+.contenedorPrincipal {
+    display: flex;
+}
+ 
+.tablaTarjetas {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tablaTarjetas th, .tablaTarjetas td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+.tablaTarjetas th {
+    font-weight: bold;
+    color: #666;
+    background-color: #f4f4f4;
+}
+
+.iconoTarjeta {
+    width: 30px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.accionesTarjeta {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconoAccion {
+    width: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.tablaTarjetas td span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.tablaTarjetas td p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.tablaTarjetas tbody tr td:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.agregarTarjeta {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.botonAgregar {
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botonAgregar:hover {
+    background-color: #0056b3;
+}
+
+.datosTarjeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

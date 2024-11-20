@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibetickets - Proceso de Pago</title>
+    <link rel="stylesheet" type="text/css" href="css/seleccion_pago.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <link rel='stylesheet'
+      href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+  </head>
+  
+  <body>
+  
+    <!-- Menú y Autenticación -->
+  
+    <%- include('partials/auth') %> <!-- Incluye el Auth -->
+    <%- include('partials/menu') %> <!-- Incluye el menú -->
+  
+    <!-- Fin Menú y Autenticación -->
+  
+    <section class="heroeImangen" id="heroe__imangen">
+      <section>
+          <div class="heroe" id="heroe__principal">
+              <div class="titulo" id="administrarusuarios">
+              <h1>Eventos en el Carrito</h1>
+              </div>
+          </div>
+      </section>
+    </section>
+
+    <!-- Barra de Proceso de Pago -->
+    <section class="procesoCompra">
+        <div class="barraProceso">
+            <div class="paso active">
+                <span>Método de Pago</span>
+                <div class="circulo"></div>
+            </div>
+            <div class="line"></div>
+            <div class="paso completed">
+                <span>Validación de Información</span>
+                <div class="circulo"></div>
+            </div>
+            <div class="line"></div>
+            <div class="paso">
+                <span>Transacción Completada</span>
+                <div class="circulo"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Formulario de Pago -->
+    <main class="resumenCompra">
+        <div class="formulario-pago">
+            <h2>Información de Pago</h2>
+            <form>
+                <label for="numero-tarjeta">Número tarjeta</label>
+                <input type="text" id="numero-tarjeta" placeholder="XXXX XXXX XXXX XXXX">
+
+                <label for="titular-tarjeta">Titular de la tarjeta</label>
+                <input type="text" id="titular-tarjeta" placeholder="FERNANDO GONZALEZ">
+
+                <div class="fila-expiracion-seguridad">
+                    <div class="campo">
+                        <label for="fecha-expiracion">Fecha de expiración</label>
+                        <input type="text" id="fecha-expiracion" placeholder="XX/XX">
+                    </div>
+                    <div class="campo">
+                        <label for="codigo-seguridad">Código de seguridad</label>
+                        <input type="text" id="codigo-seguridad" placeholder="XXX">
+                    </div>
+                </div>
+
+                <button type="submit" class="boton-continuar">CONTINUAR</button>
+            </form>
+        </div>
+    </main>
+
+   <!-------------------------------------------Footer---------------------------------------------->
+
+   <footer class="piePagina" id="pie__pagina">
+    <div class="menuInferior" id="menu__inferior">
+      <p>Menú</p>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/nosotros">Nosotros</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/ayuda">Ayuda</a></li>
+      </ul>
+    </div>
+    <div class="categoriasInferiores" id="categorias__inferiores">
+      <p>Categorías</p>
+      <ul>
+        <li><a href="#">Conciertos</a></li>
+        <li><a href="#">Comedia</a></li>
+        <li><a href="#">Deportes</a></li>
+        <li><a href="#">Festivales</a></li>
+        <li><a href="#">Charlas</a></li>
+        <li><a href="#">Teatro</a></li>
+
+      </ul>
+    </div>
+    <div class="logoRedes" id="logo__redes">
+      <div class="logoFooter">
+        <img src="img/VibeTickets-Logo-verde.png" alt="VibeTickets">
+      </div>
+      <div class="iconosSociales" id="iconos__sociales">
+        <a href="#"><img src="img/icono_facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="img/icono_instagram.png" alt="Instagram"></a>
+        <a href="#"><img src="img/icono_whatsapp.png" alt="WhatsApp"></a>
+        <a href="#"><img src="img/icono_tiktok.png" alt="TikTok"></a>
+      </div>
+      <p>© Brightcodelabs 2024</p>
+    </div>
+  </footer>
+
+  <!-------------------------------------------Fin Footer---------------------------------------------->
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  src: url("../fonts/Montserrat-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "Montserrat-Hairline";
+  src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora-Regular";
+  src: url("../fonts/Lora-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat-Regular", sans-serif;
+}
+
+.heroe {
+  background: url('../img/banner-heroe1.png') no-repeat center center;
+  background-size: cover;
+  height: 300px;
+  position: relative;
+}
+
+.titulo {
+  color: #ffffff;
+  font-size: 2em;
+  text-align: left;
+  padding-top: 100px;
+  text-transform: uppercase;
+  margin-left: 10%;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.titulo h1:before {
+  display: block;
+  width: 5px;
+  height: 35px;
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 110px;
+  background: hsl(0, 0%, 100%);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.infoEvento {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 300px;
+  align-items: center;
+  background-color: black;
+}
+
+.lugar,
+.fecha,
+.hora {
+  color: #ffffff;
+  text-align: center;
+}
+
+.hora h2,
+.lugar h2,
+.fecha h2 {
+  padding-top: 20px;
+  color: rgb(194, 192, 192);
+}
+
+.eventoCompleto {
+  display: flex;
+  max-width: 80%;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f8f9fa;
+  border: 1px;
+  height: auto;
+  justify-content: center;
+  text-align: center;
+  margin-left: 10%;
+}
+
+.fotoInfo {
+  height: fit-content;
+  background-color: #86a641
+}
+
+.imagenEvento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.imagenEvento img {
+  width: 350px;
+  height: auto;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.descripcionEvento {
+  color: #ffffff;
+  font-size: 20px;
+  border-top: #d94423 3px;
+  border-style: solid;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  margin: 25px 25px;
+  margin-bottom: 25px;
+  padding: 20px;
+  font-family: "Monserrat-Light", sans-serif;
+
+}
+
+.asientosGuardarReservar {
+  background-color: rgb(255, 255, 255);
+}
+
+.botones {
+  height: 100px;
+  width: 325px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 25px;
+  gap: 25px;
+  margin-left: 300px;
+}
+
+.boton {
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px;
+  border-style: ridge;
+  border-radius: 5px;
+  color: #ffffff;
+  transition: 0.2s;
+  background-color: #d94423;
+}
+
+.boton:hover {
+  background-color: #86a641;
+}
+
+.opcionesAsientos {
+  height: 405px;
+  width: 600px;
+  margin-left: 175px;
+}
+
+.opcionesAsientos h1 {
+  color: #d94423;
+}
+
+.opcionesAsientos h2 {
+  color: rgb(58, 58, 58);
+}
+
+.asiento1,
+.asiento2,
+.asiento3 {
+  width: 600px;
+  height: 135px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.cantidadAsientos {
+  border-radius: 5px;
+  border: 2px;
+  border-style: solid;
+  margin-left: 20px;
+  padding: 10px;
+}

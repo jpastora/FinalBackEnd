@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets - Administrador</title>
+  <!--CSS-->
+  <link rel="Stylesheet" href="css/eventos-perfila-adm.css" />
+  <!-- Box Icon-->
+  <linkhref="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="css/menu.css">
+  <link rel="stylesheet" type="text/css" href="css/footer.css">
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+</head>
+
+<body>
+
+  <!-- Menú y Autenticación -->
+
+  <%- include('partials/auth') %> <!-- Incluye el Auth -->
+  <%- include('partials/menu') %> <!-- Incluye el menú -->
+
+  <!-- Fin Menú y Autenticación -->
+
+  <!-------------------------------------------Eventos Hoy---------------------------------------------->
+
+  <section class="heroeImangen" id="heroe__imangen">
+    <section>
+      <div class="heroe" id="heroe__principal">
+        <div class="titulo" id="administrarusuarios">
+          <h1>Eventos hoy</h1>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-------------------------------------------Filtros------------------------------------------>
+
+  <div>
+    <form class="formulario">
+      <!-- Palabra -->
+      <div class="formulario_grupo" id="grupo_buscar_por_palabra">
+        <label class="formulario_label">Buscar por palabra</label>
+        <div class="formulario_grupo_input">
+          <input type="text" class="formulario_input" name="Busqueda" id="Busqueda" placeholder="Busqueda..." />
+        </div>
+      </div>
+
+      <!-- Lugar -->
+      <div class="formulario_grupo" id="grupo_seleccione_lugar">
+        <label class="formulario_label">Lugar</label>
+        <div class="formulario_grupo_input">
+          <select class="formulario_input" name="Seleccione_lugar" id="Seleccione_lugar">
+            <option value="" disabled selected>Seleccionar lugar</option>
+            <option value="San José">San José</option>
+            <option value="Heredia">Heredia</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="formulario_grupo" id="grupo_seleccione_categoria">
+        <label class="formulario_label">Categoría</label>
+        <div class="formulario_grupo_input">
+          <select class="formulario_input" name="Seleccione_categoria" id="Seleccione_categoria">
+            <option value="" disabled selected>Seleccionar categoría</option>
+            <option value="Conciertos">Conciertos</option>
+            <option value="Partidos">Partidos</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Enviar -->
+      <div class="formulario_grupo formulario_grupo_enviar">
+        <input type="submit" value="Buscar" class="formulario_boton" />
+      </div>
+      <div class="botonNuevo" id="botonNuevo">
+        <input type="submit" value="Nuevo" class="botonNuevo" />
+      </div>
+    </form>
+  </div>
+
+  <!-------------------------------------------Fin Filtros---------------------------------------------->
+
+  <!-------------------------------------------Eventos---------------------------------------------->
+  <div class="boxdeafuera">
+    <div class="evento1">
+      <div class="textoevento">
+        <div class="tituloevento">
+          <h2>Campeonato de fútbol</h2>
+        </div>
+        <div class="cuadrodeprecio">
+          <h2 class="comprar">Precio</h2>
+          <h2 class="comprar">desde</h2>
+          <h1 class="precio">₡15.000</h1>
+          <input type="submit" value="Comprar" class="boton_comprar" />
+        </div>
+        <div class="lugar">
+          <h1>Lugar</h1>
+          <h2>San José</h2>
+        </div>
+        <div class="fecha">
+          <h1>Fecha</h1>
+          <h2>15 de Septiembre, 2024.</h2>
+        </div>
+        <div class="hora">
+          <h1>Hora</h1>
+          <h2>11:30am.</h2>
+        </div>
+      </div>
+      <div class="fotoevento"></div>
+    </div>
+    <div class="evento2">
+      <div class="textoevento2">
+        <div class="tituloevento">
+          <h2>Concierto de Myke Towers</h2>
+        </div>
+        <div class="cuadrodeprecio">
+          <h2 class="comprar">Precio</h2>
+          <h2 class="comprar">desde</h2>
+          <h1 class="precio">₡40.000</h1>
+          <input type="submit" value="Comprar" class="boton_comprar" />
+        </div>
+        <div class="lugar">
+          <h1>Lugar</h1>
+          <h2>Puntarenas</h2>
+        </div>
+        <div class="fecha">
+          <h1>Fecha</h1>
+          <h2>16 de Septiembre, 2024.</h2>
+        </div>
+        <div class="hora">
+          <h1>Hora</h1>
+          <h2>12:30pm.</h2>
+        </div>
+        <div class="fotoevento2"></div>
+      </div>
+    </div>
+    <div class="evento3">
+      <div class="textoevento2">
+        <div class="tituloevento">
+          <h2>Concierto de Myke Towers</h2>
+        </div>
+        <div class="cuadrodeprecio">
+          <h2 class="comprar">Precio</h2>
+          <h2 class="comprar">desde</h2>
+          <h1 class="precio">₡40.000</h1>
+          <input type="submit" value="Comprar" class="boton_comprar" />
+        </div>
+        <div class="lugar">
+          <h1>Lugar</h2>
+          <h2>Puntarenas</h2>
+        </div>
+        <div class="fecha">
+          <h1>Fecha</h1>
+          <h2>16 de Septiembre, 2024.</h2>
+        </div>
+        <div class="hora">
+          <h1>Hora</h1>
+          <h2>12:30pm.</h2>
+        </div>
+        <div class="fotoevento3"></div>
+      </div>
+    </div>
+
+    <!-------------------------------------------FIN Eventos---------------------------------------------->
+    
+    <!-- Footer -->
+    <%- include('partials/footer') %>
+    <!-- Fin Footer -->
+
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("../fonts/Montserrat-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  src: url("../fonts/Montserrat-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "Montserrat-Hairline";
+  src: url("../fonts/Montserrat-Hairline.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora-Regular";
+  src: url("../fonts/Lora-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat-Regular', sans-serif;
+}
+
+/* Estilos Generales */
+.heroe {
+  background: url('../img/banner-heroe1.png') no-repeat center center;
+  background-size: cover;
+  height: 300px;
+  position: relative;
+}
+
+.titulo {
+  color: #ffffff;
+  font-size: 2em;
+  text-align: left;
+  padding-top: 100px;
+  text-transform: uppercase;
+  margin-left: 10%;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.titulo h1:before {
+  display: block;
+  width: 5px;
+  height: 35px;
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 110px;
+  background: hsl(0, 0%, 100%);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Contenedor de Autenticación */
+.contenedorAutenticacion {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fefefe;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.contenedorAutenticacion h2 {
+  font-size: 24px;
+  color: #db4437;
+  margin-bottom: 10px;
+}
+
+/* Formulario */
+.contenedorAutenticacion form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 20px;
+}
+
+.contenedorAutenticacion label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.contenedorAutenticacion input[type="email"],
+.contenedorAutenticacion input[type="password"],
+.contenedorAutenticacion input[type="text"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+/* Botón de Enviar */
+.contenedorAutenticacion button[type="submit"] {
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background: #86a641;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Botones de Autenticación */
+.contenedorAutenticacion .facebookBtn,
+.contenedorAutenticacion .googleBtn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.contenedorAutenticacion .facebookBtn {
+  background-color: #3b5998;
+}
+
+.contenedorAutenticacion .googleBtn {
+  background-color: #db4437;
+}
+
+/* Enlaces de Autenticación */
+.contenedorAutenticacion .enlacesAutenticacion {
+  display: block;
+  margin-top: 20px;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.contenedorAutenticacion .enlacesAutenticacion input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.contenedorAutenticacion {
+  background-color: rgb(255, 255, 255);
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-bottom: 10px;
+}

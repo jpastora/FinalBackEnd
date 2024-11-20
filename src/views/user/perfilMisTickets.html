@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTickets</title>
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/bannerPerfil.css">
+    <link rel="stylesheet" href="../css/menuLateral.css">
+    <link rel="stylesheet" href="../css/perfilMisTickets.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+
+</head>
+
+<body>
+
+    <!-- Menú y Autenticación -->
+
+    <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+        <%- include('../partials/menu') %> <!-- Incluye el menú -->
+
+            <!-- Fin Menú y Autenticación -->
+
+            <!-------------------------------------------Banner---------------------------------------------->
+
+            <section class="imagenHero" id="Imagen__Hero">
+                <section>
+                    <div class="heroe" id="Hero__Principal">
+                        <div class="titulo" id="Administrar__Usuarios">
+                            <h1>Perfil</h1>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-------------------------------------------FIN Banner---------------------------------------------->
+
+            <div class="contenedorPrincipal"> <!--Contenedor Principal-->
+
+                <!-------------------------------------------Barra Lateral---------------------------------------------->
+
+                <aside class="barraLateral">
+                    <ul class="menuPerfil">
+                        <li><a href="perfilDatosPers.html">Datos Personales</a></li>
+                        <li><a href="perfilSeguridad.html">Seguridad</a></li>
+                        <li><a href="perfilMetodosPago.html">Métodos de Pago</a></li>
+                        <li><a href="perfilMisTickets.html" class="activo">Mis Tickets</a></li>
+                        <li><a href="perfilEventosGuardados.html">Eventos Guardados</a></li>
+                        <li><a href="../ayuda.html">Ayuda</a></li>
+                    </ul>
+                </aside>
+
+                <!-------------------------------------------FIN Barra Lateral---------------------------------------------->
+
+                <div class="contenedorSecundario"> <!--Contenedor Secundario-->
+
+                    <!-------------------------------------------Filtro---------------------------------------------->
+
+                    <div>
+                        <form class="formularioBusqueda">
+                            <div class="grupoBusqueda" id="Grupo__BuscarPalabra">
+                                <label class="etiquetaFormulario">Buscar por palabra</label>
+                                <div class="grupoInput">
+                                    <input type="text" class="campoInput" name="busqueda" id="Busqueda__Palabra"
+                                        placeholder="Busqueda..." />
+                                </div>
+                            </div>
+                            <div class="grupoBusqueda" id="Grupo__Lugar">
+                                <label class="etiquetaFormulario">Lugar</label>
+                                <div class="grupoInput">
+                                    <select class="campoInput" name="seleccioneLugar" id="Seleccion__Lugar">
+                                        <option value="disabled selected">Seleccionar lugar</option>
+                                        <option value="San José">San José</option>
+                                        <option value="Heredia">Heredia</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grupoBusqueda" id="Grupo__Categoria">
+                                <label class="etiquetaFormulario">Categoría</label>
+                                <div class="grupoInput">
+                                    <select class="campoInput" name="seleccioneCategoria" id="Seleccion__Categoria">
+                                        <option value="" disabled selected>Seleccionar categoría</option>
+                                        <option value="Conciertos">Conciertos</option>
+                                        <option value="Partidos">Partidos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grupoBusqueda grupoBtnEnviar">
+                                <input type="submit" value="Buscar" class="botonBuscar" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-------------------------------------------FIN filtro---------------------------------------------->
+
+                    <!-------------------------------------------Mis Tickets---------------------------------------------->
+
+                    <div class="seccionTickets">
+                        <h2 class="tituloEvento">Campeonato de tennis</h2>
+                        <div class="infoTicket">
+                            <div class="detalleTicket"><strong>Lugar:</strong> San José, Costa Rica</div>
+                            <div class="detalleTicket"><strong>Fecha:</strong> 30, sept, 2024</div>
+                            <div class="detalleTicket"><strong>Hora:</strong> 10:30 a.m</div>
+                            <div class="detalleTicket"><strong>Compra:</strong> 12/12/12</div>
+                            <a href="../ticket.html" class="botonVerTicket">VER TICKET</a>
+                        </div>
+
+                        <h2 class="tituloEvento">Campeonato de tennis</h2>
+                        <div class="infoTicket">
+                            <div class="detalleTicket"><strong>Lugar:</strong> San José, Costa Rica</div>
+                            <div class="detalleTicket"><strong>Fecha:</strong> 30, sept, 2024</div>
+                            <div class="detalleTicket"><strong>Hora:</strong> 10:30 a.m</div>
+                            <div class="detalleTicket"><strong>Compra:</strong> 12/12/12</div>
+                            <a href="../ticket.html" class="botonVerTicket">VER TICKET</a>
+                        </div>
+                    </div>
+
+                    <!-------------------------------------------FIN Mis Tickets---------------------------------------------->
+
+                </div> <!--FIN Contenedor Secundario-->
+            </div> <!--FIN Contenedor Principal-->
+
+            <!-- Footer -->
+
+            <%- include('../partials/footer') %> <!-- Incluye el footer -->
+
+                <!-- Fin Footer -->
+
+</body>
+
+</html>
