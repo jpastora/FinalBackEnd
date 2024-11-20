@@ -38,7 +38,7 @@
 
 .piePagina {
     background-color: #0d0d0d;
-    color: #86a641;
+    color: #d94423;
     padding: 20px 0px 20px 20px;
     display: flex;
     flex-wrap: wrap;
@@ -78,6 +78,14 @@
     font-family: "Montserrat-Light"
 }
 
+
+.menuInferior a:hover,
+.categoriasInferiores a:hover {
+    color: #d94423;
+    font-family: "Montserrat-Light"
+
+}
+
 .logoRedes {
     flex: 2;
     text-align: center;
@@ -96,9 +104,14 @@
     margin-top: 10px;
 }
 
-.iconosSociales img {
-    width: 24px;
-    height: 24px;
+.iconosSociales i {
+    font-size: 25px;
+    color: #fff;
+}
+
+.iconosSociales i:hover{
+    font-size: 25px;
+    color: #d94423;
 }
 
 .logoRedes p {

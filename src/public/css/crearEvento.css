@@ -79,36 +79,11 @@
 }
 
 /* Contenedor principal de la página */
+
 .contenedorPrincipal {
   display: flex;
-  flex: 1;
 }
 
-/* Barra lateral de menú */
-.barraLateral {
-  width: 200px;
-  background-color: black;
-  padding: 20px;
-  color: #fff;
-  margin-bottom: -100px;
-}
-
-/* Estilos para el menú lateral */
-.menuLateral li {
-  list-style: none;
-  margin: 10px 0;
-}
-
-.menuLateral a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.1em;
-}
-
-.menuLateral .activo {
-  color: #d94423;
-  font-weight: bold;
-}
 
 /* Contenedor de contenido principal */
 .contenidoPrincipal {
@@ -141,8 +116,7 @@
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 70%;
-  margin-left: 8%;
+  width: 100%;
 
 }
 
@@ -211,11 +185,14 @@
 }
 
 /* Imagen de muestra de foto del evento */
+.subirFoto {
+  display: flex;
+  justify-content: center;
+}
+
 .subirFoto img {
-  width: 160px;
-  height: 160px;
-  margin-left: 0;
-  margin-top: 20px;
+  width: 400px;
+  height: 400px;
   border-radius: 10%;
   border: 2px solid #86a641;
 }

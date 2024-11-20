@@ -40,7 +40,6 @@
     font-family: "Montserrat-Regular" sans-serif;
 }
 
-<!-------------------------------------------FIN Menú---------------------------------------------->
 
 body {
     display: flex;
@@ -77,39 +76,8 @@ body {
     z-index: 2;
   }
 
-  <!-------------------------------------------Fin Sección Editor de Eventos---------------------------------------------->
+
   
-  <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
-
-  .barraLateral {
-    width: 200px;
-    background-color: black;
-    padding: 20px;
-    color: #fff;
-    margin-bottom: -935px;
-    height: 1800PX;
-}
-
-.menuLateral li {
-    list-style: none;
-    margin: 10px 0;
-}
-
-.menuLateral a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1em;
-}
-
-.menuLateral .activo {
-    color: #d94423;
-    font-weight: bold;
-}
-
-<!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
-
-<!-------------------------------------------Sección Filtros---------------------------------------------->
-
 .filtros {
     display: flex;
     flex-wrap: wrap;
@@ -134,9 +102,11 @@ body {
     height: 40px;
     width: 150px;
   }
+
 .filtros{
     margin-left: 200px;
 }
+
 .filtro1{
     color: rgb(74, 74, 74);
 margin-left: 700px;
@@ -165,7 +135,6 @@ input{
     border-style: groove;
 }
 
-<!------------------------------------------- Fin Sección Filtros---------------------------------------------->
 
 <!-------------------------------------------Sección Eventos---------------------------------------------->
 

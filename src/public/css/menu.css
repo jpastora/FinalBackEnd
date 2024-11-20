@@ -44,7 +44,7 @@
 
 /* Enlaces de Autenticación */
 .enlacesAuth {
-    background-color: #86a641;
+    background-color: #d94423;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -52,9 +52,13 @@
 }
 
 .enlacesAuth a {
-    color: #d94423;
+    color: #fff;
     margin: 0 10px;
     text-decoration: none;
+}
+
+.enlacesAuth a:hover {
+    color: #000;
 }
 
 /* Encabezado Principal */
@@ -94,6 +98,10 @@ header {
     padding: 10px 15px;
 }
 
+.menuPrincipal a:hover {
+    color: #d94423;
+}
+
 /* Submenú */
 .menuEventos .submenu {
     display: none;
@@ -121,7 +129,8 @@ header {
 }
 
 .menuEventos .submenu a:hover {
-    background-color: #575757;
+    background-color: #d94423;
+    border-radius: 5px;
 }
 
 /* Mostrar el submenú al pasar el mouse */
