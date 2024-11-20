@@ -114,6 +114,10 @@
     color: #d94423;
 }
 
+.iconosSociales a{
+    text-decoration: none;
+}
+
 .logoRedes p {
     color: #999;
     font-size: 12px;
