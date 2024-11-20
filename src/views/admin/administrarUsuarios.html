@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeTickets - Admin</title>
 
-    <link rel="stylesheet" type="text/css" href="css/perfiladm.css">
-    <link rel="stylesheet" type="text/css" href="css/menu.css">
-    <link rel="stylesheet" type="text/css" href="css/footer.css">
-    <link rel="stylesheet" type="text/css" href="css/menuLateral.css">
+    <link rel="stylesheet" type="text/css" href="/css/perfiladm.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/menuLateral.css">
     <link rel='stylesheet'
         href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel='stylesheet'
@@ -40,20 +40,12 @@
     </section>
 
     <div class="contenedorPrincipal">
+        
+    <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
+    
+    <%- include('../partials/menu_admin') %> <!-- Incluye el menú admin-->
 
-        <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
-        <aside class="barraLateral" id="Barra__Lateral">
-            <ul class="menuPerfil">
-                <li><a href="adminDatosPers.html">Datos Personales</a></li>
-                <li><a href="adminSeguridad.html">Seguridad</a></li>
-                <li><a href="adminMetodosPago.html">Métodos de Pago</a></li>
-                <li><a href="administrarUsuarios.html" class="activo">Administrar Usuarios</a></li>
-                <li><a href="editarEventos.html">Editor de Eventos</a></li>
-                <li><a href="crearEvento.html">Crear</a></li>
-                <li><a href="ayuda.html">Ayuda</a></li>
-            </ul>
-        </aside>
-        <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
+    <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
 
         <div class="contenedorDatos">
             <div class="filtrosBusqueda">

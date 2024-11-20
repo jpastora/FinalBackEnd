@@ -88,8 +88,37 @@ app.get('/pago/confirmacion', (req, res) => {
     res.render('pago_completado.html');
 });
 
-
 // Rutas de administrador
+app.get('/admin', (req, res) => {
+    res.render('admin/adminDatosPers.html');
+});
+
+app.get('/admin/datos-personales', (req, res) => {
+    res.render('admin/adminDatosPers.html');
+});
+
+
+app.get('/admin/seguridad', (req, res) => {
+    res.render('admin/adminSeguridad.html');
+});
+
+app.get('/admin/metodos-pago', (req, res) => {
+    res.render('admin/adminMetodosPago.html');
+});
+
+
+app.get('/admin/usuarios', (req, res) => {
+    res.render('admin/administrarUsuarios.html');
+});
+
 app.get('/admin/eventos', (req, res) => {
-    res.render('eventos-perfil-adm.html');
+    res.render('admin/adminEventos.html');
+});
+
+app.get('/admin/editar-evento', (req, res) => {
+    res.render('admin/admineditarEventos.html');
+});
+
+app.get('/admin/crear-evento', (req, res) => {
+    res.render('admin/adminCrearEventos.html');
 });

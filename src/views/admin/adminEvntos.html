@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeTickets - Administrador</title>
   <!--CSS-->
-  <link rel="Stylesheet" href="css/eventos-perfila-adm.css" />
+  <link rel="Stylesheet" href="/css/eventos-perfila-adm.css" />
   <!-- Box Icon-->
   <linkhref="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="css/menu.css">
-  <link rel="stylesheet" type="text/css" href="css/footer.css">
+  <link rel="stylesheet" type="text/css" href="/css/menu.css">
+  <link rel="stylesheet" type="text/css" href="/css/footer.css">
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
 </head>
@@ -19,8 +19,8 @@
 
   <!-- Menú y Autenticación -->
 
-  <%- include('partials/auth') %> <!-- Incluye el Auth -->
-  <%- include('partials/menu') %> <!-- Incluye el menú -->
+  <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+  <%- include('../partials/menu') %> <!-- Incluye el menú -->
 
   <!-- Fin Menú y Autenticación -->
 
@@ -35,6 +35,12 @@
       </div>
     </section>
   </section>
+
+<!-------------------------------------------Sección Barra Lateral---------------------------------------------->
+    
+      <%- include('../partials/menu_admin') %> <!-- Incluye el menú admin-->
+
+<!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
 
   <!-------------------------------------------Filtros------------------------------------------>
 
@@ -168,7 +174,7 @@
     <!-------------------------------------------FIN Eventos---------------------------------------------->
     
     <!-- Footer -->
-    <%- include('partials/footer') %>
+    <%- include('../partials/footer') %>
     <!-- Fin Footer -->
 
 </body>

@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeTickets</title>
-    <link rel="stylesheet" href="css/menu.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/bannerPerfil.css">
-    <link rel="stylesheet" href="css/menuLateral.css">
-    <link rel="stylesheet" href="css/perfilDatoPers.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/bannerPerfil.css">
+    <link rel="stylesheet" href="/css/menuLateral.css">
+    <link rel="stylesheet" href="/css/perfilDatoPers.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
 
@@ -41,17 +41,9 @@
     <div class="contenedorPrincipal" id="Contenedor__Principal"> <!--Contenedor Principal-->
 
         <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
-        <aside class="barraLateral" id="Barra__Lateral">
-            <ul class="menuPerfil">
-                <li><a href="adminDatosPers.html" class="activo">Datos Personales</a></li>
-                <li><a href="adminSeguridad.html">Seguridad</a></li>
-                <li><a href="adminMetodosPago.html">Métodos de Pago</a></li>
-                <li><a href="administrarUsuarios.html">Administrar Usuarios</a></li>
-                <li><a href="editarEventos.html">Editor de Eventos</a></li>
-                <li><a href="crearEvento.html">Crear</a></li>
-                <li><a href="ayuda.html">Ayuda</a></li>
-            </ul>
-        </aside>
+
+        <%- include('../partials/menu_admin') %> <!-- Incluye el menú admin-->
+        
         <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
 
 
@@ -81,7 +73,7 @@
                 </div>
             </form>
             <div class="imagenPerfil" id="Imagen__Perfil">
-                <img src="img/imagenPerfil.png" alt="Foto de perfil">
+                <img src="/img/imagenPerfil.png" alt="Foto de perfil">
             </div>
         </section>
 
