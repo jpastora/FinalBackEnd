@@ -74,13 +74,13 @@
     max-width: 600px;
     margin: auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px  #ddd;
     border-radius: 8px;
-    background-color: #f2f2f2;
+    background-color: #fefefe;
     text-align: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 70px;
+    margin-bottom: 70px;
 }
 
 .contenedorAutenticacion h2 {
@@ -105,15 +105,50 @@
     width: 100%;
 }
 
+label {
+    text-align: left;
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #201c1c;
+}
+
+.tyc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.tos {
+    color: #201c1c;
+    margin-top: 7px;
+}
+
+.tyc input[type="checkbox"] {
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+
 .contenedorAutenticacion button[type="submit"] {
+    display: block;
     padding: 10px;
     font-size: 16px;
     color: #fff;
-    background-color: #86a641;
+    background-color: #db4437;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 50px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+
+.contenedorAutenticacion button[type="submit"]:hover {
+    background-color: #86a641;
 }
 
 /* Estilos para mensajes de error */

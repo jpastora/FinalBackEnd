@@ -76,7 +76,7 @@
   max-width: 500px;
   margin: auto;
   padding: 40px;
-  border: 1px solid #ddd;
+  border: 1px  #ddd;
   border-radius: 8px;
   background-color: #fefefe;
   text-align: center;
@@ -119,51 +119,64 @@
 
 /* Botón de Enviar */
 .contenedorAutenticacion button[type="submit"] {
+  display: block;
   padding: 10px;
   font-size: 16px;
   color: #fff;
-  background: #86a641;
+  background-color: #db4437;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
 }
 
-/* Botones de Autenticación */
-.contenedorAutenticacion .facebookBtn,
-.contenedorAutenticacion .googleBtn {
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 4px;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.contenedorAutenticacion .facebookBtn {
-  background-color: #3b5998;
-}
-
-.contenedorAutenticacion .googleBtn {
-  background-color: #db4437;
+.contenedorAutenticacion button[type="submit"]:hover {
+  background: #6c8f2e;
 }
 
 /* Enlaces de Autenticación */
 .contenedorAutenticacion .enlacesAutenticacion {
-  display: block;
-  margin-top: 20px;
+  display: flex;
   align-items: center;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 5px;
+  justify-content: center;
+  width: 100%;
+  gap: 5px;
+  margin-top: 20px;
 }
 
 .contenedorAutenticacion .enlacesAutenticacion input[type="checkbox"] {
-  margin-right: 5px;
+  flex-shrink: 0;
 }
+
+label {
+  text-align: left;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #201c1c;
+}
+
 
 .contenedorAutenticacion {
   background-color: rgb(255, 255, 255);
+}
+
+.infoAdi a{
+  margin-bottom: 20px;
+  color: #db4437;
+  margin-top: 7px;
+  text-decoration: none;
+}
+
+.infoAdi p{
+  margin-bottom: 20px;
+  color: #333;
+  margin-top: 7px;
+  text-decoration: none;
+  position: relative;
 }
 
 /* Estilos para mensajes de error */
