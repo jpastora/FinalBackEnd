@@ -103,25 +103,26 @@ app.get('/perfil/mis-tickets', (req, res) => { // Corregido aquí
     res.render('user/perfilMisTickets.html', { title: 'Mis Tickets' });
 });
 
-
-
-
 // ------------------- Rutas de pago -------------------
 
-app.get('/pago/seleccion', (req, res) => {
-    res.render('seleccion_pago.html', { title: 'Seleccionar Pago' });
+app.get('/pago', (req, res) => {
+    res.render('pago/pagos.html', { title: 'Pago' });
 });
 
 app.get('/pago/carrito', (req, res) => {
-    res.render('pagos.html', { title: 'Carrito' });
+    res.render('pago/pagos.html', { title: 'Carrito' });
+});
+
+app.get('/pago/seleccion', (req, res) => {
+    res.render('pago/seleccion_pago.html', { title: 'Seleccionar Pago' });
 });
 
 app.get('/pago/resumen', (req, res) => {
-    res.render('resumen_compra.html', { title: 'Resumen de Compra' });
+    res.render('pago/resumen_compra.html', { title: 'Resumen de Compra' });
 });
 
 app.get('/pago/confirmacion', (req, res) => {
-    res.render('pago_completado.html', { title: 'Confirmación de Pago' });
+    res.render('pago/pago_completado.html', { title: 'Confirmación de Pago' });
 });
 
 // ------------------- Rutas de administrador -------------------

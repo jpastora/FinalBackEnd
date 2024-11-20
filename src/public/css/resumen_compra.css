@@ -196,14 +196,22 @@ body {
     font-weight: bold;
 }
 
+
+
 .botonPagar {
-    background-color: #86a641;
+    background-color: #d94423;
     color: #fff;
     font-family: "Montserrat-Bold";
-    padding: 15px 30px;
+    padding: 15px;
+    width: 100%;
     border: none;
     border-radius: 5px;
     font-size: 1.2em;
+    margin-top: 20px;
     cursor: pointer;
-    margin-top: 10px;
 }
+
+.botonPagar:hover {
+    background-color: #74a534;
+}
+

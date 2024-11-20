@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibetickets - Pago Completado </title>
+    <link rel="stylesheet" type="text/css" href="/css/pago_completado.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel='stylesheet'
+      href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+  </head>
+  
+  <body>
+    
+    <!-- Menú y Autenticación -->
+
+    <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+    <%- include('../partials/menu') %> <!-- Incluye el menú -->
+  
+    <!-- Fin Menú y Autenticación -->
+  
+  
+    <section class="heroeImangen" id="heroe__imangen">
+      <section>
+          <div class="heroe" id="heroe__principal">
+              <div class="titulo" id="administrarusuarios">
+              <h1>Pago Completado</h1>
+              </div>
+          </div>
+      </section>
+    </section>
+
+    <!-- Barra de Proceso de Pago -->
+    <section class="procesoCompra">
+        <div class="barraProceso">
+            <div class="paso completed">
+                <span>Método de Pago</span>
+                <div class="circulo"></div>
+            </div>
+            <div class="line"></div>
+            <div class="paso completed">
+                <span>Validación de Información</span>
+                <div class="circulo"></div>
+            </div>
+            <div class="line"></div>
+            <div class="paso completed">
+                <span>Transacción Completada</span>
+                <div class="circulo"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mensaje de Pago Completado -->
+    <main class="mensajePagoCompletado">
+        <h2>PAGO COMPLETADO</h2>
+        <div class="icono-completado">&#10004;</div>
+        <p>Regresando a la pantalla de inicio</p>
+    </main>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  <!-- Fin Footer -->
+</body>
+
+</html>

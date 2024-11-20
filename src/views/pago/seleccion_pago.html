@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibetickets - Proceso de Pago</title>
-    <link rel="stylesheet" type="text/css" href="css/seleccion_pago.css">
-    <link rel="stylesheet" type="text/css" href="css/menu.css">
-    <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/seleccion_pago.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
     <link rel='stylesheet'
       href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
   </head>
@@ -16,8 +16,8 @@
   
     <!-- Menú y Autenticación -->
   
-    <%- include('partials/auth') %> <!-- Incluye el Auth -->
-    <%- include('partials/menu') %> <!-- Incluye el menú -->
+    <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+    <%- include('../partials/menu') %> <!-- Incluye el menú -->
   
     <!-- Fin Menú y Autenticación -->
   
@@ -25,7 +25,7 @@
       <section>
           <div class="heroe" id="heroe__principal">
               <div class="titulo" id="administrarusuarios">
-              <h1>Eventos en el Carrito</h1>
+              <h1>Seleccionar metodo de Pago</h1>
               </div>
           </div>
       </section>
@@ -73,51 +73,14 @@
                         <input type="text" id="codigo-seguridad" placeholder="XXX">
                     </div>
                 </div>
-
-                <button type="submit" class="boton-continuar">CONTINUAR</button>
+                <a href="/pago/resumen"><button type="submit" class="boton-continuar">CONTINUAR</button></a>
             </form>
         </div>
     </main>
 
-   <!-------------------------------------------Footer---------------------------------------------->
-
-   <footer class="piePagina" id="pie__pagina">
-    <div class="menuInferior" id="menu__inferior">
-      <p>Menú</p>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/nosotros">Nosotros</a></li>
-        <li><a href="/eventos">Eventos</a></li>
-        <li><a href="/ayuda">Ayuda</a></li>
-      </ul>
-    </div>
-    <div class="categoriasInferiores" id="categorias__inferiores">
-      <p>Categorías</p>
-      <ul>
-        <li><a href="#">Conciertos</a></li>
-        <li><a href="#">Comedia</a></li>
-        <li><a href="#">Deportes</a></li>
-        <li><a href="#">Festivales</a></li>
-        <li><a href="#">Charlas</a></li>
-        <li><a href="#">Teatro</a></li>
-
-      </ul>
-    </div>
-    <div class="logoRedes" id="logo__redes">
-      <div class="logoFooter">
-        <img src="img/VibeTickets-Logo-verde.png" alt="VibeTickets">
-      </div>
-      <div class="iconosSociales" id="iconos__sociales">
-        <a href="#"><img src="img/icono_facebook.png" alt="Facebook"></a>
-        <a href="#"><img src="img/icono_instagram.png" alt="Instagram"></a>
-        <a href="#"><img src="img/icono_whatsapp.png" alt="WhatsApp"></a>
-        <a href="#"><img src="img/icono_tiktok.png" alt="TikTok"></a>
-      </div>
-      <p>© Brightcodelabs 2024</p>
-    </div>
-  </footer>
-
-  <!-------------------------------------------Fin Footer---------------------------------------------->
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  <!-- Fin Footer -->
 </body>
 
 </html>

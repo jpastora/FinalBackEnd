@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibetickets - Carrito de Eventos</title>
+  <link rel="stylesheet" href="/css/carrito_compra.css">
+  <link rel="stylesheet" type="text/css" href="/css/menu.css">
+  <link rel="stylesheet" type="text/css" href="/css/footer.css">
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+</head>
+
+<body>
+
+  <!-- Menú y Autenticación -->
+
+  <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+  <%- include('../partials/menu') %> <!-- Incluye el menú -->
+
+  <!-- Fin Menú y Autenticación -->
+
+
+      <section class="heroeImangen" id="heroe__imangen">
+        <section>
+          <div class="heroe" id="heroe__principal">
+            <div class="titulo" id="administrarusuarios">
+              <h1>Eventos en el Carrito</h1>
+            </div>
+          </div>
+        </section>
+      </section>
+
+
+      <main class="contenedorCarrito">
+        <div class="evento">
+          <div class="infoEvento">
+            <h2>Campeonato de Tennis</h2>
+            <p><strong>Lugar:</strong> San José, Costa Rica</p>
+            <p><strong>Fecha:</strong> 30 sept, 2024</p>
+            <p><strong>Hora:</strong> 10:00 a.m.</p>
+            <p><strong>Precio:</strong> 33,000</p>
+          </div>
+          <div class="imagenEvento">
+            <img src="/img/eventoCategoria3.png" alt="Evento de Tennis">
+          </div>
+        </div>
+
+        <div class="evento">
+          <div class="infoEvento">
+            <h2>Campeonato de Tennis</h2>
+            <p><strong>Lugar:</strong> San José, Costa Rica</p>
+            <p><strong>Fecha:</strong> 30 abril, 2024</p>
+            <p><strong>Hora:</strong> 20:00 p.m.</p>
+            <p><strong>Precio:</strong> 33,000</p>
+          </div>
+          <div class="imagenEvento">
+            <img src="/img/eventoCategoria2.png" alt="Evento de Tennis">
+          </div>
+        </div>
+
+        <div class="resumenCompra">
+          <p><strong>IVA:</strong> 2,500</p>
+          <p><strong>Total:</strong> 68,500</p>
+          <a href="/pago/seleccion"><button class="botonPagar">Proceder al Pago</button></a>
+        </div>
+      </main>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  <!-- Fin Footer -->
+</body>
+
+</html>
