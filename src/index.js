@@ -1,8 +1,16 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser'); // Keep this declaration
+const mongoose = require('mongoose');
 const app = express();
-
 const port = 3000;
+
+// Middleware to parse request body
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Base de datos
+require('../models/usuarios.js');
 
 // Configurar servidor para escuchar en el puerto definido
 app.listen(port, () => {
@@ -162,4 +170,33 @@ app.get('/admin/crear-evento', (req, res) => {
 // Manejo de rutas no encontradas
 app.use((req, res) => {
     res.status(404).render('404.html', { title: 'Página no encontrada' });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+
+//Registro post
+app.post('/registro', (req, res) => {
+    const Usuario = require('../models/usuarios.js'); 
+    let data = new Usuario({
+        nombre: req.body.nombre,
+        cedula: req.body.cedula,
+        correo: req.body.correo,
+        contrasena: req.body.contrasena,
+        telefono: req.body.telefono
+    });
+
+    data.save()
+        .then(() => {
+            console.log('Usuario registrado');
+            res.redirect('/auth/login'); // Redirigir a la página de inicio de sesión
+        })
+        .catch((error) => {
+            console.log(error);
+            res.redirect('/auth/registro'); // Redirigir a la página de registro
+        });
 });
