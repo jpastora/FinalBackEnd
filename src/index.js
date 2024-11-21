@@ -192,7 +192,7 @@ app.post('/registro', (req, res) => {
 
     data.save()
         .then(() => {
-            console.log('Usuario registrados');
+            console.log('Usuario registrado');
             res.redirect('/auth/login'); // Redirigir a la página de inicio de sesión
         })
         .catch((error) => {
