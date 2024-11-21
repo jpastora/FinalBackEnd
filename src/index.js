@@ -234,7 +234,8 @@ app.use((err, req, res, next) => {
 // 8. RUTAS DE API
 // Endpoints para operaciones con la base de datos
 // Ruta para el registro de usuarios (POST)
-app.post('/registro', (req, res) => {
+app.post('/registerUser', (req, res) => {
+    console.log('Registrando usuario...');
     const Usuario = require('../models/usuarios.js'); 
     let data = new Usuario({
         nombre: req.body.nombre,

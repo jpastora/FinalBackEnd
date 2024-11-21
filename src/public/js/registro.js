@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   });
 
-  // Validación final al enviar el formulario
+  /**  Validación final al enviar el formulario
   form.addEventListener("submit", (event) => {
       event.preventDefault();
       let valid = true;
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (valid) {
           form.submit();
       }
-  });
+  });*/
 
   // Función para validar formato de correo
   function validateEmail(email) {
