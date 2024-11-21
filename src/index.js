@@ -254,3 +254,4 @@ app.post('/registro', (req, res) => {
             res.redirect('/auth/registro'); // Redirigir a la página de registro
         });
 });
+
