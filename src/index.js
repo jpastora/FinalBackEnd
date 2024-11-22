@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
+const nodemailer = require('nodemailer');
 
 // Configuración de middleware para procesar datos de formularios
 app.use(express.json());
@@ -30,6 +31,22 @@ connectDB(); // Mantén la conexión activa durante el ciclo de vida del servido
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+// Configuración de Nodemailer
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com", // Servidor SMTP de Gmail
+        port: 587,             // Puerto para conexiones STARTTLS
+        secure: false,         // Usar STARTTLS en lugar de SSL/TLS directamente
+        auth: {
+        user: "joe.red.pruebas@gmail.com", // Correo electrónico
+        pass: "Manomano3",       // Contraseña
+    },
+    tls: {
+        rejectUnauthorized: false, // Permitir certificados no seguros (opcional para pruebas locales)
+    },
+});
+
+module.exports = transporter;
 
 // Configuración de archivos estáticos y motor de plantillas
 app.use(express.static(path.join(__dirname, 'public')));
@@ -99,13 +116,26 @@ app.post('/registerUser', async (req, res) => {
             rol: req.body.rol,
         });
 
-        // Guardar usuario en la base de datos
-        await newUser.save();
-        console.log('Usuario registrado exitosamente');
-        res.redirect('/auth/login'); // Redirigir a la página de login
+        // Enviar correo de confirmación
+        const mailOptions = {
+            from: "joe.red.pruebas@gmail.com",
+            to: User.email,
+            subject: "Confirmación de Registro - VibeTickets",
+            html: `
+                <h1>Registro Exitoso</h1>
+                <p>Hola, ${User.name} ${User.secondName},</p>
+                <p>Tu registro se ha completado exitosamente. Gracias por unirte a nuestra plataforma.</p>
+            `,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`Correo enviado a ${newUser.email}`);
+
+        // Responder con éxito
+        res.status(200).json({ message: "Registro completado con éxito" });
     } catch (error) {
-        console.error('Error al guardar el usuario:', error.message);
-        res.redirect('/auth/registro'); // Redirigir a la página de registro si hay error
+        console.error("Error al registrar usuario:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
     }
 });
 
