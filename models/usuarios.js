@@ -1,22 +1,19 @@
+
 const mongoose = require('mongoose');
 
-const DB_URI = 'mongodb://localhost:27017/VibeTickets';
-
-mongoose.connect(DB_URI, {})
-    .then(() => console.log('Conexión exitosa a la base de datos'))
-    .catch(() => console.log('Error al conectar a la base de datos'));
-
 // Schema de usuarios
-let usuarioSchema = new mongoose.Schema({
-    nombre: { type: String, required: true },
-    cedula: { type: Number, required: true, unique: true },
-    correo: { type: String, required: true, unique: true },
-    contrasena: { type: String, required: true },
-    telefono: { type: Number, required: true }
-}); {versionKey: false}
+let userSchema = new mongoose.Schema({
+    name: { type: String, required: true, trim: true },
+    secondName: { type: String, required: true, trim: true },
+    id: { type: String, required: true, unique: true, minlength: 9 },
+    email: { type: String, required: true, unique: true, trim: true },
+    password: { type: String, required: true, minlength: 6 },
+    phone: { type: String, required: true,},
+    rol: { type: String, default: 'user' },
+});
 
 // Modelo de usuarios
-let Usuario = mongoose.model('Usuario', usuarioSchema);
+let User = mongoose.model('User', userSchema);
 
-module.exports = Usuario;
+module.exports = User;
 
