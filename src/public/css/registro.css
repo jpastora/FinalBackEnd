@@ -151,10 +151,9 @@ label {
     background-color: #86a641;
 }
 
-/* Estilos para mensajes de error */
 .error-message {
-    color: red;
+    color: #db4437;
     font-size: 12px;
-    display: none;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    display: none; /* Solo se muestra si hay un error */
 }

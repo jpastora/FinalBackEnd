@@ -32,7 +32,7 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-// Configuración de Nodemailer
+/** Configuración de Nodemailer
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com", // Servidor SMTP de Gmail
         port: 587,             // Puerto para conexiones STARTTLS
@@ -46,7 +46,7 @@ app.listen(port, () => {
     },
 });
 
-module.exports = transporter;
+module.exports = transporter; */
 
 // Configuración de archivos estáticos y motor de plantillas
 app.use(express.static(path.join(__dirname, 'public')));
@@ -99,13 +99,12 @@ app.get('/perfil/datos-personales', (req, res) => {
 });
 
 // Ruta POST para registro de usuarios
-const User = require('../models/usuarios.js'); // Asegúrate de que el modelo esté configurado correctamente
+const User = require('../models/usuarios.js'); // Aseguren de que el modelo esté configurado correctamente
 
 app.post('/registerUser', async (req, res) => {
     try {
         console.log('Datos recibidos:', req.body);
 
-        // Crear un nuevo usuario
         const newUser = new User({
             name: req.body.name,
             secondName: req.body.secondName,
@@ -113,29 +112,21 @@ app.post('/registerUser', async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             phone: req.body.phone,
-            rol: req.body.rol,
+            rol: req.body.rol || 'user', // valor por defecto
         });
 
-        // Enviar correo de confirmación
-        const mailOptions = {
-            from: "joe.red.pruebas@gmail.com",
-            to: User.email,
-            subject: "Confirmación de Registro - VibeTickets",
-            html: `
-                <h1>Registro Exitoso</h1>
-                <p>Hola, ${User.name} ${User.secondName},</p>
-                <p>Tu registro se ha completado exitosamente. Gracias por unirte a nuestra plataforma.</p>
-            `,
-        };
-
-        await transporter.sendMail(mailOptions);
-        console.log(`Correo enviado a ${newUser.email}`);
-
-        // Responder con éxito
-        res.status(200).json({ message: "Registro completado con éxito" });
+        await newUser.save();
+        console.log('Usuario registrado exitosamente');
+        res.status(200).json({ 
+            success: true, 
+            message: 'Usuario registrado exitosamente'
+        });
     } catch (error) {
-        console.error("Error al registrar usuario:", error);
-        res.status(500).json({ message: "Error interno del servidor" });
+        console.error('Error al guardar el usuario:', error.message);
+        res.status(400).json({ 
+            success: false, 
+            error: 'Error al registrar usuario: ' + error.message 
+        });
     }
 });
 
