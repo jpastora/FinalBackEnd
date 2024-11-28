@@ -336,6 +336,68 @@ app.get('/logout', (req, res) => {
     });
 });
 
+// Función para generar contraseña temporal
+function generateTempPassword(length = 10) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let password = '';
+    for (let i = 0; i < length; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+}
+
+// Ruta para procesar la recuperación de contraseña
+app.post('/recuperar-contrasena', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                error: 'No existe una cuenta con este correo electrónico'
+            });
+        }
+
+        // Generar nueva contraseña temporal
+        const tempPassword = generateTempPassword();
+        user.password = tempPassword;
+        await user.save();
+
+        // Enviar correo con la contraseña temporal
+        const sentFrom = new Sender("MS_9LuM3X@trial-351ndgwe0kqgzqx8.mlsender.net", "Vibe Tickets");
+        const recipients = [new Recipient(user.email, user.name)];
+
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setSubject("Vibe Tickets - Recuperación de Contraseña")
+            .setHtml(`
+                <h1>Recuperación de Contraseña</h1>
+                <p>Hola ${user.name},</p>
+                <p>Has solicitado recuperar tu contraseña. Tu nueva contraseña temporal es:</p>
+                <h2>${tempPassword}</h2>
+                <p>Por favor, inicia sesión con esta contraseña y cámbiala inmediatamente por motivos de seguridad.</p>
+                <p>Si no solicitaste este cambio, por favor contacta con soporte inmediatamente.</p>
+                <p>Saludos,<br>Equipo de Vibe Tickets</p>
+            `);
+
+        await mailerSend.email.send(emailParams);
+
+        res.status(200).json({
+            success: true,
+            message: 'Se ha enviado una nueva contraseña a tu correo electrónico'
+        });
+
+    } catch (error) {
+        console.error('Error en recuperación de contraseña:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Error al procesar la solicitud'
+        });
+    }
+});
+
 // ------------------- MANEJO DE ERRORES -------------------
 
 // Middleware para rutas no encontradas (404)
@@ -388,3 +450,5 @@ async function sendConfirmationEmail(user) {
         return false;
     }
 }
+
+
