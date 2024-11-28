@@ -259,22 +259,22 @@ app.post('/registerUser', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log('Intentando login con:', { email }); // Log para debugging
+        console.log('Intentando login con:', { email });
 
         if (!email || !password) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Email y contraseña son requeridos' 
+            return res.render('auth/login.html', {
+                title: 'Iniciar Sesión',
+                error: 'Email y contraseña son requeridos'
             });
         }
 
         const user = await User.findOne({ email: email });
-        console.log('Usuario encontrado:', user); // Log para debugging
+        console.log('Usuario encontrado:', user);
 
         if (!user) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Usuario no encontrado' 
+            return res.render('auth/login.html', {
+                title: 'Iniciar Sesión',
+                error: 'Usuario no encontrado'
             });
         }
 
@@ -286,31 +286,33 @@ app.post('/login', async (req, res) => {
                 rol: user.rol
             };
             
-            console.log('Sesión creada:', req.session.user); // Log para debugging
-            
-            return res.status(200).json({ 
-                success: true, 
-                message: 'Login exitoso',
-                user: {
-                    email: user.email,
-                    rol: user.rol
-                }
-            });
+            console.log('Sesión creada:', req.session.user);
+            return res.redirect('/'); // Redirección al inicio en caso de éxito
         } else {
-            console.log('Contraseña incorrecta'); // Log para debugging
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Contraseña incorrecta' 
+            console.log('Contraseña incorrecta');
+            return res.render('auth/login.html', {
+                title: 'Iniciar Sesión',
+                error: 'Email o contraseña incorrectos'
             });
         }
     } catch (err) {
         console.error('Error en login:', err);
-        return res.status(500).json({ 
-            success: false, 
-            message: 'Error interno del servidor',
-            error: err.message
+        return res.render('auth/login.html', {
+            title: 'Iniciar Sesión',
+            error: 'Error interno del servidor'
         });
     }
+});
+// Ruta para cerrar sesión
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error al cerrar sesión:', err);
+            return res.redirect('/');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
 });
 
 // ------------------- MANEJO DE ERRORES -------------------
