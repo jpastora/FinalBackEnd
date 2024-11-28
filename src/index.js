@@ -450,5 +450,3 @@ async function sendConfirmationEmail(user) {
         return false;
     }
 }
-
-
