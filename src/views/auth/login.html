@@ -17,8 +17,8 @@
   
   <!-- Menú y Autenticación -->
 
-  <%- include('../partials/auth') %> <!-- Incluye el Auth -->
-  <%- include('../partials/menu') %> <!-- Incluye el menú -->
+  <%- include('../../partials/auth') %> <!-- Incluye el Auth -->
+  <%- include('../../partials/menu') %> <!-- Incluye el menú -->
 
   <!-- Fin Menú y Autenticación -->
   
@@ -43,7 +43,7 @@
       <p>Bienvenido a tu cuenta</p>
 
       <!-- Formulario de Inicio de Sesión -->
-      <form action="login_process.php"  action="/login"  method="post" id="loginForm">
+      <form action="/login" method="post" id="loginForm">
           <label for="email">Email (Correo electrónico)</label>
           <input type="email" id="Email__Usuario" name="email" placeholder="juaperez@prueba.com" required>
           <span class="error-message" id="error-email"></span>
@@ -70,7 +70,7 @@
 
 
   <!-- Footer -->
-  <%- include('../partials/footer') %>
+  <%- include('../../partials/footer') %>
   <!-- Fin Footer -->
 
 

@@ -23,7 +23,7 @@ async function connectDB() {
         process.exit(1);
     }
 }
-connectDB(); // Mantén la conexión activa durante el ciclo de vida del servidor
+connectDB();
 
 
 
@@ -60,14 +60,12 @@ app.use((req, res, next) => {
     next();
 });
 
-// --------------------- RUTAS DE LA APLICACIÓN ---------------------
+// ------------------- Rutas principales -------------------
 
-// Ruta principal
 app.get('/', (req, res) => {
     res.render('inicio.html', { title: 'Inicio' });
 });
 
-// Rutas principales
 app.get('/nosotros', (req, res) => {
     res.render('nosotros.html', { title: 'Nosotros' });
 });
@@ -76,7 +74,34 @@ app.get('/ayuda', (req, res) => {
     res.render('ayuda.html', { title: 'Ayuda' });
 });
 
-// Rutas de autenticación
+// ------------------- Rutas de eventos -------------------
+
+app.get('/eventos', (req, res) => {
+    res.render('eventos.html', { title: 'Eventos' });
+});
+
+app.get('/eventos/crear', (req, res) => {
+    res.render('eventos/crearEvento.html', { title: 'Crear Evento' });
+});
+
+app.get('/eventos/editar', (req, res) => {
+    res.render('eventos/editarEventos.html', { title: 'Editar Eventos' });
+});
+
+app.get('/eventos/evento', (req, res) => {
+    res.render('eventos/evento.html', { title: 'Evento' });
+});
+
+app.get('/eventos/evento2', (req, res) => {
+    res.render('eventos/evento2.html', { title: 'Evento 2' });
+});
+
+app.get('/eventos/categorias', (req, res) => {
+    res.render('eventos/categorias.html', { title: 'Categorías' });
+});
+
+// ------------------- Rutas de autenticación -------------------
+
 app.get('/auth/login', (req, res) => {
     res.render('auth/login.html', { title: 'Iniciar Sesión' });
 });
@@ -89,13 +114,89 @@ app.get('/auth/recuperar-contrasena', (req, res) => {
     res.render('auth/recuperarContrasena.html', { title: 'Recuperar Contraseña' });
 });
 
-// Rutas de perfil
+// ------------------- Rutas de perfil -------------------
+
 app.get('/perfil', (req, res) => {
     res.redirect('/perfil/datos-personales');
 });
 
 app.get('/perfil/datos-personales', (req, res) => {
     res.render('user/perfilDatosPers.html', { title: 'Datos Personales' });
+});
+
+app.get('/perfil/seguridad', (req, res) => {
+    res.render('user/perfilSeguridad.html', { title: 'Seguridad' });
+});
+
+app.get('/perfil/metodospago', (req, res) => {
+    res.render('user/perfilMetodosPago.html', { title: 'Métodos de Pago' });
+});
+
+app.get('/perfil/eventos-guardados', (req, res) => {
+    res.render('user/perfilEventosGuardados.html', { title: 'Eventos Guardados' });
+});
+
+app.get('/perfil/mis-tickets', (req, res) => { // Corregido aquí
+    res.render('user/perfilMisTickets.html', { title: 'Mis Tickets' });
+});
+
+
+
+
+// ------------------- Rutas de pago -------------------
+
+app.get('/pago', (req, res) => {
+    res.render('pago/pagos.html', { title: 'Pago' });
+});
+
+app.get('/pago/carrito', (req, res) => {
+    res.render('pago/pagos.html', { title: 'Carrito' });
+});
+
+app.get('/pago/seleccion', (req, res) => {
+    res.render('pago/seleccion_pago.html', { title: 'Seleccionar Pago' });
+});
+
+app.get('/pago/resumen', (req, res) => {
+    res.render('pago/resumen_compra.html', { title: 'Resumen de Compra' });
+});
+
+app.get('/pago/confirmacion', (req, res) => {
+    res.render('pago/pago_completado.html', { title: 'Confirmación de Pago' });
+});
+
+// ------------------- Rutas de administrador -------------------
+
+app.get('/admin', (req, res) => {
+    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
+});
+
+app.get('/admin/datos-personales', (req, res) => {
+    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
+});
+
+app.get('/admin/seguridad', (req, res) => {
+    res.render('admin/adminSeguridad.html', { title: 'Seguridad' });
+});
+
+app.get('/admin/metodos-pago', (req, res) => {
+    res.render('admin/adminMetodosPago.html', { title: 'Métodos de Pago' });
+});
+
+app.get('/admin/usuarios', (req, res) => {
+    res.render('admin/administrarUsuarios.html', { title: 'Administrar Usuarios' });
+});
+
+app.get('/admin/eventos', (req, res) => {
+    res.render('admin/adminEventos.html', { title: 'Administrar Eventos' });
+});
+
+app.get('/admin/editar-evento', (req, res) => {
+    res.render('admin/adminEditarEventos.html', { title: 'Editar Evento' });
+});
+
+app.get('/admin/crear-evento', (req, res) => {
+    res.render('admin/adminCrearEvento.html', { title: 'Crear Evento' });
 });
 
 // Ruta POST para registro de usuarios
