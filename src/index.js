@@ -4,8 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
-
+const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
 
 // Configuración de Express
 const app = express();
@@ -44,22 +43,6 @@ app.use(session({
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-/** Configuración de Nodemailer
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com", // Servidor SMTP de Gmail
-        port: 587,             // Puerto para conexiones STARTTLS
-        secure: false,         // Usar STARTTLS en lugar de SSL/TLS directamente
-        auth: {
-        user: "joe.red.pruebas@gmail.com", // Correo electrónico
-        pass: "Manomano3",      
-    },
-    tls: {
-        rejectUnauthorized: false, // Permitir certificados no seguros (opcional para pruebas locales)
-    },
-});
-
-module.exports = transporter; */
 
 // Configuración de sesiones
 app.use((req, res, next) => {
@@ -226,31 +209,69 @@ app.get('/admin/crear-evento', (req, res) => {
 // Ruta POST para registro de usuarios
 const User = require('../models/usuarios'); // Actualiza esta ruta según tu estructura
 
+// Eliminar la ruta /registerUser duplicada y mantener solo esta versión
 app.post('/registerUser', async (req, res) => {
     try {
         console.log('Datos recibidos:', req.body);
+
+        // Validación básica
+        if (!req.body.name || !req.body.email || !req.body.password) {
+            throw new Error('Faltan campos requeridos');
+        }
 
         const newUser = new User({
             name: req.body.name,
             secondName: req.body.secondName,
             id: req.body.id,
             email: req.body.email,
-            password: req.body.password,
+            password: req.body.password, // Considera usar bcrypt aquí
             phone: req.body.phone,
-            rol: req.body.rol || 'user', // valor por defecto
+            rol: 'user'
         });
 
-        await newUser.save();
-        console.log('Usuario registrado exitosamente');
-        res.status(200).json({ 
-            success: true, 
+        // Guardar usuario
+        const savedUser = await newUser.save();
+        console.log('Usuario guardado:', savedUser);
+
+        try {
+            // Enviar correo
+            const sentFrom = new Sender("MS_9LuM3X@trial-351ndgwe0kqgzqx8.mlsender.net", "Vibe Tickets");
+            const recipients = [new Recipient(newUser.email, newUser.name)];
+
+            const emailParams = new EmailParams()
+                .setFrom(sentFrom)
+                .setTo(recipients)
+                .setSubject("Bienvenido a Vibe Tickets - Confirmación de Registro")
+                .setHtml(`
+                    <h1>¡Bienvenido a Vibe Tickets!</h1>
+                    <p>Hola ${newUser.name},</p>
+                    <p>Tu registro ha sido exitoso. Aquí están tus datos:</p>
+                    <ul>
+                        <li>Nombre: ${newUser.name} ${newUser.secondName}</li>
+                        <li>ID: ${newUser.id}</li>
+                        <li>Email: ${newUser.email}</li>
+                        <li>Teléfono: ${newUser.phone}</li>
+                    </ul>
+                    <p>Ya puedes iniciar sesión en nuestra plataforma.</p>
+                `);
+
+            await mailerSend.email.send(emailParams);
+            console.log('Email enviado correctamente');
+        } catch (emailError) {
+            console.error('Error al enviar email:', emailError);
+            // Continuamos aunque falle el email
+        }
+
+        res.status(200).json({
+            success: true,
             message: 'Usuario registrado exitosamente'
         });
+
     } catch (error) {
-        console.error('Error al guardar el usuario:', error.message);
-        res.status(400).json({ 
-            success: false, 
-            error: 'Error al registrar usuario: ' + error.message 
+        console.error('Error completo:', error);
+        res.status(400).json({
+            success: false,
+            error: error.message || 'Error al registrar usuario'
         });
     }
 });
@@ -327,3 +348,43 @@ app.use((err, req, res, next) => {
     console.error('Error detectado:', err.stack);
     res.status(500).send('Ocurrió un error en el servidor');
 });
+
+// Configuración de MailerSend
+const mailerSend = new MailerSend({
+    apiKey: process.env.API_KEY || 'mlsn.63a3c27299ea23c6376b823107554664a07911864ad75b64217aea286416da4c'
+});
+
+// Función para enviar email de confirmación
+async function sendConfirmationEmail(user) {
+    try {
+        const sentFrom = new Sender("MS_9LuM3X@trial-351ndgwe0kqgzqx8.mlsender.net", "Vibe Tickets");
+        const recipients = [new Recipient(user.email, user.name)];
+
+        const htmlContent = `
+            <h1>¡Bienvenido a Vibe Tickets!</h1>
+            <p>Hola ${user.name},</p>
+            <p>Tu registro ha sido exitoso. Aquí están tus datos:</p>
+            <ul>
+                <li>Nombre: ${user.name} ${user.secondName}</li>
+                <li>ID: ${user.id}</li>
+                <li>Email: ${user.email}</li>
+                <li>Teléfono: ${user.phone}</li>
+            </ul>
+            <p>Ya puedes iniciar sesión en nuestra plataforma.</p>
+            <p>¡Gracias por unirte a nosotros!</p>
+        `;
+
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setSubject("Bienvenido a Vibe Tickets - Confirmación de Registro")
+            .setHtml(htmlContent);
+
+        const response = await mailerSend.email.send(emailParams);
+        console.log("Email de confirmación enviado:", response);
+        return true;
+    } catch (error) {
+        console.error("Error enviando email:", error);
+        return false;
+    }
+}
