@@ -52,7 +52,7 @@ app.listen(port, () => {
         secure: false,         // Usar STARTTLS en lugar de SSL/TLS directamente
         auth: {
         user: "joe.red.pruebas@gmail.com", // Correo electrónico
-        pass: "Manomano3",       // Contraseña
+        pass: "Manomano3",      
     },
     tls: {
         rejectUnauthorized: false, // Permitir certificados no seguros (opcional para pruebas locales)
