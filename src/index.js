@@ -32,7 +32,13 @@ async function connectDB() {
 }
 connectDB();
 
-
+// Configuración de sesiones
+app.use(session({
+    secret: 'secreto-seguro-aqui',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // true en producción con HTTPS
+}));
 
 // Configuración del servidor para escuchar en el puerto definido
 app.listen(port, () => {
@@ -218,7 +224,7 @@ app.get('/admin/crear-evento', (req, res) => {
 });
 
 // Ruta POST para registro de usuarios
-const User = require('../models/usuarios.js'); // Aseguren de que el modelo esté configurado correctamente
+const User = require('./models/usuarios.js'); // Actualiza esta ruta según tu estructura
 
 app.post('/registerUser', async (req, res) => {
     try {
@@ -249,27 +255,63 @@ app.post('/registerUser', async (req, res) => {
     }
 });
 
-// Ruta de login
+// Modificar la ruta de login
 app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
     try {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.redirect('/login');
-      }
-      const match = await bcrypt.compare(password, user.password);
-      if (match) {
-        req.session.userId = user._id;
-        req.session.email = user.email; 
-        return res.redirect('/dashboard');
-      } else {
-        res.redirect('/login');
-      }
+        const { email, password } = req.body;
+        console.log('Intentando login con:', { email }); // Log para debugging
+
+        if (!email || !password) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Email y contraseña son requeridos' 
+            });
+        }
+
+        const user = await User.findOne({ email: email });
+        console.log('Usuario encontrado:', user); // Log para debugging
+
+        if (!user) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Usuario no encontrado' 
+            });
+        }
+
+        // Comparación directa de contraseñas (temporal para pruebas)
+        if (password === user.password) {
+            req.session.user = {
+                userId: user._id,
+                email: user.email,
+                rol: user.rol
+            };
+            
+            console.log('Sesión creada:', req.session.user); // Log para debugging
+            
+            return res.status(200).json({ 
+                success: true, 
+                message: 'Login exitoso',
+                user: {
+                    email: user.email,
+                    rol: user.rol
+                }
+            });
+        } else {
+            console.log('Contraseña incorrecta'); // Log para debugging
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Contraseña incorrecta' 
+            });
+        }
     } catch (err) {
-      console.error(err);
-      res.redirect('/login');
+        console.error('Error en login:', err);
+        return res.status(500).json({ 
+            success: false, 
+            message: 'Error interno del servidor',
+            error: err.message
+        });
     }
-  });
+});
 
 // ------------------- MANEJO DE ERRORES -------------------
 
