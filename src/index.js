@@ -224,7 +224,7 @@ app.get('/admin/crear-evento', (req, res) => {
 });
 
 // Ruta POST para registro de usuarios
-const User = require('./models/usuarios.js'); // Actualiza esta ruta según tu estructura
+const User = require('../models/usuarios'); // Actualiza esta ruta según tu estructura
 
 app.post('/registerUser', async (req, res) => {
     try {
