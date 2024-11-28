@@ -55,6 +55,17 @@ app.listen(port, () => {
 
 module.exports = transporter; */
 
+// Configuración de sesiones
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session && req.session.user ? true : false;
+    if (req.session && req.session.user) {
+        res.locals.userId = req.session.user.userId;
+    } else {
+        res.locals.userId = null;
+    }
+    next();
+});
+
 // Configuración de archivos estáticos y motor de plantillas
 app.use(express.static(path.join(__dirname, 'public')));
 app.engine('html', require('ejs').renderFile);
@@ -143,7 +154,7 @@ app.get('/perfil/eventos-guardados', (req, res) => {
     res.render('user/perfilEventosGuardados.html', { title: 'Eventos Guardados' });
 });
 
-app.get('/perfil/mis-tickets', (req, res) => { // Corregido aquí
+app.get('/perfil/mis-tickets', (req, res) => { 
     res.render('user/perfilMisTickets.html', { title: 'Mis Tickets' });
 });
 
@@ -237,6 +248,28 @@ app.post('/registerUser', async (req, res) => {
         });
     }
 });
+
+// Ruta de login
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.redirect('/login');
+      }
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        req.session.userId = user._id;
+        req.session.email = user.email; 
+        return res.redirect('/dashboard');
+      } else {
+        res.redirect('/login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/login');
+    }
+  });
 
 // ------------------- MANEJO DE ERRORES -------------------
 

@@ -1,12 +1,16 @@
-<!-- Enlaces de autenticación y carrito -->
-
+<% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+<!-- Enlace pata usuarios logueados -->
     <div class="enlacesAuth" id="enlaces__auth">
         <a href="/perfil/datos-personales">Ver cuenta</a>
+        <a href="/logout">Logout</a>
         <a href="/pago/carrito"><i class="fi fi-ss-shopping-cart"></i></a>
     </div>
+    <% } else { %>
+<!-- Enlace para usuarios no logueados -->
     <div class="enlacesAuth" id="enlaces__auth">
         <a href="/auth/registro">Registro</a>
         <a href="/auth/login">Login</a>
         <a href="/pago/carrito"><i class="fi fi-ss-shopping-cart"></i></a>
     </div>
+    <% } %>
 
