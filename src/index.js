@@ -2,9 +2,16 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const app = express();
-const port = 3000;
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+
+
+// Configuración de Express
+const app = express();
+
+// Configuración de variables de entorno
+const port = 3000;
 
 // Configuración de middleware para procesar datos de formularios
 app.use(express.json());
