@@ -7,14 +7,15 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="/css/menu.css">
     <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/error.css">
 </head>
 <body>
     <%- include('partials/menu') %>
-    
-    <div style="text-align: center; padding: 50px;">
+    <div class="error-container">
+    <div class="error-message">
         <h1>Error</h1>
         <p><%= message %></p>
-        <a href="/" style="text-decoration: none; color: blue;">Volver al inicio</a>
+        <a href="/" class="back-home-link">Volver al inicio</a>
     </div>
 
     <%- include('partials/footer') %>

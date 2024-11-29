@@ -48,7 +48,7 @@
       <div class="formulario_grupo" id="grupo_seleccione_lugar">
         <label class="formulario_label">Lugar</label>
         <div class="formulario_grupo_input">
-          <select class="formulario_input" name="Seleccione_lugar" id="Seleccione_lugar">
+          <select class="formulario_input" name="Seleccione_lugar" id="Seleccione_lugar" title="Seleccione un lugar">
             <option value="" disabled selected>Seleccionar lugar</option>
             <option value="San José">San José</option>
             <option value="Heredia">Heredia</option>
@@ -59,7 +59,7 @@
       <div class="formulario_grupo" id="grupo_seleccione_categoria">
         <label class="formulario_label">Categoría</label>
         <div class="formulario_grupo_input">
-          <select class="formulario_input" name="Seleccione_categoria" id="Seleccione_categoria">
+          <select class="formulario_input" name="Seleccione_categoria" id="Seleccione_categoria" title="Seleccione una categoría">
             <option value="" disabled selected>Seleccionar categoría</option>
             <option value="Conciertos">Conciertos</option>
             <option value="Partidos">Partidos</option>
@@ -78,7 +78,7 @@
   <!-------------------------------------------Eventos---------------------------------------------->
   <div class="boxdeafuera">
     <% if (typeof error !== 'undefined' && error) { %>
-        <div class="error-message" style="color: red; text-align: center; padding: 20px;">
+        <div class="error-message">
             <%= error %>
         </div>
     <% } %>
@@ -109,8 +109,8 @@
               <h2><%= evento.hora %></h2>
             </div>
           </div>
-          <div class="fotoevento" style="background-image: url('<%= evento.imagen %>');"></div>
-          <div class="debug-info" style="display: none;">
+          <div class="fotoevento" data-imagen="<%= evento.imagen %>"></div>
+          <div class="debug-info hidden">
             <%= JSON.stringify(evento) %>
           </div>
         </div>
