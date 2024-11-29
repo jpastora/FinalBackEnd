@@ -1,4 +1,4 @@
-const User = require('../models/usuarios');
+const User = require('../models/user');
 const { sendConfirmationEmail } = require('../config/mailer');
 const { generateTempPassword } = require('../utils/helpers');
 

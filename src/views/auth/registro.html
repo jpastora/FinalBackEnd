@@ -38,7 +38,7 @@
     <div class="contenedorAutenticacion">
         <h2>REGISTRATE</h2>
         <p>Crea tu cuenta</p>
-        <form action="/registerUser" method="POST" id="registrationForm" >
+        <form id="registrationForm">
 
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" placeholder="Juan" required>
@@ -88,6 +88,54 @@
     <!--Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/registro.js"></script>
+    <script>
+    document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            name: document.getElementById('name').value,         // Cambiado de nombre
+            secondName: document.getElementById('secondName').value, // Cambiado de apellido
+            id: document.getElementById('id').value,             // Cambiado de identificacion
+            phone: document.getElementById('phone').value        // Cambiado de telefono
+        };
+    
+        try {
+            const response = await fetch('/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            const data = await response.json();
+            
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Registro exitoso!',
+                    text: 'Te has registrado correctamente'
+                }).then(() => {
+                    window.location.href = '/auth/login';
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'Error al registrar usuario'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al procesar la solicitud'
+            });
+        }
+    });
+    </script>
 
 </body>
 </html>

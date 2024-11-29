@@ -53,19 +53,33 @@ app.use('/pago', checkAuth, paymentRoutes);
 
 // Manejo de errores - 404
 app.use((req, res) => {
-    res.status(404).render('404.html', { 
-        title: 'Página no encontrada',
-        message: 'La página que buscas no existe'
-    });
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+        res.status(404).json({ 
+            success: false,
+            error: 'Ruta no encontrada'
+        });
+    } else {
+        res.status(404).render('404.html', { 
+            title: 'Página no encontrada',
+            message: 'La página que buscas no existe'
+        });
+    }
 });
 
 // Manejo de errores - 500
 app.use((err, req, res, next) => {
     console.error('Error detectado:', err);
-    res.status(500).render('error.html', { 
-        title: 'Error del Servidor',
-        message: process.env.NODE_ENV === 'development' ? err.message : 'Error interno del servidor'
-    });
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+        res.status(500).json({
+            success: false,
+            error: process.env.NODE_ENV === 'development' ? err.message : 'Error interno del servidor'
+        });
+    } else {
+        res.status(500).render('error.html', { 
+            title: 'Error del Servidor',
+            message: process.env.NODE_ENV === 'development' ? err.message : 'Error interno del servidor'
+        });
+    }
 });
 
 // Iniciar servidor

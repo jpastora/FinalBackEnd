@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/footer.css">
     <link rel='stylesheet'
       href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   
   <body>
@@ -43,7 +44,7 @@
       <p>Bienvenido a tu cuenta</p>
 
       <!-- Formulario de Inicio de Sesión -->
-      <form action="/login" method="post" id="loginForm">
+      <form id="loginForm">
           <label for="email">Email (Correo electrónico)</label>
           <input type="email" id="Email__Usuario" name="email" placeholder="juaperez@prueba.com" required>
           <span class="error-message" id="error-email"></span>
@@ -67,7 +68,44 @@
     </div>
   </div>
 
-
+  <script>
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('Email__Usuario').value;
+      const password = document.getElementById('Password__Usuario').value;
+      
+      try {
+          const response = await fetch('/auth/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email, password })
+          });
+  
+          const data = await response.json();
+          console.log('Respuesta del servidor:', data); // Debug
+          
+          if (data.success) {
+              window.location.href = '/';
+          } else {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error de inicio de sesión',
+                  text: data.message || 'Error al iniciar sesión'
+              });
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al procesar la solicitud'
+          });
+      }
+  });
+  </script>
 
   <!-- Footer -->
   <%- include('../partials/footer') %>

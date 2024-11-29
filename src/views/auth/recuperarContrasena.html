@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/footer.css">
     <link rel='stylesheet'
       href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   
   <body>
@@ -43,7 +44,7 @@
       <p>Ingrese el correo electrónico asociado a su cuenta</p>
 
       <!-- Formulario de Inicio de Sesión -->
-      <form id="recuperarForm" method="POST" action="/recuperar-contrasena">
+      <form id="recuperarForm">
           <div class="form-group">
               <label for="email">Correo Electrónico</label>
               <input type="email" id="email" name="email" required>
@@ -59,8 +60,19 @@
   <script>
   document.getElementById('recuperarForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      // Mostrar loading
+      Swal.fire({
+          title: 'Procesando...',
+          text: 'Enviando instrucciones de recuperación',
+          allowOutsideClick: false,
+          didOpen: () => {
+              Swal.showLoading();
+          }
+      });
+
       try {
-          const response = await fetch('/recuperar-contrasena', {
+          const response = await fetch('/auth/recuperar-contrasena', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -70,14 +82,30 @@
               })
           });
           const data = await response.json();
+          
           if (data.success) {
-              alert('Se ha enviado una nueva contraseña a tu correo electrónico');
+              await Swal.fire({
+                  icon: 'success',
+                  title: '¡Enviado!',
+                  text: 'Se ha enviado una nueva contraseña a tu correo electrónico',
+                  showConfirmButton: true,
+                  confirmButtonText: 'Ir a inicio de sesión',
+                  allowOutsideClick: false
+              });
               window.location.href = '/auth/login';
           } else {
-              alert(data.error || 'Error al procesar la solicitud');
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: data.message || 'Error al procesar la solicitud'
+              });
           }
       } catch (error) {
-          alert('Error al procesar la solicitud');
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al procesar la solicitud'
+          });
       }
   });
   </script>
