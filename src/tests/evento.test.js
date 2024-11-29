@@ -8,7 +8,7 @@ describe('Evento Model Test', () => {
     beforeAll(async () => {
         try {
             // Reemplaza con tu URL de conexión de MongoDB Atlas
-            const mongoUri = "mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/vibetickets_test?retryWrites=true&w=majority";
+            const mongoUri = "mongodb+srv://uservibe:vive1717@cluster0.fztdd.mongodb.net/VibeTickets?retryWrites=true&w=majority";
             await mongoose.connect(mongoUri);
             console.log('Conectado a MongoDB Atlas exitosamente');
         } catch (error) {
