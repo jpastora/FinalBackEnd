@@ -20,7 +20,16 @@ const port = 3000;
 // Middleware básico
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session(sessionConfig));
+app.use(session({
+    ...sessionConfig,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 24 horas
+    }
+}));
 app.use(authMiddleware);
 
 // Configuración de vistas y archivos estáticos
@@ -43,8 +52,8 @@ connectDB();
 
 // Rutas públicas
 app.use('/', mainRoutes);
-app.use('/auth', authRoutes);
-app.use('/eventos', eventsRoutes);
+app.use('/auth', authRoutes);      // Rutas de autenticación después
+app.use('/eventos', eventsRoutes); // Otras rutas después
 
 // Rutas protegidas
 app.use('/perfil', checkAuth, profileRoutes);

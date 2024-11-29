@@ -180,7 +180,34 @@ router.post('/recuperar-contrasena', async (req, res) => {
     }
 });
 
-router.get('/logout', logout);
+router.get('/logout', (req, res) => {
+    try {
+        if (req.session) {
+            // Destruir la sesión
+            req.session.destroy((err) => {
+                if (err) {
+                    console.error('Error al cerrar sesión:', err);
+                    return res.status(500).send('Error al cerrar sesión');
+                }
+                
+                // Limpiar la cookie de sesión
+                res.clearCookie('connect.sid', {
+                    path: '/',
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production'
+                });
+                
+                // Redireccionar a la página principal
+                return res.status(302).redirect('/');
+            });
+        } else {
+            res.redirect('/');
+        }
+    } catch (error) {
+        console.error('Error en logout:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+});
 
 // Rutas GET para renderizar vistas
 router.get('/login', (req, res) => {
