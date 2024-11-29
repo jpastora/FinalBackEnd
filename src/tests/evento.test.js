@@ -46,12 +46,41 @@ describe('Evento Model Test', () => {
 
     // Test 1: Crear evento válido
     test('crear y guardar evento exitosamente', async () => {
-        expect.assertions(2);
+        expect.assertions(7);
         const nuevoEvento = new Evento(eventoValido);
         const eventoGuardado = await nuevoEvento.save();
         
+        // Verificar que el evento se guardó correctamente
         expect(eventoGuardado._id).toBeDefined();
         expect(eventoGuardado.titulo).toBe(eventoValido.titulo);
+        expect(eventoGuardado.precio).toBe(eventoValido.precio);
+        expect(eventoGuardado.lugar).toBe(eventoValido.lugar);
+        expect(eventoGuardado.categoria).toBe(eventoValido.categoria);
+        
+        // Verificar que el evento existe en la base de datos
+        const eventoEncontrado = await Evento.findById(eventoGuardado._id);
+        expect(eventoEncontrado).toBeTruthy();
+        expect(eventoEncontrado.titulo).toBe(eventoValido.titulo);
+    }, 10000);
+
+    // Test adicional: Verificar múltiples eventos
+    test('crear múltiples eventos y verificar su existencia', async () => {
+        expect.assertions(3);
+        
+        const evento1 = new Evento(eventoValido);
+        const evento2 = new Evento({
+            ...eventoValido,
+            titulo: 'Concierto de Pop',
+            precio: 30000
+        });
+        
+        await evento1.save();
+        await evento2.save();
+        
+        const eventos = await Evento.find();
+        expect(eventos).toHaveLength(2);
+        expect(eventos[0].titulo).toBe('Concierto de Rock');
+        expect(eventos[1].titulo).toBe('Concierto de Pop');
     }, 10000);
 
     // Test 2: Validación de campos requeridos
