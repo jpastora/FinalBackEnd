@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
 
-router.get('/', (req, res) => {
-    res.render('eventos.html', { title: 'Eventos' });
-});
+// Cambiar esta ruta para usar el controlador directamente
+router.get('/', eventoController.listarEventos);
 
 router.get('/crear', (req, res) => {
     res.render('eventos/crearEvento.html', { title: 'Crear Evento' });

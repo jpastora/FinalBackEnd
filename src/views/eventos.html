@@ -77,59 +77,51 @@
 
   <!-------------------------------------------Eventos---------------------------------------------->
   <div class="boxdeafuera">
-    <div class="evento1">
-      <div class="textoevento">
-        <div class="tituloevento">
-          <h2>Campeonato de fútbol</h2>
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error-message" style="color: red; text-align: center; padding: 20px;">
+            <%= error %>
         </div>
-        <div class="cuadrodeprecio">
-          <h2 class="comprar">Precio</h2>
-          <h2 class="comprar">desde</h2>
-          <h1 class="precio">₡15.000</h1>
-          <a href="/evento" class="boton_comprar">Comprar</a>
+    <% } %>
+    
+    <% if (typeof eventos !== 'undefined' && eventos.length > 0) { %>
+      <% eventos.forEach(function(evento) { %>
+        <div class="evento1">
+          <div class="textoevento">
+            <div class="tituloevento">
+              <h2><%= evento.nombre %></h2>
+            </div>
+            <div class="cuadrodeprecio">
+              <h2 class="comprar">Precio</h2>
+              <h2 class="comprar">desde</h2>
+              <h1 class="precio">₡<%= evento.precio %></h1>
+              <a href="/evento/<%= evento.id %>" class="boton_comprar">Comprar</a>
+            </div>
+            <div class="lugar">
+              <h1>Lugar</h1>
+              <h2><%= evento.lugar %></h2>
+            </div>
+            <div class="fecha">
+              <h1>Fecha</h1>
+              <h2><%= evento.fecha %></h2>
+            </div>
+            <div class="hora">
+              <h1>Hora</h1>
+              <h2><%= evento.hora %></h2>
+            </div>
+          </div>
+          <div class="fotoevento" style="background-image: url('<%= evento.imagen %>');"></div>
+          <div class="debug-info" style="display: none;">
+            <%= JSON.stringify(evento) %>
+          </div>
         </div>
-        <div class="lugar">
-          <h1>Lugar</h1>
-          <h2>San José</h2>
-        </div>
-        <div class="fecha">
-          <h1>Fecha</h1>
-          <h2>15 de Septiembre, 2024.</h2>
-        </div>
-        <div class="hora">
-          <h1>Hora</h1>
-          <h2>11:30am.</h2>
-        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="no-eventos">
+        <h2>No hay eventos disponibles en este momento</h2>
+        <p>Intente más tarde o contacte al administrador</p>
       </div>
-      <div class="fotoevento"></div>
-    </div>
-    <!-------------------------------------------Evento2---------------------------------------------->
-    <div class="evento2">
-      <div class="textoevento2">
-        <div class="tituloevento">
-          <h2>Show Hernán Jiménez</h2>
-        </div>
-        <div class="cuadrodeprecio">
-          <h2 class="comprar">Precio</h2>
-          <h2 class="comprar">desde</h2>
-          <h1 class="precio">₡45.000</h1>
-          <a href="/evento2" class="boton_comprar">Comprar</a>
-        </div>
-        <div class="lugar">
-          <h1>Lugar</h1>
-          <h2>Limón</h2>
-        </div>
-        <div class="fecha">
-          <h1>Fecha</h1>
-          <h2>28 de Septiembre, 2024.</h2>
-        </div>
-        <div class="hora">
-          <h1>Hora</h1>
-          <h2>12:30pm.</h2>
-        </div>
-      </div>
-      <div class="fotoevento2"></div>
-    </div>
+    <% } %>
+  </div>
 
     <!-------------------------------------------FIN Eventos---------------------------------------------->
 

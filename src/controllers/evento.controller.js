@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-exports.crearEvento = [upload.single('imagenEvento'), async (req, res) => {
+const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
     try {
         const { titulo, lugar, categoria, precio, fecha, hora } = req.body;
         
@@ -33,7 +33,7 @@ exports.crearEvento = [upload.single('imagenEvento'), async (req, res) => {
         };
 
         const nuevoEvento = new Evento({
-            titulo,
+            nombre: titulo,
             lugar,
             categoria: categoriaMap[categoria],
             precio: Number(precio),
@@ -41,13 +41,13 @@ exports.crearEvento = [upload.single('imagenEvento'), async (req, res) => {
             hora,
             imagen: req.file ? `/uploads/eventos/${req.file.filename}` : '/img/default-event.png'
         });
-        
+
         await nuevoEvento.save();
         
         res.status(201).json({
             success: true,
             mensaje: 'Evento creado exitosamente',
-            evento: nuevoEvento
+            eventoId: nuevoEvento._id
         });
     } catch (error) {
         console.error('Error al crear evento:', error);
@@ -58,3 +58,38 @@ exports.crearEvento = [upload.single('imagenEvento'), async (req, res) => {
         });
     }
 }];
+
+const listarEventos = async (req, res) => {
+    try {
+        console.log('Consultando eventos en MongoDB...');
+        const eventos = await Evento.find()
+            .sort({ fecha: 1 })
+            .lean();
+
+        console.log('Eventos encontrados:', eventos);
+
+        const eventosFormateados = eventos.map(evento => ({
+            ...evento,
+            fecha: evento.fecha.toLocaleDateString('es-ES'),
+            precio: evento.precio.toFixed(2)
+        }));
+
+        return res.render('eventos.html', {
+            title: 'Eventos',
+            eventos: eventosFormateados,
+            error: null
+        });
+    } catch (error) {
+        console.error('Error al listar eventos:', error);
+        return res.render('eventos.html', {
+            title: 'Eventos',
+            eventos: [],
+            error: 'Error al cargar los eventos: ' + error.message
+        });
+    }
+};
+
+module.exports = {
+    crearEvento,
+    listarEventos
+};
