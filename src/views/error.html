@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+    <%- include('partials/menu') %>
+    
+    <div style="text-align: center; padding: 50px;">
+        <h1>Error</h1>
+        <p><%= message %></p>
+        <a href="/" style="text-decoration: none; color: blue;">Volver al inicio</a>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

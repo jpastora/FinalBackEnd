@@ -41,7 +41,7 @@
 
       <!-- Imagen de muestra para la foto del evento -->
       <div class="subirFoto" id="SubirFoto">
-        <img src="/img/eventoCategoria6.png" alt="">
+        <img id="previewImagen" src="/img/eventoCategoria6.png" alt="Preview">
       </div>
 
       <!-- Campo para ingresar el nombre del evento -->
@@ -68,10 +68,9 @@
           <label for="categories">Seleccione la Categoria</label>
           <select name="categories" id="categories">
             <option value="category-1">Deportes</option>
-            <option value="category-2">Concierto</option>
+            <option value="category-2">Conciertos</option>
             <option value="category-3">Festivales</option>
             <option value="category-4">Teatro</option>
-            <option value="category-4">Espectáculos familiares</option>
           </select>
         </div>
       </div>
@@ -84,15 +83,11 @@
         </div>
       </div>
 
-      <!-- Opciones para cargar una imagen de portada y foto del evento -->
+      <!-- Opciones para cargar imagen del evento -->
       <div class="editarEventoFila">
         <div class="editarEventoInput">
-          <label for="test">Cambiar Portada</label>
-          <input type="text" id="test" name="test" placeholder="imagen.png">
-        </div>
-        <div class="editarEventoInput">
           <label class="imagenEvento" for="imagenEvento">Foto de Evento</label>
-          <input type="file" id="imagenEvento" name="imagenEvento" accept="image/png, image/jpeg" />
+          <input type="file" id="imagenEvento" name="imagenEvento" accept="image/png, image/jpeg" required />
         </div>
       </div>
 
@@ -102,6 +97,17 @@
         <input type="text" id="price" name="price" placeholder="Precio">
       </div>
 
+      <!-- Campo para fecha y hora -->
+      <div class="editarEventoFila">
+        <div class="editarEventoInput">
+          <label for="fecha">Fecha del Evento</label>
+          <input type="date" id="fecha" name="fecha" required>
+        </div>
+        <div class="editarEventoInput">
+          <label for="hora">Hora del Evento</label>
+          <input type="time" id="hora" name="hora" required>
+        </div>
+      </div>
 
       <!-- Botones para enviar o borrar el formulario -->
       <div class="editarEventoBotones">
@@ -110,6 +116,58 @@
       </div>
     </form>
   </div>
+
+  <!-- Scripts -->
+  <script>
+    // Función para previsualizar la imagen
+    document.getElementById('imagenEvento').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImagen').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('EditarEventoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData();
+      formData.append('titulo', document.getElementById('name').value);
+      formData.append('lugar', document.getElementById('lugar').value);
+      formData.append('categoria', document.getElementById('categories').value);
+      formData.append('precio', document.getElementById('price').value);
+      formData.append('fecha', document.getElementById('fecha').value);
+      formData.append('hora', document.getElementById('hora').value);
+      formData.append('imagenEvento', document.getElementById('imagenEvento').files[0]);
+
+      if(!formData.get('titulo') || !formData.get('precio') || !formData.get('fecha') || !formData.get('hora')) {
+        alert('Por favor complete todos los campos requeridos');
+        return;
+      }
+
+      try {
+        const response = await fetch('/eventos/crear', {
+          method: 'POST',
+          body: formData // No establecer Content-Type, fetch lo hará automáticamente
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert('Evento creado exitosamente');
+          window.location.href = '/eventos';
+        } else {
+          alert(data.mensaje || 'Error al crear el evento');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al crear el evento');
+      }
+    });
+  </script>
 
   <!-- Footer -->
   <%- include('../partials/footer') %>
