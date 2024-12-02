@@ -3,6 +3,9 @@ const Evento = require('../models/eventos');
 const getAllEvents = async (req, res) => {
     try {
         const eventos = await Evento.find();
+        eventos.forEach(evento => {
+            evento.imagen = `/uploads/eventos/${path.basename(evento.imagen)}`;
+        });
         res.render('eventos.html', { 
             title: 'Eventos',
             eventos: eventos

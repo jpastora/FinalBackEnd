@@ -146,15 +146,22 @@
 }
 
 .fotoevento {
-  background: url("../img/eventoCategoria3.png") no-repeat center center;
   background-size: cover;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   margin-bottom: 7px;
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.fotoevento img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fotoevento2 {
-  background: url("../img/eventoCategoria2.png") no-repeat center center;
   background-size: cover;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;

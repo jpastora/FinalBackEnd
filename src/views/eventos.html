@@ -126,9 +126,8 @@
                       </h2>
                     </div>
                   </div>
-                  <div class="fotoevento" data-imagen="<%= evento.imagen %>"></div>
-                  <div class="debug-info hidden">
-                    <%= JSON.stringify(evento) %>
+                  <div class="fotoevento">
+                    <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
                   </div>
                 </div>
                 <% }); %>

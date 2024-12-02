@@ -2,8 +2,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Asegurarse que la carpeta uploads existe
-const uploadDir = 'src/uploads/eventos';
+// Usar path.join para la ruta del directorio
+const uploadDir = path.join(__dirname, '..', 'uploads', 'eventos');
+
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
