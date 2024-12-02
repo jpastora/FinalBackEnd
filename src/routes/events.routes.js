@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
 const upload = require('../middleware/upload');
-const Evento = require('../models/evento'); // Añadir esta línea
+const Evento = require('../models/evento');
 
-// Cambiar esta ruta para usar el controlador directamente
+// Ruta principal de eventos
 router.get('/', eventoController.listarEventos);
 
 router.get('/crear', (req, res) => {

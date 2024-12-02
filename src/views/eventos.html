@@ -2,10 +2,10 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeTickets - Eventos</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeTickets - Eventos</title>
+
   <!--CSS-->
   <link rel="Stylesheet" href="/css/eventos.css" />
   <link rel="stylesheet" type="text/css" href="/css/menu.css">
@@ -16,118 +16,137 @@
 
 <body>
 
-<!-- Menú y Autenticación -->
+  <!-- Menú y Autenticación -->
 
-<%- include('partials/auth') %> <!-- Incluye el Auth -->
-<%- include('partials/menu') %> <!-- Incluye el menú -->
+  <%- include('partials/auth') %> <!-- Incluye el Auth -->
+    <%- include('partials/menu') %> <!-- Incluye el menú -->
 
-<!-- Fin Menú y Autenticación -->
+      <!-- Fin Menú y Autenticación -->
 
-  <!-------------------------------------------Eventos Hoy---------------------------------------------->
-  <section class="heroeImangen" id="heroe__imangen">
-    <section>
-        <div class="heroe" id="heroe__principal">
+      <!-------------------------------------------Eventos Hoy---------------------------------------------->
+      <section class="heroeImangen" id="heroe__imangen">
+        <section>
+          <div class="heroe" id="heroe__principal">
             <div class="titulo" id="administrarusuarios">
-            <h1>Eventos en el Carrito</h1>
+              <h1>Eventos</h1>
             </div>
-        </div>
-    </section>
-  </section>
+          </div>
+        </section>
+      </section>
 
-  <!-------------------------------------------Filtros------------------------------------------>
-  <div>
-    <form class="formulario">
-      <!-- Palabra -->
-      <div class="formulario_grupo" id="grupo_buscar_por_palabra">
-        <label class="formulario_label">Buscar por palabra</label>
-        <div class="formulario_grupo_input">
-          <input type="text" class="formulario_input" name="Busqueda" id="Busqueda" placeholder="Busqueda..." />
-        </div>
+      <!-------------------------------------------Filtros------------------------------------------>
+      <div>
+        <form class="formulario" id="searchForm">
+          <!-- Palabra -->
+          <div class="formulario_grupo" id="grupo_buscar_por_palabra">
+            <label class="formulario_label">Buscar por palabra</label>
+            <div class="formulario_grupo_input">
+              <input type="text" class="formulario_input" name="busqueda" id="busqueda" placeholder="Busqueda..." />
+            </div>
+          </div>
+          <!-- Lugar -->
+          <div class="formulario_grupo" id="grupo_seleccione_lugar">
+            <label class="formulario_label">Lugar</label>
+            <div class="formulario_grupo_input">
+              <select class="formulario_input" name="lugar" id="lugar">
+                <option value="">Todos los lugares</option>
+                <option value="San José">San José</option>
+                <option value="Heredia">Heredia</option>
+                <option value="Alajuela">Alajuela</option>
+                <option value="Cartago">Cartago</option>
+                <option value="Guanacaste">Guanacaste</option>
+                <option value="Puntarenas">Puntarenas</option>
+              </select>
+            </div>
+          </div>
+          <!-- Categoría -->
+          <div class="formulario_grupo" id="grupo_seleccione_categoria">
+            <label class="formulario_label">Categoría</label>
+            <div class="formulario_grupo_input">
+              <select class="formulario_input" name="categoria" id="categoria">
+                <option value="">Todas las categorías</option>
+                <option value="Deportes">Deportes</option>
+                <option value="Conciertos">Conciertos</option>
+                <option value="Festivales">Festivales</option>
+                <option value="Teatro">Teatro</option>
+                <option value="Comedia">Comedia</option>
+                <option value="Charlas">Charlas</option>
+              </select>
+            </div>
+          </div>
+          <!-- Enviar -->
+          <div class="formulario_grupo formulario_grupo_enviar">
+            <input type="submit" value="Buscar" class="formulario_boton" />
+            <input type="button" value="Limpiar Filtros" class="formulario_boton" id="resetButton" />
+          </div>
+        </form>
       </div>
-      <!-- Lugar -->
-      <div class="formulario_grupo" id="grupo_seleccione_lugar">
-        <label class="formulario_label">Lugar</label>
-        <div class="formulario_grupo_input">
-          <select class="formulario_input" name="Seleccione_lugar" id="Seleccione_lugar" title="Seleccione un lugar">
-            <option value="" disabled selected>Seleccionar lugar</option>
-            <option value="San José">San José</option>
-            <option value="Heredia">Heredia</option>
-          </select>
-        </div>
-      </div>
-      <!-- Categoría -->
-      <div class="formulario_grupo" id="grupo_seleccione_categoria">
-        <label class="formulario_label">Categoría</label>
-        <div class="formulario_grupo_input">
-          <select class="formulario_input" name="Seleccione_categoria" id="Seleccione_categoria" title="Seleccione una categoría">
-            <option value="" disabled selected>Seleccionar categoría</option>
-            <option value="Conciertos">Conciertos</option>
-            <option value="Partidos">Partidos</option>
-          </select>
-        </div>
-      </div>
-      <!-- Enviar -->
-      <div class="formulario_grupo formulario_grupo_enviar">
-        <input type="submit" value="Buscar" class="formulario_boton" />
-      </div>
-    </form>
-  </div>
 
-  <!-------------------------------------------Fin Filtros---------------------------------------------->
+      <!-------------------------------------------Fin Filtros---------------------------------------------->
 
-  <!-------------------------------------------Eventos---------------------------------------------->
-  <div class="boxdeafuera">
-    <% if (typeof error !== 'undefined' && error) { %>
-        <div class="error-message">
+      <!-------------------------------------------Eventos---------------------------------------------->
+      <div class="boxdeafuera">
+        <% if (typeof error !=='undefined' && error) { %>
+          <div class="error-message">
             <%= error %>
-        </div>
-    <% } %>
-    
-    <% if (typeof eventos !== 'undefined' && eventos.length > 0) { %>
-      <% eventos.forEach(function(evento) { %>
-        <div class="evento1">
-          <div class="textoevento">
-            <div class="tituloevento">
-              <h2><%= evento.nombre %></h2>
-            </div>
-            <div class="cuadrodeprecio">
-              <h2 class="comprar">Precio</h2>
-              <h2 class="comprar">desde</h2>
-              <h1 class="precio">₡<%= evento.precio %></h1>
-              <a href="/evento/<%= evento.id %>" class="boton_comprar">Comprar</a>
-            </div>
-            <div class="lugar">
-              <h1>Lugar</h1>
-              <h2><%= evento.lugar %></h2>
-            </div>
-            <div class="fecha">
-              <h1>Fecha</h1>
-              <h2><%= evento.fecha %></h2>
-            </div>
-            <div class="hora">
-              <h1>Hora</h1>
-              <h2><%= evento.hora %></h2>
-            </div>
           </div>
-          <div class="fotoevento" data-imagen="<%= evento.imagen %>"></div>
-          <div class="debug-info hidden">
-            <%= JSON.stringify(evento) %>
-          </div>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <div class="no-eventos">
-        <h2>No hay eventos disponibles en este momento</h2>
-        <p>Intente más tarde o contacte al administrador</p>
+          <% } %>
+
+            <% if (typeof eventos !=='undefined' && eventos.length> 0) { %>
+              <% eventos.forEach(function(evento) { %>
+                <div class="evento1">
+                  <div class="textoevento">
+                    <div class="tituloevento">
+                      <h2>
+                        <%= evento.nombre %>
+                      </h2>
+                    </div>
+                    <div class="cuadrodeprecio">
+                      <h2 class="comprar">Precio</h2>
+                      <h2 class="comprar">desde</h2>
+                      <h1 class="precio">₡<%= evento.precio %>
+                      </h1>
+                      <a href="/evento/<%= evento.id %>" class="boton_comprar">Comprar</a>
+                    </div>
+                    <div class="lugar">
+                      <h1>Lugar</h1>
+                      <h2>
+                        <%= evento.lugar %>
+                      </h2>
+                    </div>
+                    <div class="fecha">
+                      <h1>Fecha</h1>
+                      <h2>
+                        <%= evento.fecha %>
+                      </h2>
+                    </div>
+                    <div class="hora">
+                      <h1>Hora</h1>
+                      <h2>
+                        <%= evento.hora %>
+                      </h2>
+                    </div>
+                  </div>
+                  <div class="fotoevento" data-imagen="<%= evento.imagen %>"></div>
+                  <div class="debug-info hidden">
+                    <%= JSON.stringify(evento) %>
+                  </div>
+                </div>
+                <% }); %>
+                  <% } else { %>
+                    <div class="no-eventos">
+                      <h2>No hay eventos disponibles en este momento</h2>
+                      <p>Intente más tarde o contacte al administrador</p>
+                    </div>
+                    <% } %>
       </div>
-    <% } %>
-  </div>
 
-    <!-------------------------------------------FIN Eventos---------------------------------------------->
+      <!-------------------------------------------FIN Eventos---------------------------------------------->
 
-    <!-- Footer -->
-    <%- include('partials/footer') %>
-    <!-- Fin Footer -->
+      <!-- Footer -->
+      <%- include('partials/footer') %>
+        <!-- Fin Footer -->
+        <script src="/js/eventos.js"></script>
 </body>
 
 </html>

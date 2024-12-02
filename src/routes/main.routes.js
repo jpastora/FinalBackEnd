@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const eventoController = require('../controllers/evento.controller');
 
 // Rutas principales
 router.get('/', (req, res) => {
@@ -15,9 +16,7 @@ router.get('/ayuda', (req, res) => {
 });
 
 // Rutas de eventos
-router.get('/eventos', (req, res) => {
-    res.render('eventos.html', { title: 'Eventos' });
-});
+router.get('/eventos', eventoController.listarEventos);
 
 router.get('/eventos/crear', (req, res) => {
     res.render('eventos/crearEvento.html', { title: 'Crear Evento' });

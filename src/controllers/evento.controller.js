@@ -26,10 +26,12 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
         const { titulo, lugar, categoria, precio, fecha, hora } = req.body;
         
         const categoriaMap = {
-            'category-1': 'Deportes',
-            'category-2': 'Conciertos',
-            'category-3': 'Festivales',
-            'category-4': 'Teatro'
+            'Deportes': 'Deportes',
+            'Conciertos': 'Conciertos',
+            'Festivales': 'Festivales',
+            'Teatro': 'Teatro',
+            'Comedia': 'Comedia',
+            'Charlas': 'Charlas'
         };
 
         const nuevoEvento = new Evento({
@@ -61,30 +63,21 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
 
 const listarEventos = async (req, res) => {
     try {
-        console.log('Consultando eventos en MongoDB...');
         const eventos = await Evento.find()
-            .sort({ fecha: 1 })
-            .lean();
-
-        console.log('Eventos encontrados:', eventos);
-
-        const eventosFormateados = eventos.map(evento => ({
-            ...evento,
-            fecha: evento.fecha.toLocaleDateString('es-ES'),
-            precio: evento.precio.toFixed(2)
-        }));
-
-        return res.render('eventos.html', {
+            .sort({ fecha: 1 }) // Ordenar por fecha ascendente
+            .select('nombre lugar categoria precio fecha hora imagen');
+        
+        res.render('eventos.html', { 
             title: 'Eventos',
-            eventos: eventosFormateados,
+            eventos: eventos,
             error: null
         });
     } catch (error) {
         console.error('Error al listar eventos:', error);
-        return res.render('eventos.html', {
+        res.render('eventos.html', {
             title: 'Eventos',
             eventos: [],
-            error: 'Error al cargar los eventos: ' + error.message
+            error: 'Error al cargar los eventos'
         });
     }
 };
