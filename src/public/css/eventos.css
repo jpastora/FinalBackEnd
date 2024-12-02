@@ -67,12 +67,10 @@
 .formulario {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr auto;
-  /* Última columna para el botón de buscar */
   gap: 15px;
   padding: 25px;
   text-align: center;
   align-items: center;
-  /* Alinea verticalmente los elementos */
 }
 
 /* Estilo para las etiquetas */
@@ -109,21 +107,17 @@
 
 /* Botón de buscar alineado y con altura igual a los campos */
 .formulario_boton {
-  padding: 8px 20px;
-  margin-top: 50px;
-  height: 45px;
-  /* Altura uniforme para el botón */
-  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #db4437;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1em;
-  text-align: center;
-  box-sizing: border-box;
-  border: 1px;
-  border-style: ridge;
-  border-radius: 5px;
-  color: #d94423;
-  transition: 0.5s;
-  background-color: #ffffff;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
 }
 
 .formulario_boton:hover {
@@ -191,27 +185,29 @@
 }
 
 .precio {
-  color: rgb(194, 192, 192);
+  color: rgb(0, 0, 0);
+  text-align: center;
 }
 
-.boton_comprar {
-  padding: 8px 20px;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  height: 45px;
-  /* Altura uniforme para el botón */
-  border-radius: 5px;
+.boton_comprar{
+  display: block;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #db4437;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1em;
-  text-align: center;
-  box-sizing: border-box;
-  border: 1px;
-  border-style: ridge;
-  border-radius: 5px;
-  color: #ffffff;
-  transition: 0.5s;
-  background-color: #86a641;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
   text-decoration: none;
+  text-align: center;
+}
+
+.boton_comprar:hover {
+  background-color: #86a641;
 }
 
 .cuadrodeprecio {
