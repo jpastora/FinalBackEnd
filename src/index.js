@@ -34,7 +34,7 @@ app.use(authMiddleware);
 
 // Configuración de vistas y archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); 
+app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Ruta absoluta a uploads
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

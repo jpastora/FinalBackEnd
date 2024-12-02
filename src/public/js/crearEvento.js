@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Función para previsualizar la imagen
-    document.getElementById('imagenEvento').addEventListener('change', function(e) {
+    document.getElementById('imagen').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -10,4 +10,4 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(file);
         }
     });
-});    
+});
