@@ -63,13 +63,17 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
 
 const listarEventos = async (req, res) => {
     try {
-        const eventos = await Evento.find()
-            .sort({ fecha: 1 }) // Ordenar por fecha ascendente
+        const { categoria } = req.query;
+        const filtro = categoria ? { categoria } : {};
+        
+        const eventos = await Evento.find(filtro)
+            .sort({ fecha: 1 })
             .select('nombre lugar categoria precio fecha hora imagen');
         
         res.render('eventos.html', { 
-            title: 'Eventos',
+            title: categoria ? `Eventos - ${categoria}` : 'Eventos',
             eventos: eventos,
+            categoriaActual: categoria || '',
             error: null
         });
     } catch (error) {
@@ -77,6 +81,7 @@ const listarEventos = async (req, res) => {
         res.render('eventos.html', {
             title: 'Eventos',
             eventos: [],
+            categoriaActual: '',
             error: 'Error al cargar los eventos'
         });
     }
