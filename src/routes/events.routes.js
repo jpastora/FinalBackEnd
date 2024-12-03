@@ -4,7 +4,7 @@ const eventoController = require('../controllers/evento.controller');
 const upload = require('../middleware/upload');
 const Evento = require('../models/evento');
 
-// Ruta principal de eventos
+// Ruta principal de eventos - usar el controlador en lugar de la lógica inline
 router.get('/', eventoController.listarEventos);
 
 router.get('/crear', (req, res) => {

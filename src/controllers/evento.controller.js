@@ -62,31 +62,62 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
     }
 }];
 
+// ...existing code...
+
 const listarEventos = async (req, res) => {
     try {
-        const { categoria } = req.query;
-        const filtro = categoria ? { categoria } : {};
-        
-        const eventos = await Evento.find(filtro)
+        let { busqueda, categoria, lugar } = req.query;
+        let query = {};
+
+        // 1. Primero aplicar filtros exactos (lugar y categoría)
+        if (lugar) query.lugar = lugar;
+        if (categoria) query.categoria = categoria;
+
+        // 2. Luego manejar la búsqueda por texto
+        if (busqueda) {
+            const searchQuery = {
+                $or: [
+                    { nombre: { $regex: busqueda, $options: 'i' } },
+                    { descripcion: { $regex: busqueda, $options: 'i' } },
+                    { categoria: { $regex: busqueda, $options: 'i' } }
+                ]
+            };
+
+            // Si ya existen otros filtros, combinarlos con AND
+            query = Object.keys(query).length > 0 ? 
+                { $and: [searchQuery, query] } : 
+                searchQuery;
+        }
+
+        console.log('Query final:', JSON.stringify(query, null, 2));
+
+        const eventos = await Evento.find(query)
             .sort({ fecha: 1 })
-            .select('nombre lugar categoria precio fecha hora imagen');
+            .exec();
+
+        console.log(`Eventos encontrados: ${eventos.length}`);
         
-        res.render('eventos.html', { 
-            title: categoria ? `Eventos - ${categoria}` : 'Eventos',
-            eventos: eventos,
-            categoriaActual: categoria || '',
-            error: null
-        });
-    } catch (error) {
-        console.error('Error al listar eventos:', error);
+        // Mantener todos los filtros en la respuesta
         res.render('eventos.html', {
-            title: 'Eventos',
+            eventos,
+            filtros: {
+                busqueda: busqueda || '',
+                categoria: categoria || '',
+                lugar: lugar || ''
+            }
+        });
+
+    } catch (error) {
+        console.error('Error en listarEventos:', error);
+        res.render('eventos.html', {
             eventos: [],
-            categoriaActual: '',
-            error: 'Error al cargar los eventos'
+            error: 'Error al buscar eventos',
+            filtros: { busqueda: '', categoria: '', lugar: '' }
         });
     }
 };
+
+// ...existing code...
 
 const obtenerEvento = async (req, res) => {
     try {

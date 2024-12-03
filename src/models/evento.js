@@ -16,11 +16,11 @@ const eventoSchema = new mongoose.Schema({
     lugar: {
         type: String,
         required: [true, 'El lugar es requerido'],
-        enum: ['sanJose', 'Heredia', 'Alajuela', 'Cartago', 'Limon', 'Puntarenas', 'Guanacaste']
+        enum: ['San José', 'Heredia', 'Alajuela', 'Cartago', 'Limon', 'Puntarenas', 'Guanacaste']
     },
     categoria: {
         type: String,
-        enum: ['Deportes', 'Conciertos', 'Festivales', 'Teatro', 'Comedia', 'Charlas'],
+        enum: ['Conciertos', 'Deportes', 'Festivales', 'Teatro', 'Comedia', 'Charlas'],
         required: [true, 'La categoría es requerida']
     },
     numerotickets: {

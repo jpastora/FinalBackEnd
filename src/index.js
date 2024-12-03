@@ -54,7 +54,7 @@ connectDB();
 // Rutas públicas
 app.use('/', mainRoutes);
 app.use('/auth', authRoutes);      // Rutas de autenticación después
-app.use('/eventos', eventsRoutes); // Otras rutas después
+app.use('/eventos', eventsRoutes); // Asegúrate de que esta línea esté antes de otras rutas que puedan interferir
 
 // Rutas protegidas
 app.use('/perfil', checkAuth, profileRoutes);

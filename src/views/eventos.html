@@ -36,12 +36,12 @@
 
       <!-------------------------------------------Filtros------------------------------------------>
       <div>
-        <form class="formulario" id="searchForm">
+        <form class="formulario" id="searchForm" method="GET" action="/eventos">
           <!-- Palabra -->
           <div class="formulario_grupo" id="grupo_buscar_por_palabra">
             <label class="formulario_label">Buscar por palabra</label>
             <div class="formulario_grupo_input">
-              <input type="text" class="formulario_input" name="busqueda" id="busqueda" placeholder="Busqueda..." />
+              <input type="text" class="formulario_input" name="busqueda" id="busqueda" placeholder="Busqueda..." value="<%= filtros?.busqueda || '' %>"/>
             </div>
           </div>
           <!-- Lugar -->
@@ -50,12 +50,13 @@
             <div class="formulario_grupo_input">
               <select class="formulario_input" name="lugar" id="lugar" aria-label="Seleccione un lugar">
                 <option value="">Todos los lugares</option>
-                <option value="San José">San José</option>
-                <option value="Heredia">Heredia</option>
-                <option value="Alajuela">Alajuela</option>
-                <option value="Cartago">Cartago</option>
-                <option value="Guanacaste">Guanacaste</option>
-                <option value="Puntarenas">Puntarenas</option>
+                <option value="San José" <%= filtros?.lugar === 'San José' ? 'selected' : '' %>>San José</option>
+                <option value="Heredia" <%= filtros?.lugar === 'Heredia' ? 'selected' : '' %>>Heredia</option>
+                <option value="Alajuela" <%= filtros?.lugar === 'Alajuela' ? 'selected' : '' %>>Alajuela</option>
+                <option value="Cartago" <%= filtros?.lugar === 'Cartago' ? 'selected' : '' %>>Cartago</option>
+                <option value="Limon" <%= filtros?.lugar === 'Limon' ? 'selected' : '' %>>Limón</option>
+                <option value="Puntarenas" <%= filtros?.lugar === 'Puntarenas' ? 'selected' : '' %>>Puntarenas</option>
+                <option value="Guanacaste" <%= filtros?.lugar === 'Guanacaste' ? 'selected' : '' %>>Guanacaste</option>
               </select>
             </div>
           </div>
@@ -65,8 +66,8 @@
             <div class="formulario_grupo_input">
               <select class="formulario_input" name="categoria" id="categoria" aria-label="Seleccione una categoría">
                 <option value="">Todas las categorías</option>
-                <option value="Deportes">Deportes</option>
-                <option value="Conciertos">Conciertos</option>
+                <option value="Deportes" <%= filtros?.categoria === 'Deportes' ? 'selected' : '' %>>Deportes</option>
+                <option value="Conciertos" <%= filtros?.categoria === 'Conciertos' ? 'selected' : '' %>>Conciertos</option>
                 <option value="Festivales">Festivales</option>
                 <option value="Teatro">Teatro</option>
                 <option value="Comedia">Comedia</option>
@@ -76,8 +77,8 @@
           </div>
           <!-- Enviar -->
           <div class="formulario_grupo formulario_grupo_enviar">
-            <input type="submit" value="Buscar" class="formulario_boton" />
-            <input type="button" value="Limpiar Filtros" class="formulario_boton" id="resetButton" />
+            <button type="submit" class="formulario_boton">Buscar</button>
+            <button type="button" class="formulario_boton" id="resetButton">Limpiar Filtros</button>
           </div>
         </form>
       </div>
