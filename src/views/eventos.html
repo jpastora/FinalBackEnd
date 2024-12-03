@@ -98,6 +98,13 @@
                   <div class="fotoevento">
                     <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
                   </div>
+                  <script type="application/json" class="evento-data" style="display: none;">
+                    {
+                      "nombre": "<%= evento.nombre %>",
+                      "lugar": "<%= evento.lugar %>",
+                      "categoria": "<%= evento.categoria %>"
+                    }
+                  </script>
                   <div class="textoevento">
                     <div class="tituloevento">
                       <h2>

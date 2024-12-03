@@ -35,9 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const categoria = document.getElementById('categoria').value;
         
         const eventos = document.querySelectorAll('.evento1');
+        let eventosVisibles = 0;
         
         eventos.forEach(evento => {
-            const eventoData = JSON.parse(evento.querySelector('.debug-info').textContent);
+            const eventoDataElement = evento.querySelector('.evento-data');
+            const eventoData = JSON.parse(eventoDataElement.textContent);
             let mostrar = true;
             
             // Filtrar por búsqueda
@@ -57,13 +59,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Mostrar u ocultar el evento
             evento.style.display = mostrar ? 'flex' : 'none';
+            if (mostrar) eventosVisibles++;
         });
         
         // Mostrar mensaje si no hay resultados
-        const eventosVisibles = [...eventos].filter(evento => 
-            evento.style.display !== 'none'
-        ).length;
-        
         const noEventosMsg = document.querySelector('.no-eventos');
         if (noEventosMsg) {
             noEventosMsg.style.display = eventosVisibles === 0 ? 'block' : 'none';
