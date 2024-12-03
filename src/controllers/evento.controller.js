@@ -41,6 +41,7 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
             precio: Number(precio),
             fecha: new Date(fecha),
             hora,
+            descripcion: req.body.descripcion,
             imagen: req.file ? `/uploads/eventos/${req.file.filename}` : '/img/default-event.png'
         });
 
@@ -103,7 +104,7 @@ const obtenerEvento = async (req, res) => {
             fecha: { $gte: new Date() }
         })
         .sort({ fecha: 1 })
-        .limit(3);
+        .limit(5);
         
         return res.render('eventos/evento.html', {
             title: evento.nombre,

@@ -7,6 +7,12 @@ const eventoSchema = new mongoose.Schema({
         trim: true,
         maxlength: [100, 'El nombre no puede exceder 100 caracteres']
     },
+    descripcion: {
+        type: String,
+        required: [true, 'La descripción del evento es requerida'],
+        trim: true,
+        maxlength: [1000, 'La descripción no puede exceder 1000 caracteres']
+    },
     lugar: {
         type: String,
         required: [true, 'El lugar es requerido'],
