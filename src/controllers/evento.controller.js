@@ -87,6 +87,38 @@ const listarEventos = async (req, res) => {
     }
 };
 
+const obtenerEvento = async (req, res) => {
+    try {
+        const evento = await Evento.findById(req.params.id);
+        if (!evento) {
+            return res.status(404).render('error.html', {
+                title: 'Evento no encontrado',
+                mensaje: 'El evento que buscas no existe'
+            });
+        }
+        
+        const eventosRelacionados = await Evento.find({
+            categoria: evento.categoria,
+            _id: { $ne: evento._id },
+            fecha: { $gte: new Date() }
+        })
+        .sort({ fecha: 1 })
+        .limit(3);
+        
+        return res.render('eventos/evento.html', {
+            title: evento.nombre,
+            evento,
+            eventosRelacionados
+        });
+    } catch (error) {
+        console.error('Error al obtener evento:', error);
+        return res.status(500).render('error.html', {
+            title: 'Error del servidor',
+            mensaje: 'Error al cargar el evento. Por favor, inténtalo más tarde.'
+        });
+    }
+};
+
 const obtenerEventosHoy = async () => {
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
@@ -115,6 +147,7 @@ const obtenerProximosEventos = async () => {
 module.exports = {
     crearEvento,
     listarEventos,
+    obtenerEvento,
     obtenerEventosHoy,
     obtenerProximosEventos
 };

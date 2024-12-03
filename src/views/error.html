@@ -1,23 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title><%= title || 'Error' %> - VibeTickets</title>
     <link rel="stylesheet" href="/css/menu.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/error.css">
 </head>
 <body>
-    <%- include('partials/menu') %>
+    <%- include('./partials/menu') %>
     <div class="error-container">
-    <div class="error-message">
-        <h1>Error</h1>
-        <p><%= message %></p>
-        <a href="/" class="back-home-link">Volver al inicio</a>
+        <div class="error-message">
+            <h1><%= title || 'Error' %></h1>
+            <p><%= mensaje || 'Ha ocurrido un error inesperado' %></p>
+            <a href="/" class="back-home-link">Volver al inicio</a>
+        </div>
     </div>
-
-    <%- include('partials/footer') %>
+    <%- include('./partials/footer') %>
 </body>
 </html>

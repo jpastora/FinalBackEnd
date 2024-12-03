@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
+const Evento = require('../models/evento'); // Agregar esta línea
 
 // Rutas principales
 router.get('/', async (req, res) => {
@@ -33,6 +34,9 @@ router.get('/ayuda', (req, res) => {
 // Rutas de eventos
 router.get('/eventos', eventoController.listarEventos);
 
+// Modificar esta ruta
+router.get('/eventos/evento/:id', eventoController.obtenerEvento);
+
 router.get('/eventos/crear', (req, res) => {
     res.render('eventos/crearEvento.html', { title: 'Crear Evento' });
 });
@@ -41,9 +45,9 @@ router.get('/eventos/editar', (req, res) => {
     res.render('eventos/editarEventos.html', { title: 'Editar Eventos' });
 });
 
-router.get('/eventos/evento', (req, res) => {
-    res.render('eventos/evento.html', { title: 'Evento' });
-});
+// router.get('/eventos/evento', (req, res) => {
+//     res.render('eventos/evento.html', { title: 'Evento' });
+// });
 
 router.get('/eventos/evento2', (req, res) => {
     res.render('eventos/evento2.html', { title: 'Evento 2' });

@@ -93,9 +93,10 @@
 
 .eventoCompleto {
   display: flex;
-  max-width: 80%;
-  margin: 20px;
-  padding: 20px;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #f8f9fa;
@@ -107,11 +108,16 @@
 }
 
 .fotoInfo {
+  flex: 2;
   height: fit-content;
   background-color: #86a641
 }
 
 .imagenEvento {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,13 +125,18 @@
 }
 
 .imagenEvento img {
-  width: 350px;
+  width: 100%;
   height: auto;
+  object-fit: cover;
   border-radius: 10px;
   margin: 20px;
 }
 
 .descripcionEvento {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
   color: #ffffff;
   font-size: 20px;
   border-top: #d94423 3px;
@@ -137,14 +148,96 @@
   margin-bottom: 25px;
   padding: 20px;
   font-family: "Monserrat-Light", sans-serif;
-
 }
 
 .asientosGuardarReservar {
+  flex: 1;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
   background-color: rgb(255, 255, 255);
 }
 
+.opcionesAsientos {
+  height: 405px;
+  width: 600px;
+  margin-left: 175px;
+}
+
+.opcionesAsientos h1 {
+  color: #d94423;
+}
+
+.opcionesAsientos h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.25rem;
+  color: rgb(58, 58, 58);
+}
+
+.ticket-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ticket-info h3 {
+  margin: 0;
+  color: #444;
+}
+
+.precio {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.ticket-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-cantidad {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.ticket-cantidad input {
+  width: 60px;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.total-seccion {
+  margin: 1.5rem 0;
+  padding: 1rem 0;
+  border-top: 2px solid #eee;
+}
+
+.total-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
 .botones {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
   height: 100px;
   width: 325px;
   display: grid;
@@ -152,6 +245,41 @@
   padding: 25px;
   gap: 25px;
   margin-left: 300px;
+}
+
+.btn-guardar, .btn-comprar, .btn-agotado {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-guardar {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #444;
+}
+
+.btn-comprar {
+  background: #2c3e50;
+  color: white;
+}
+
+.btn-agotado {
+  background: #dc3545;
+  color: white;
+  cursor: not-allowed;
+}
+
+.tickets-disponibles {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
 }
 
 .boton {
@@ -203,4 +331,95 @@
   border-style: solid;
   margin-left: 20px;
   padding: 10px;
+}
+
+/* Estilos para eventos relacionados */
+.eventos-relacionados {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1rem;
+}
+
+.eventos-relacionados h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.eventos-relacionados h2:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 24px;
+    background-color: #d94423;
+}
+
+.eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.evento-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.evento-card:hover {
+    transform: translateY(-5px);
+}
+
+.evento-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.evento-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.evento-card .evento-info {
+    padding: 1.5rem;
+}
+
+.evento-card h3 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.evento-card .fecha {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.evento-card .precio {
+    color: #d94423;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .eventos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .eventos-grid {
+        grid-template-columns: 1fr;
+    }
 }
