@@ -95,6 +95,9 @@
             <% if (typeof eventos !=='undefined' && eventos.length> 0) { %>
               <% eventos.forEach(function(evento) { %>
                 <div class="evento1">
+                  <div class="fotoevento">
+                    <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
+                  </div>
                   <div class="textoevento">
                     <div class="tituloevento">
                       <h2>
@@ -116,7 +119,7 @@
                     <div class="fecha">
                       <h1>Fecha</h1>
                       <h2>
-                        <%= evento.fecha %>
+                        <%= new Date(evento.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' }) %>
                       </h2>
                     </div>
                     <div class="hora">
@@ -125,9 +128,6 @@
                         <%= evento.hora %>
                       </h2>
                     </div>
-                  </div>
-                  <div class="fotoevento">
-                    <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
                   </div>
                 </div>
                 <% }); %>
