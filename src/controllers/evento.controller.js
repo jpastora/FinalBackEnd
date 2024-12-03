@@ -82,7 +82,34 @@ const listarEventos = async (req, res) => {
     }
 };
 
+const obtenerEventosHoy = async () => {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const mañana = new Date(hoy);
+    mañana.setDate(mañana.getDate() + 1);
+
+    return await Evento.find({
+        fecha: {
+            $gte: hoy,
+            $lt: mañana
+        }
+    })
+    .sort({ hora: 1 })
+    .limit(4);
+};
+
+const obtenerProximosEventos = async () => {
+    const hoy = new Date();
+    return await Evento.find({
+        fecha: { $gt: hoy }
+    })
+    .sort({ fecha: 1 })
+    .limit(3);
+};
+
 module.exports = {
     crearEvento,
-    listarEventos
+    listarEventos,
+    obtenerEventosHoy,
+    obtenerProximosEventos
 };

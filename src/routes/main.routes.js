@@ -3,8 +3,23 @@ const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
 
 // Rutas principales
-router.get('/', (req, res) => {
-    res.render('inicio.html', { title: 'Inicio' });
+router.get('/', async (req, res) => {
+    try {
+        const eventosHoy = await eventoController.obtenerEventosHoy();
+        const proximosEventos = await eventoController.obtenerProximosEventos();
+        res.render('inicio.html', { 
+            title: 'Inicio',
+            eventosHoy,
+            proximosEventos
+        });
+    } catch (error) {
+        console.error('Error al cargar eventos:', error);
+        res.render('inicio.html', { 
+            title: 'Inicio',
+            eventosHoy: [],
+            proximosEventos: []
+        });
+    }
 });
 
 router.get('/nosotros', (req, res) => {
