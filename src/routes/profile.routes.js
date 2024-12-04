@@ -5,6 +5,7 @@ const multer = require('multer');
 const upload = multer({ dest: 'src/public/uploads/profiles/' });
 const bcrypt = require('bcrypt');
 const PaymentCard = require('../models/paymentCard');
+const profileController = require('../controllers/profile.controller');
 
 router.get('/', (req, res) => {
     res.redirect('/perfil/datos-personales');
@@ -218,23 +219,6 @@ router.get('/eventos-guardados', async (req, res) => {
     }
 });
 
-router.get('/mis-tickets', async (req, res) => {
-    try {
-        const user = await User.findById(req.session.user._id)
-            .populate({
-                path: 'tickets',
-                populate: {
-                    path: 'evento'
-                }
-            });
-        
-        res.render('user/perfilMisTickets.html', { 
-            title: 'Mis Tickets',
-            tickets: user.tickets
-        });
-    } catch (error) {
-        res.status(500).render('error.html', { message: error.message });
-    }
-});
+router.get('/mis-tickets', profileController.getMisTickets);
 
 module.exports = router;

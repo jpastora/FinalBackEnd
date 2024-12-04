@@ -10,6 +10,7 @@ const profileRoutes = require('./routes/profile.routes');
 const adminRoutes = require('./routes/admin.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const eventsRoutes = require('./routes/events.routes');
+const cartRoutes = require('./routes/cart.routes');
 const { sessionConfig, authMiddleware } = require('./middleware/auth');
 const { checkAuth, checkAdmin } = require('./middleware/checkAuth');
 const upload = require('./middleware/upload');
@@ -62,9 +63,10 @@ connectDB();
 // Rutas públicas
 app.use('/auth', authRoutes);
 app.use('/eventos', eventsRoutes);
+app.use('/cart', checkAuth, cartRoutes); // Rutas del carrito
+app.use('/pago', checkAuth, paymentRoutes); // Rutas de pago
 app.use('/perfil', checkAuth, profileRoutes); // Asegurarse que esta ruta esté antes de mainRoutes
 app.use('/admin', checkAuth, checkAdmin, adminRoutes);
-app.use('/pago', checkAuth, paymentRoutes);
 app.use('/', mainRoutes); // Debe ir al final
 
 // Manejo de errores - 404
