@@ -1,33 +1,33 @@
 <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
     <div class="enlacesAuth" id="enlaces__auth">
-        <% if (typeof user !== 'undefined' && user && user.rol === 'admin') { %>
-            <a href="/admin/datos-personales">Ver cuenta</a>
-            <ul class="submenuPerfil">
-                <li><a href="/padmin/datos-personales">Datos personales</a></li>
-                <li><a href="/admin/seguridad">Seguridad</a></li>
-                <li><a href="/perfil/eventos-guardados">Eventos Guardados</a></li>
-                <li><a href="/admin/metodospago">Métodos de pago</a></li>
-                <li><a href="/admin/usuarios"></a>Administra Usuarios</li>
-                <li><a href="/admin/editar-evento"></a>Editar Eventos</li>
-                <li><a href="/admin/crear-evento"></a>Agregar Eventos</li>
-
-            </ul>
+        <% if (userRole === 'admin') { %>
+            <div class="menuPerfil">
+                <a href="/admin/datos-personales">Panel Admin</a>
+                <ul class="submenuPerfil">
+                    <li><a href="/admin/datos-personales">Datos personales</a></li>
+                    <li><a href="/admin/seguridad">Seguridad</a></li>
+                    <li><a href="/admin/usuarios">Administrar Usuarios</a></li>
+                    <li><a href="/admin/eventos">Gestionar Eventos</a></li>
+                    <li><a href="/admin/crear-evento">Crear Evento</a></li>
+                    <li><a href="/admin/reportes">Reportes</a></li>
+                </ul>
+            </div>
         <% } else { %>
             <div class="menuPerfil">
-                <a href="/perfil/datos-personales">Ver cuenta</a>
+                <a href="/perfil/datos-personales">Mi Cuenta</a>
                 <ul class="submenuPerfil">
                     <li><a href="/perfil/datos-personales">Datos personales</a></li>
                     <li><a href="/perfil/seguridad">Seguridad</a></li>
                     <li><a href="/perfil/eventos-guardados">Eventos Guardados</a></li>
                     <li><a href="/perfil/metodospago">Métodos de pago</a></li>
+                    <li><a href="/perfil/mis-tickets">Mis Tickets</a></li>
                 </ul>
             </div>
         <% } %>
-        <a href="/auth/logout">Logout</a>
+        <a href="/auth/logout">Cerrar Sesión</a>
         <a href="/pago/carrito"><i class="fi fi-ss-shopping-cart"></i></a>
     </div>
 <% } else { %>
-<!-- Enlace para usuarios no logueados -->
     <div class="enlacesAuth" id="enlaces__auth">
         <a href="/auth/registro">Registro</a>
         <a href="/auth/login">Login</a>

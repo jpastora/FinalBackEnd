@@ -43,8 +43,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use((req, res, next) => {
     res.locals.currentUrl = req.originalUrl;
     res.locals.isAuthenticated = req.session && req.session.user ? true : false;
-    res.locals.userId = req.session?.user?.userId || null;
+    res.locals.user = req.session?.user || null;
     res.locals.userRole = req.session?.user?.rol || null;
+    console.log('User Role:', res.locals.userRole); // Para debugging
     next();
 });
 
