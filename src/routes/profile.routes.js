@@ -179,10 +179,36 @@ router.get('/eventos-guardados', async (req, res) => {
                 message: 'Usuario no encontrado' 
             });
         }
+
+        // Formatear fechas y horas correctamente
+        const eventos = user.eventosGuardados.map(evento => {
+            // Crear objeto de fecha a partir de la fecha del evento
+            const fecha = new Date(evento.fecha);
+            
+            // Formatear hora para mostrar AM/PM
+            const [hora, minutos] = evento.hora.split(':');
+            const horaDate = new Date();
+            horaDate.setHours(hora);
+            horaDate.setMinutes(minutos);
+            
+            return {
+                ...evento._doc,
+                fechaFormateada: fecha.toLocaleDateString('es-ES', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }),
+                horaFormateada: horaDate.toLocaleTimeString('es-ES', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                }).replace(/\./g, '').toUpperCase() // Elimina puntos y convierte AM/PM a mayúsculas
+            };
+        });
         
         res.render('user/perfilEventosGuardados.html', { 
             title: 'Eventos Guardados',
-            eventos: user.eventosGuardados
+            eventos: eventos
         });
     } catch (error) {
         console.error('Error en eventos guardados:', error);

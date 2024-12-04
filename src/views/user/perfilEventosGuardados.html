@@ -49,62 +49,44 @@
 <!-------------------------------------------Eventos Guardados---------------------------------------------->
 
 <div class="cajaExterna" id="Caja__Externa">
-    <div class="tarjetaEvento" id="Tarjeta__Evento1">
-        <div class="eventoVenta" id="Evento__Venta1">
-            <div class="textoEvento">
-                <div class="tituloEvento"><h2>Campeonato de fútbol</h2></div>
-                <div class="cuadroPrecio">
-                    <h2 class="textoComprar">Precio</h2>
-                    <h2 class="textoComprar">desde</h2>
-                    <h1 class="montoPrecio">₡15.000</h1>
-                    <a href="#" class="botonComprar">Comprar</a>
+    <% if (locals.eventos && eventos.length > 0) { %>
+        <% eventos.forEach(evento => { %>
+            <div class="tarjetaEvento">
+                <div class="imagenEvento">
+                    <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
+                </div>
+                <div class="eventoVenta">
+                    <div class="textoEvento">
+                        <div class="tituloEvento"><h2><%= evento.nombre %></h2></div>
+                        <div class="cuadroPrecio">
+                            <h2 class="textoComprar">Precio</h2>
+                            <h2 class="textoComprar">desde</h2>
+                            <h1 class="montoPrecio">₡<%= evento.precio %></h1>
+                            <a href="/eventos/evento/<%= evento._id %>" class="botonComprar">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="infoEvento">
+                    <div class="lugarEvento">
+                        <span class="labelInfo">Lugar</span>
+                        <h2><%= evento.lugar %></h2>
+                    </div>
+                    <div class="fechaEvento">
+                        <span class="labelInfo">Fecha</span>
+                        <h2><%= evento.fechaFormateada %></h2>
+                    </div>
+                    <div class="horaEvento">
+                        <span class="labelInfo">Hora</span>
+                        <h2><%= evento.horaFormateada %></h2>
+                    </div>
                 </div>
             </div>
+        <% }) %>
+    <% } else { %>
+        <div class="mensajeVacio">
+            <h2>No tienes eventos guardados</h2>
         </div>
-        <div class="infoEvento" id="Info__Evento1">
-            <div class="lugarEvento">
-                <h1>Lugar</h1>
-                <h2>San José</h2>
-            </div>
-            <div class="fechaEvento">
-                <h1>Fecha</h1>
-                <h2>15 de Septiembre, 2024.</h2>
-            </div>
-            <div class="horaEvento">
-                <h1>Hora</h1>
-                <h2>11:30am.</h2>
-            </div>
-        </div>
-        <div class="imagenEvento"><img src="../img/eventoCategoria3.png" alt="Evento de futbol"></div>
-    </div>
-    <div class="tarjetaEvento" id="Tarjeta__Evento2">
-        <div class="eventoVenta" id="Evento__Venta2">
-            <div class="textoEvento">
-                <div class="tituloEvento"><h2>Concierto de rock</h2></div>
-                <div class="cuadroPrecio">
-                    <h2 class="textoComprar">Precio</h2>
-                    <h2 class="textoComprar">desde</h2>
-                    <h1 class="montoPrecio">₡20.000</h1>
-                    <a href="#" class="botonComprar">Comprar</a>
-                </div>
-            </div>
-        </div>
-        <div class="infoEvento" id="Info__Evento2">
-            <div class="lugarEvento">
-                <h1>Lugar</h1>
-                <h2>San José</h2>
-            </div>
-            <div class="fechaEvento">
-                <h1>Fecha</h1>
-                <h2>15 de Septiembre, 2024.</h2>
-            </div>
-            <div class="horaEvento">
-                <h1>Hora</h1>
-                <h2>11:30am.</h2>
-            </div>
-        </div>
-        <div class="imagenEvento"><img src="../img/eventoCategoria1.png" alt="Evento de rock"></div>
-    </div>
+    <% } %>
 </div>
 
 <!-------------------------------------------FIN Eventos Guardados---------------------------------------------->

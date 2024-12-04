@@ -86,6 +86,30 @@
     width: 80%;
     height: 100%;
     justify-content: center;
+    gap: 20px;
+    overflow-x: auto;
+    width: calc(100% - 250px); /* Ajusta según el ancho del menú lateral */
+    scrollbar-width: thin;
+    scrollbar-color: #d94423 #f1f1f1;
+}
+
+/* Estilo para la barra de desplazamiento en Chrome */
+.cajaExterna::-webkit-scrollbar {
+    height: 8px;
+}
+
+.cajaExterna::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.cajaExterna::-webkit-scrollbar-thumb {
+    background: #d94423;
+    border-radius: 4px;
+}
+
+.cajaExterna::-webkit-scrollbar-thumb:hover {
+    background: #86a641;
 }
 
 .tarjetaEvento {
@@ -98,6 +122,19 @@
     flex-direction: column;
     align-items: center;
     margin: 10px;
+    min-width: 300px;
+    max-width: 300px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.mensajeVacio {
+    width: 100%;
+    text-align: center;
+    padding: 50px;
+    color: #666;
 }
 
 .eventoVenta {
@@ -179,6 +216,51 @@
     border: 1px;
     
 }
+
+.infoEvento {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.lugarEvento, .fechaEvento, .horaEvento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.labelInfo {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.infoEvento h2 {
+    color: #333;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.montoPrecio {
+    font-size: 1.8em;
+    color: #d94423;
+    margin: 10px 0;
+}
+
+.textoComprar {
+    color: #666;
+    font-size: 0.9em;
+}
+
 .lugar, .fecha, .hora {
     color: #181818;
     font-size: 15px;
@@ -310,9 +392,31 @@
 }
 
 /* Imagen del evento */
-.fotoevento img {
-    width: 100%;
+.imagenEvento img {
+    width: 300px;
     height: auto;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+/* Ajustes para hacer las tarjetas responsive */
+@media (max-width: 768px) {
+    .cajaExterna {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .tarjetaEvento {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .infoEvento {
+        padding: 15px;
+    }
+
+    .lugarEvento, .fechaEvento, .horaEvento {
+        padding: 8px;
+    }
 }
