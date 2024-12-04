@@ -182,10 +182,15 @@ router.delete('/eliminar-guardado/:eventoId', isAuth, async (req, res) => {
         const { eventoId } = req.params;
         const userId = req.session.user._id;
 
-        await EventoGuardado.findOneAndDelete({
-            userId,
-            eventoId
-        });
+        // Eliminar de ambos modelos
+        await Promise.all([
+            // Eliminar de EventoGuardado
+            EventoGuardado.findOneAndDelete({ userId, eventoId }),
+            // Eliminar del array de eventos guardados del usuario
+            User.findByIdAndUpdate(userId, {
+                $pull: { eventosGuardados: eventoId }
+            })
+        ]);
 
         res.json({
             success: true,

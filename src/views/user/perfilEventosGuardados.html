@@ -125,6 +125,31 @@
 
 <script src="/js/eventos.js"></script>
 
+<script>
+// Añadir esto justo antes del cierre del body
+async function eliminarEventoGuardado(eventoId) {
+    try {
+        const response = await fetch(`/eventos/eliminar-guardado/${eventoId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Recargar la página o eliminar el elemento del DOM
+            window.location.reload();
+        } else {
+            throw new Error(data.message || 'Error al eliminar el evento');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al eliminar el evento');
+    }
+}
+</script>
 </body>
 
 </html>
