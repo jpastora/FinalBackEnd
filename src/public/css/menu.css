@@ -44,7 +44,7 @@
 
 /* Enlaces de Autenticación */
 .enlacesAuth {
-    background-color:   #0f0f0f;
+    background-color:   #d94423;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -58,7 +58,7 @@
 }
 
 .enlacesAuth a:hover {
-    color: #d94423;
+    color: #333;
 }
 
 /* Encabezado Principal */
