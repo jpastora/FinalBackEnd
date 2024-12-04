@@ -56,6 +56,16 @@ const swalConfig = {
     cancelButtonColor: '#d94423'
 };
 
+// Funciones para manejo de cantidad
+function decrementarCantidad() {
+    const input = document.getElementById('cantidadTickets');
+    const currentValue = parseInt(input.value);
+    if (currentValue > 1) {
+        input.value = currentValue - 1;
+        actualizarTotal();
+    }
+}
+
 function incrementarCantidad() {
     const input = document.getElementById('cantidadTickets');
     const max = parseInt(input.max);
@@ -66,18 +76,9 @@ function incrementarCantidad() {
     }
 }
 
-function decrementarCantidad() {
-    const input = document.getElementById('cantidadTickets');
-    const currentValue = parseInt(input.value);
-    if (currentValue > 1) {
-        input.value = currentValue - 1;
-        actualizarTotal();
-    }
-}
-
 function actualizarTotal() {
     const cantidad = parseInt(document.getElementById('cantidadTickets').value);
-    const precioUnitario = parseFloat(document.querySelector('.precio').textContent.replace('₡', '').replace(',', ''));
+    const precioUnitario = parseFloat(document.querySelector('.precio').textContent.replace('₡', '').replace(/,/g, ''));
     const total = cantidad * precioUnitario;
     document.querySelector('.precio-total').textContent = `₡${total.toLocaleString()}`;
 }
@@ -108,6 +109,7 @@ async function guardarEvento(eventoId) {
                 title: '¡Debes iniciar sesión!',
                 text: 'Para guardar eventos necesitas estar logueado',
                 icon: 'warning',
+                iconColor: '#d94423',
                 showCancelButton: true,
                 confirmButtonText: 'Ir a login',
                 cancelButtonText: 'Cancelar'
@@ -147,6 +149,26 @@ async function guardarEvento(eventoId) {
     }
 }
 
+// Función para mostrar alerta de login
+function mostrarAlertaLogin() {
+    Swal.fire({
+        title: '¡Inicia Sesión!',
+        text: 'Debes estar registrado para poder comprar tickets',
+        icon: 'warning',
+        iconColor: '#d94423',
+        showCancelButton: true,
+        confirmButtonText: 'Ir a Login',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#d94423',
+        cancelButtonColor: '#6c757d'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/auth/login';
+        }
+    });
+}
+
+// Función para agregar al carrito
 function agregarAlCarrito(eventoId, precio) {
     const cantidad = parseInt(document.getElementById('cantidadTickets').value);
     
@@ -168,22 +190,47 @@ function agregarAlCarrito(eventoId, precio) {
                 title: '¡Éxito!',
                 text: 'Evento agregado al carrito',
                 icon: 'success',
-                confirmButtonText: 'Ir al carrito',
+                iconColor: '#d94423',
                 showCancelButton: true,
-                cancelButtonText: 'Seguir comprando'
+                confirmButtonText: 'Ir al carrito',
+                cancelButtonText: 'Seguir comprando',
                 confirmButtonColor: '#d94423',
-                cancelButtonColor: '#d94423'
+                cancelButtonColor: '#6c757d'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '/pago/carrito';
+                    window.location.href = '/cart';
                 }
             });
         } else {
             Swal.fire({
                 title: 'Error',
                 text: data.message || 'Error al agregar al carrito',
-                icon: 'error'
+                icon: 'error',
+                confirmButtonColor: '#d94423'
             });
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al agregar al carrito',
+            icon: 'error'
+        });
     });
 }
+
+// Event listeners cuando el DOM está cargado
+document.addEventListener('DOMContentLoaded', function() {
+    const cantidadInput = document.getElementById('cantidadTickets');
+    if (cantidadInput) {
+        cantidadInput.addEventListener('change', actualizarTotal);
+        actualizarTotal();
+    }
+});
+
+// Asegurarnos de que las funciones estén disponibles globalmente
+window.mostrarAlertaLogin = mostrarAlertaLogin;
+window.agregarAlCarrito = agregarAlCarrito;
+window.decrementarCantidad = decrementarCantidad;
+window.incrementarCantidad = incrementarCantidad;

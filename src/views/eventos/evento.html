@@ -12,8 +12,8 @@
   <link rel="stylesheet" type="text/css" href="/css/footer.css">
   <link rel="stylesheet"
     href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css">
-  <script src="js/validacionEvento2.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/validacionEvento2.js"></script>
   <script src="/js/eventos.js" defer></script>
 </head>
 
@@ -91,7 +91,11 @@
         <div class="botones">
             <% if (evento.numerotickets > 0) { %>
                 <button onclick="guardarEvento('<%= evento._id %>')" class="btn-guardar">Guardar</button>
-                <button onclick="agregarAlCarrito('<%= evento._id %>', <%= evento.precio %>)" class="btn-comprar">Agregar al Carrito</button>
+                <% if (locals.isAuthenticated) { %>
+                    <button onclick="agregarAlCarrito('<%= evento._id %>', <%= evento.precio %>)" class="btn-comprar">Agregar al Carrito</button>
+                <% } else { %>
+                    <button onclick="mostrarAlertaLogin()" class="btn-comprar">Agregar al Carrito</button>
+                <% } %>
             <% } else { %>
                 <button class="btn-agotado" disabled>Agotado</button>
             <% } %>
