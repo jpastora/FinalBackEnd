@@ -1,6 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("registrationForm");
-
+document.addEventListener('DOMContentLoaded', () => {
     function showError(inputId, message) {
         const errorElement = document.getElementById(`error-${inputId}`);
         if (errorElement) {
@@ -18,141 +16,135 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     function validatePhone(phone) {
-        const phoneRegex = /^\d{8}$/;
-        return phoneRegex.test(phone);
-    }
-
-    function validateMatchingFields(field1Id, field2Id, errorMessage) {
-        const field1 = document.getElementById(field1Id);
-        const field2 = document.getElementById(field2Id);
-        if (field1.value !== field2.value) {
-            showError(field2Id, errorMessage);
-            return false;
-        }
-        clearError(field2Id);
-        return true;
+        return /^\d{8}$/.test(phone);
     }
 
     function validateText(text) {
-        const textRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,}$/;
-        return textRegex.test(text);
+        return /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,}$/.test(text);
     }
 
-    form.querySelectorAll("input").forEach(input => {
-        input.addEventListener("input", (e) => {
-            const { id, value } = e.target;
-            switch (id) {
-                case "name":
-                    if (!validateText(value)) {
-                        showError(id, "El nombre debe tener al menos 3 caracteres y solo puede contener letras.");
-                    } else {
-                        clearError(id);
-                    }
-                    break;
-                case "secondName":
-                    if (!validateText(value)) {
-                        showError(id, "El apellido debe tener al menos 3 caracteres y solo puede contener letras.");
-                    } else {
-                        clearError(id);
-                    }
-                    break;
-                case "id":
-                    /^\d{1,9}$/.test(value) 
-                        ? clearError(id) 
-                        : showError(id, "La identificación debe contener solo números y tener máximo 9 dígitos.");
-                    break;
-                case "email":
-                    if (!validateEmail(value)) {
-                        showError(id, "El correo electrónico no es válido.");
-                    } else {
-                        clearError(id);
-                        // Validar coincidencia si confirm_email tiene valor
-                        if (document.getElementById("confirm_email").value) {
-                            validateMatchingFields("email", "confirm_email", "Los correos no coinciden.");
+    // Validaciones en tiempo real
+    const form = document.getElementById('registrationForm');
+    if (form) {
+        form.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const { id, value } = e.target;
+                switch (id) {
+                    case 'name':
+                    case 'secondName':
+                        if (!validateText(value)) {
+                            showError(id, `El ${id === 'name' ? 'nombre' : 'apellido'} debe tener al menos 3 caracteres y solo letras`);
+                        } else {
+                            clearError(id);
                         }
-                    }
-                    break;
-                case "confirm_email":
-                    validateMatchingFields("email", "confirm_email", "Los correos no coinciden.");
-                    break;
-                case "password":
-                    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value)) {
-                        showError(id, "La contraseña debe tener al menos 8 caracteres, incluyendo una letra y un número.");
-                    } else {
-                        clearError(id);
-                        // Validar coincidencia si confirm_password tiene valor
-                        if (document.getElementById("confirm_password").value) {
-                            validateMatchingFields("password", "confirm_password", "Las contraseñas no coinciden.");
+                        break;
+                    case 'id':
+                        if (!/^\d{1,9}$/.test(value)) {
+                            showError(id, 'La identificación debe contener solo números (máximo 9 dígitos)');
+                        } else {
+                            clearError(id);
                         }
-                    }
-                    break;
-                case "confirm_password":
-                    validateMatchingFields("password", "confirm_password", "Las contraseñas no coinciden.");
-                    break;
-                case "phone":
-                    validatePhone(value) ? clearError(id) : showError(id, "El número debe tener exactamente 8 dígitos.");
-                    break;
-                case "terms":
-                    e.target.checked ? clearError(id) : showError(id, "Debe aceptar los Términos y Condiciones.");
-                    break;
-            }
-        });
-    });
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        let isValid = true;
-
-        form.querySelectorAll("input").forEach(input => {
-            const event = new Event("input");
-            input.dispatchEvent(event);
-            if (document.getElementById(`error-${input.id}`)?.innerText !== "") {
-                isValid = false;
-            }
+                        break;
+                    case 'email':
+                    case 'confirm_email':
+                        if (!validateEmail(value)) {
+                            showError(id, 'Correo electrónico no válido');
+                        } else if (id === 'confirm_email' && value !== document.getElementById('email').value) {
+                            showError(id, 'Los correos no coinciden');
+                        } else {
+                            clearError(id);
+                        }
+                        break;
+                    case 'password':
+                    case 'confirm_password':
+                        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value)) {
+                            showError(id, 'La contraseña debe tener al menos 8 caracteres, una letra y un número');
+                        } else if (id === 'confirm_password' && value !== document.getElementById('password').value) {
+                            showError(id, 'Las contraseñas no coinciden');
+                        } else {
+                            clearError(id);
+                        }
+                        break;
+                    case 'phone':
+                        if (!validatePhone(value)) {
+                            showError(id, 'El teléfono debe tener 8 dígitos');
+                        } else {
+                            clearError(id);
+                        }
+                        break;
+                }
+            });
         });
 
-        if (isValid) {
+        // Manejo del envío del formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Verificar todas las validaciones
+            let isValid = true;
+            form.querySelectorAll('input').forEach(input => {
+                const errorSpan = document.getElementById(`error-${input.id}`);
+                if (errorSpan && errorSpan.innerText !== '') {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: 'Por favor, corrige los errores en el formulario',
+                    confirmButtonColor: '#db4437'
+                });
+                return;
+            }
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
             try {
-                const formData = new FormData(form);
-                const response = await fetch('/registerUser', {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    secondName: document.getElementById('secondName').value,
+                    id: document.getElementById('id').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    phone: document.getElementById('phone').value
+                };
+
+                const response = await fetch('/auth/register', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(formData)
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
                 });
 
                 const data = await response.json();
 
                 if (data.success) {
-                    Swal.fire({
+                    await Swal.fire({
                         icon: 'success',
                         title: '¡Registro exitoso!',
-                        text: 'Tu cuenta ha sido creada correctamente.',
-                        confirmButtonColor: '#db4437',
-                        background: '#fefefe'
-                    }).then((result) => {
-                        if (result.isConfirmed || result.isDismissed) {
-                            window.location.href = '/auth/login';
-                        }
+                        text: 'Tu cuenta ha sido creada correctamente',
+                        confirmButtonColor: '#db4437'
                     });
+                    window.location.href = '/auth/login';
                 } else {
-                    throw new Error(data.error || 'Error en el registro');
+                    throw new Error(data.message);
                 }
             } catch (error) {
-                Swal.fire({
+                await Swal.fire({
                     icon: 'error',
                     title: 'Error en el registro',
-                    text: error.message || 'No se pudo completar el registro. Por favor, intenta nuevamente.',
-                    confirmButtonColor: '#db4437',
-                    background: '#fefefe'
+                    text: error.message || 'Error al procesar el registro',
+                    confirmButtonColor: '#db4437'
                 });
+            } finally {
+                submitButton.disabled = false;
             }
-        }
-    });
+        });
+    }
 });
