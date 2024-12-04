@@ -91,13 +91,54 @@
         <div class="botones">
             <% if (evento.numerotickets > 0) { %>
                 <button onclick="guardarEvento('<%= evento._id %>')" class="btn-guardar">Guardar</button>
-                <a href="/pago/seleccion?evento=<%= evento._id %>" class="btn-comprar">Comprar Tickets</a>
+                <button onclick="agregarAlCarrito('<%= evento._id %>', <%= evento.precio %>)" class="btn-comprar">Agregar al Carrito</button>
             <% } else { %>
                 <button class="btn-agotado" disabled>Agotado</button>
             <% } %>
         </div>
       </div>
     </div>
+
+    <script>
+        function agregarAlCarrito(eventoId, precio) {
+            const cantidad = parseInt(document.getElementById('cantidadTickets').value);
+            
+            fetch('/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    eventoId: eventoId,
+                    cantidad: cantidad,
+                    precio: precio
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: 'Evento agregado al carrito',
+                        icon: 'success',
+                        confirmButtonText: 'Ir al carrito',
+                        showCancelButton: true,
+                        cancelButtonText: 'Seguir comprando'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/pago/pagos';
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data.message || 'Error al agregar al carrito',
+                        icon: 'error'
+                    });
+                }
+            });
+        }
+    </script>
 
     <% if (eventosRelacionados && eventosRelacionados.length > 0) { %>
       <section class="eventos-relacionados">

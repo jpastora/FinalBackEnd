@@ -34,38 +34,80 @@
 
 
       <main class="contenedorCarrito">
-        <div class="evento">
-          <div class="infoEvento">
-            <h2>Campeonato de Tennis</h2>
-            <p><strong>Lugar:</strong> San José, Costa Rica</p>
-            <p><strong>Fecha:</strong> 30 sept, 2024</p>
-            <p><strong>Hora:</strong> 10:00 a.m.</p>
-            <p><strong>Precio:</strong> 33,000</p>
-          </div>
-          <div class="imagenEvento">
-            <img src="/img/eventoCategoria3.png" alt="Evento de Tennis">
-          </div>
-        </div>
+        <% if (cart && cart.items && cart.items.length > 0) { %>
+          <% cart.items.forEach(item => { %>
+            <div class="evento" data-item-id="<%= item._id %>">
+              <div class="infoEvento">
+                <h2><%= item.evento.nombre %></h2>
+                <p><strong>Lugar:</strong> <%= item.evento.lugar %></p>
+                <p><strong>Fecha:</strong> <%= new Date(item.evento.fecha).toLocaleDateString('es-ES') %></p>
+                <p><strong>Hora:</strong> <%= item.evento.hora %></p>
+                <p><strong>Precio:</strong> ₡<%= item.precioUnitario.toLocaleString() %></p>
+                <p><strong>Cantidad:</strong> 
+                  <input type="number" class="cantidadInput" value="<%= item.cantidad %>" min="1" 
+                         data-precio="<%= item.precioUnitario %>">
+                </p>
+                <button class="eliminarItem" onclick="eliminarDelCarrito('<%= item._id %>')">Eliminar</button>
+              </div>
+              <div class="imagenEvento">
+                <img src="<%= item.evento.imagen %>" alt="<%= item.evento.nombre %>">
+              </div>
+            </div>
+          <% }); %>
 
-        <div class="evento">
-          <div class="infoEvento">
-            <h2>Campeonato de Tennis</h2>
-            <p><strong>Lugar:</strong> San José, Costa Rica</p>
-            <p><strong>Fecha:</strong> 30 abril, 2024</p>
-            <p><strong>Hora:</strong> 20:00 p.m.</p>
-            <p><strong>Precio:</strong> 33,000</p>
+          <div class="resumenCompra">
+            <p><strong>Subtotal:</strong> ₡<%= subtotal.toLocaleString() %></p>
+            <p><strong>IVA (13%):</strong> ₡<%= iva.toLocaleString() %></p>
+            <p><strong>Total:</strong> ₡<%= total.toLocaleString() %></p>
+            <button class="botonPagar" onclick="window.location.href='/pago/seleccion'">Proceder al Pago</button>
           </div>
-          <div class="imagenEvento">
-            <img src="/img/eventoCategoria2.png" alt="Evento de Tennis">
+        <% } else { %>
+          <div class="carritoVacio">
+            <p>Tu carrito está vacío</p>
+            <a href="/eventos" class="botonContinuar">Ver Eventos</a>
           </div>
-        </div>
-
-        <div class="resumenCompra">
-          <p><strong>IVA:</strong> 2,500</p>
-          <p><strong>Total:</strong> 68,500</p>
-          <a href="/pago/seleccion"><button class="botonPagar">Proceder al Pago</button></a>
-        </div>
+        <% } %>
       </main>
+
+      <script>
+        async function eliminarDelCarrito(itemId) {
+          try {
+            const response = await fetch(`/cart/remove/${itemId}`, {
+              method: 'DELETE'
+            });
+            const data = await response.json();
+            if (data.success) {
+              location.reload();
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+
+        document.querySelectorAll('.cantidadInput').forEach(input => {
+          input.addEventListener('change', async function() {
+            const itemId = this.closest('.evento').dataset.itemId;
+            const cantidad = parseInt(this.value);
+            const precio = parseFloat(this.dataset.precio);
+            
+            try {
+              const response = await fetch(`/cart/update/${itemId}`, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cantidad })
+              });
+              const data = await response.json();
+              if (data.success) {
+                location.reload();
+              }
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          });
+        });
+      </script>
 
   <!-- Footer -->
   <%- include('../partials/footer') %>

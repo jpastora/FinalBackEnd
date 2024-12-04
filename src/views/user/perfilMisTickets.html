@@ -52,36 +52,46 @@
                     <!-------------------------------------------Filtro---------------------------------------------->
 
                     <div>
-                        <form class="formularioBusqueda">
-                            <div class="grupoBusqueda" id="Grupo__BuscarPalabra">
+                        <form class="formularioBusqueda" method="GET">
+                            <div class="grupoBusqueda">
                                 <label class="etiquetaFormulario">Buscar por palabra</label>
                                 <div class="grupoInput">
-                                    <input type="text" class="campoInput" name="busqueda" id="Busqueda__Palabra"
-                                        placeholder="Busqueda..." />
+                                    <input type="text" class="campoInput" name="busqueda"
+                                        placeholder="Buscar evento..." value="<%= filtros.busqueda || '' %>"/>
                                 </div>
                             </div>
-                            <div class="grupoBusqueda" id="Grupo__Lugar">
+                            
+                            <div class="grupoBusqueda">
                                 <label class="etiquetaFormulario">Lugar</label>
                                 <div class="grupoInput">
-                                    <select class="campoInput" name="seleccioneLugar" id="Seleccion__Lugar">
-                                        <option value="disabled selected">Seleccionar lugar</option>
-                                        <option value="San José">San José</option>
-                                        <option value="Heredia">Heredia</option>
+                                    <select class="campoInput" name="lugar">
+                                        <option value="">Todos los lugares</option>
+                                        <% lugares.forEach(function(lugar) { %>
+                                            <option value="<%= lugar %>" <%= filtros.lugar === lugar ? 'selected' : '' %>>
+                                                <%= lugar %>
+                                            </option>
+                                        <% }); %>
                                     </select>
                                 </div>
                             </div>
-                            <div class="grupoBusqueda" id="Grupo__Categoria">
+                            
+                            <div class="grupoBusqueda">
                                 <label class="etiquetaFormulario">Categoría</label>
                                 <div class="grupoInput">
-                                    <select class="campoInput" name="seleccioneCategoria" id="Seleccion__Categoria">
-                                        <option value="" disabled selected>Seleccionar categoría</option>
-                                        <option value="Conciertos">Conciertos</option>
-                                        <option value="Partidos">Partidos</option>
+                                    <select class="campoInput" name="categoria">
+                                        <option value="">Todas las categorías</option>
+                                        <% categorias.forEach(function(categoria) { %>
+                                            <option value="<%= categoria %>" <%= filtros.categoria === categoria ? 'selected' : '' %>>
+                                                <%= categoria %>
+                                            </option>
+                                        <% }); %>
                                     </select>
                                 </div>
                             </div>
+                            
                             <div class="grupoBusqueda grupoBtnEnviar">
-                                <input type="submit" value="Buscar" class="botonBuscar" />
+                                <button type="submit" class="botonBuscar">Buscar</button>
+                                <a href="/perfil/mis-tickets" class="botonLimpiar">Limpiar</a>
                             </div>
                         </form>
                     </div>
@@ -91,23 +101,22 @@
                     <!-------------------------------------------Mis Tickets---------------------------------------------->
 
                     <div class="seccionTickets">
-                        <h2 class="tituloEvento">Campeonato de tennis</h2>
-                        <div class="infoTicket">
-                            <div class="detalleTicket"><strong>Lugar:</strong> San José, Costa Rica</div>
-                            <div class="detalleTicket"><strong>Fecha:</strong> 30, sept, 2024</div>
-                            <div class="detalleTicket"><strong>Hora:</strong> 10:30 a.m</div>
-                            <div class="detalleTicket"><strong>Compra:</strong> 12/12/12</div>
-                            <a href="../ticket.html" class="botonVerTicket">VER TICKET</a>
-                        </div>
-
-                        <h2 class="tituloEvento">Campeonato de tennis</h2>
-                        <div class="infoTicket">
-                            <div class="detalleTicket"><strong>Lugar:</strong> San José, Costa Rica</div>
-                            <div class="detalleTicket"><strong>Fecha:</strong> 30, sept, 2024</div>
-                            <div class="detalleTicket"><strong>Hora:</strong> 10:30 a.m</div>
-                            <div class="detalleTicket"><strong>Compra:</strong> 12/12/12</div>
-                            <a href="../ticket.html" class="botonVerTicket">VER TICKET</a>
-                        </div>
+                        <% if (tickets && tickets.length > 0) { %>
+                            <% tickets.forEach(ticket => { %>
+                                <h2 class="tituloEvento"><%= ticket.evento.nombre %></h2>
+                                <div class="infoTicket">
+                                    <div class="detalleTicket"><strong>Lugar:</strong> <%= ticket.evento.lugar %></div>
+                                    <div class="detalleTicket"><strong>Fecha:</strong> <%= new Date(ticket.evento.fecha).toLocaleDateString('es-ES') %></div>
+                                    <div class="detalleTicket"><strong>Hora:</strong> <%= ticket.evento.hora %></div>
+                                    <div class="detalleTicket"><strong>Compra:</strong> <%= new Date(ticket.fechaCompra).toLocaleDateString('es-ES') %></div>
+                                    <div class="detalleTicket"><strong>Cantidad:</strong> <%= ticket.cantidad %></div>
+                                    <div class="detalleTicket"><strong>Total:</strong> ₡<%= ticket.precioTotal %></div>
+                                    <a href="/ticket/<%= ticket._id %>" class="botonVerTicket">VER TICKET</a>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="noTickets">No has comprado tickets aún.</p>
+                        <% } %>
                     </div>
 
                     <!-------------------------------------------FIN Mis Tickets---------------------------------------------->
