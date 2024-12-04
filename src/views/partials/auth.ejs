@@ -2,6 +2,12 @@
     <div class="enlacesAuth" id="enlaces__auth">
         <% if (typeof user !== 'undefined' && user && user.rol === 'admin') { %>
             <a href="/admin/datos-personales">Ver cuenta</a>
+            <ul class="submenuPerfil">
+                <li><a href="/perfil/datos-personales">Datos personales</a></li>
+                <li><a href="/perfil/seguridad">Seguridad</a></li>
+                <li><a href="/perfil/eventos-guardados">Eventos Guardados</a></li>
+                <li><a href="/perfil/metodospago">Métodos de pago</a></li>
+            </ul>
         <% } else { %>
             <div class="menuPerfil">
                 <a href="/perfil/datos-personales">Ver cuenta</a>
