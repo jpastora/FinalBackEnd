@@ -1,6 +1,20 @@
 
 const session = require('express-session');
 
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    name: String,
+    secondName: String,
+    id: String,
+    email: String,
+    password: String,
+    phone: String,
+    rol: String
+});
+
+module.exports = mongoose.model('User', userSchema);
+
 const sessionConfig = {
     secret: 'secreto-seguro-aqui',
     resave: false,
@@ -33,7 +47,39 @@ const authMiddleware = (req, res, next) => {
     next();
 };
 
+
+// Function to check authentication and roles
+function checkAuth(req, res, next) {
+    const user = req.user; // Assuming user information is stored in req.user
+
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    if (user.role === 'admin') {
+        return res.redirect('/admin-dashboard');
+    } else if (user.role === 'user') {
+        return res.redirect('/user-dashboard');
+    } else {
+        return res.status(403).send('Access Denied');
+    }
+}
+
+const checkUserRole = (role) => {
+    return (req, res, next) => {
+        if (req.session && req.session.user && req.session.user.rol === role) {
+            return next();
+        }
+        res.status(403).render('error.html', { 
+            title: 'Acceso Denegado',
+            message: 'No tienes permisos para acceder a esta área'
+        });
+    };
+};
+
 module.exports = {
     sessionConfig,
-    authMiddleware
+    authMiddleware,
+    checkAuth,
+    checkUserRole
 };

@@ -2,19 +2,29 @@
 const { Admin } = require('mongodb');
 const mongoose = require('mongoose');
 
-// Schema de usuarios
-let userSchema = new mongoose.Schema({
-    name: { type: String, required: true, trim: true },
-    secondName: { type: String, required: true, trim: true },
-    id: { type: String, required: true, unique: true, minlength: 9 },
-    email: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true, minlength: 6 },
-    phone: { type: String, required: true,},
-    rol: { type: String, enum: [ 'admin', 'user'], default: 'user' },
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String,
+    rol: String
 });
 
 // Modelo de usuarios
-let User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+const User = require('../models/user');
+
+const findUserByEmail = async (email) => {
+    try {
+        const user = await User.findOne({ email });
+        return user;
+    } catch (error) {
+        console.error('Error finding user by email:', error);
+        throw error;
+    }
+};
 
 module.exports = User;
+
+
 

@@ -1,6 +1,10 @@
 const User = require('../models/user');
 const { sendConfirmationEmail } = require('../config/mailer');
 const { generateTempPassword } = require('../utils/helpers');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+
 
 const login = async (req, res) => {
     try {

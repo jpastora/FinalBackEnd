@@ -107,4 +107,21 @@ function gracefulShutdown() {
     process.exit(0);
 }
 
+// Your other imports and middleware setup here
+
+// Routes
+app.get('/', checkAuth, (req, res) => {
+    res.send('Welcome to the homepage');
+});
+
+// Single server shutdown handler
+process.on('SIGINT', () => {
+    console.log('Cerrando servidor...');
+    mongoose.connection.close();
+    process.exit(0);
+});
+
 module.exports = app;
+
+
+

@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 // Rutas POST para autenticación
-router.post('/login', async (req, res) => {
+router.post('/login', authController.login, async (req, res) => {
     try {
         const { email, password } = req.body;
         
@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', authController.register, async (req, res) => {
     try {
         const { email, password, name, secondName, id, phone } = req.body;
         

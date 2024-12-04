@@ -33,4 +33,31 @@ router.get('/crear-evento', (req, res) => {
     res.render('admin/adminCrearEvento.html', { title: 'Crear Evento' });
 });
 
+const { checkUserRole } = require('../middleware/auth');
+
+// Protected routes with admin role check
+router.get('/', checkUserRole('admin'), (req, res) => {
+    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
+});
+
+router.get('/datos-personales', checkUserRole('admin'), (req, res) => {
+    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
+});
+
+router.get('/usuarios', checkUserRole('admin'), (req, res) => {
+    res.render('admin/administrarUsuarios.html', { title: 'Administrar Usuarios' });
+});
+
+router.get('/eventos', checkUserRole('admin'), (req, res) => {
+    res.render('admin/adminEventos.html', { title: 'Administrar Eventos' });
+});
+
+router.get('/editar-evento', checkUserRole('admin'), (req, res) => {
+    res.render('admin/adminEditarEventos.html', { title: 'Editar Evento' });
+});
+
+router.get('/crear-evento', checkUserRole('admin'), (req, res) => {
+    res.render('admin/adminCrearEvento.html', { title: 'Crear Evento' });
+});
+
 module.exports = router;
