@@ -1,10 +1,6 @@
 const User = require('../models/user');
-const { sendConfirmationEmail } = require('../config/mailer');
-const { generateTempPassword } = require('../utils/helpers');
-const User = require('../models/user');
+const { sendConfirmationEmail, sendPasswordResetEmail } = require('../config/mailer');
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
-
 
 const login = async (req, res) => {
     try {
@@ -12,39 +8,44 @@ const login = async (req, res) => {
         console.log('Intentando login con:', { email });
 
         if (!email || !password) {
-            return res.render('auth/login.html', {
-                title: 'Iniciar Sesión',
-                error: 'Email y contraseña son requeridos'
+            return res.status(400).json({
+                success: false,
+                message: 'Email y contraseña son requeridos'
             });
         }
 
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email.toLowerCase() });
         
         if (!user) {
-            return res.render('auth/login.html', {
-                title: 'Iniciar Sesión',
-                error: 'Usuario no encontrado'
+            return res.status(401).json({
+                success: false,
+                message: 'Credenciales inválidas'
             });
         }
 
-        if (password === user.password) {
-            req.session.user = {
-                userId: user._id,
-                email: user.email,
-                rol: user.rol
-            };
-            return res.redirect('/');
-        } else {
-            return res.render('auth/login.html', {
-                title: 'Iniciar Sesión',
-                error: 'Email o contraseña incorrectos'
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Credenciales inválidas'
             });
         }
+
+        req.session.user = {
+            userId: user._id,
+            email: user.email,
+            rol: user.rol
+        };
+
+        return res.json({
+            success: true,
+            message: 'Login exitoso'
+        });
     } catch (err) {
         console.error('Error en login:', err);
-        return res.render('auth/login.html', {
-            title: 'Iniciar Sesión',
-            error: 'Error interno del servidor'
+        return res.status(500).json({
+            success: false,
+            message: 'Error interno del servidor'
         });
     }
 };
@@ -84,37 +85,36 @@ const register = async (req, res) => {
 const recoverPassword = async (req, res) => {
     try {
         const { email } = req.body;
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
             return res.status(404).json({
                 success: false,
-                error: 'No existe una cuenta con este correo electrónico'
+                message: 'No existe una cuenta con este correo electrónico'
             });
         }
 
-        const tempPassword = generateTempPassword();
-        user.password = tempPassword;
+        const tempPassword = Math.random().toString(36).slice(-8);
+        const hashedPassword = await bcrypt.hash(tempPassword, 10);
+        
+        user.password = hashedPassword;
         await user.save();
 
-        const emailSent = await sendConfirmationEmail({
-            ...user.toObject(),
-            tempPassword
-        });
+        const emailSent = await sendPasswordResetEmail(user, tempPassword);
 
         if (!emailSent) {
             throw new Error('Error al enviar el correo');
         }
 
-        res.status(200).json({
+        return res.json({
             success: true,
             message: 'Se ha enviado una nueva contraseña a tu correo electrónico'
         });
     } catch (error) {
         console.error('Error en recuperación:', error);
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            error: 'Error al procesar la solicitud'
+            message: 'Error al procesar la solicitud'
         });
     }
 };

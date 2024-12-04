@@ -1,19 +1,5 @@
-
 const session = require('express-session');
-
-const mongoose = require('mongoose');
-
-const userSchema = new mongoose.Schema({
-    name: String,
-    secondName: String,
-    id: String,
-    email: String,
-    password: String,
-    phone: String,
-    rol: String
-});
-
-module.exports = mongoose.model('User', userSchema);
+const User = require('../models/user');
 
 const sessionConfig = {
     secret: 'secreto-seguro-aqui',
