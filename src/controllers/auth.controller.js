@@ -5,9 +5,10 @@ const bcrypt = require('bcrypt');
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log('Intentando login con:', { email });
+        console.log('Datos recibidos en el servidor:', { email, password });
 
         if (!email || !password) {
+            console.log('Faltan campos requeridos');
             return res.status(400).json({
                 success: false,
                 message: 'Email y contraseña son requeridos'
@@ -15,6 +16,7 @@ const login = async (req, res) => {
         }
 
         const user = await User.findOne({ email: email.toLowerCase() });
+        console.log('Usuario encontrado:', user ? 'Sí' : 'No');
         
         if (!user) {
             return res.status(401).json({
@@ -24,6 +26,8 @@ const login = async (req, res) => {
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
+        console.log('Contraseña válida:', isValidPassword ? 'Sí' : 'No');
+
         if (!isValidPassword) {
             return res.status(401).json({
                 success: false,
@@ -36,6 +40,7 @@ const login = async (req, res) => {
             email: user.email,
             rol: user.rol
         };
+        console.log('Sesión creada:', req.session.user);
 
         return res.json({
             success: true,

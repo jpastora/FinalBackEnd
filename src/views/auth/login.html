@@ -75,6 +75,17 @@
       const email = document.getElementById('Email__Usuario').value;
       const password = document.getElementById('Password__Usuario').value;
       
+      // Validación de campos
+      if (!email || !password) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Campos incompletos',
+              text: 'Por favor, complete tanto el email como la contraseña',
+              confirmButtonColor: '#db4437'
+          });
+          return;
+      }
+      
       try {
           const response = await fetch('/auth/login', {
               method: 'POST',
@@ -85,15 +96,24 @@
           });
   
           const data = await response.json();
-          console.log('Respuesta del servidor:', data); // Debug
+          console.log('Respuesta del servidor:', data);
           
           if (data.success) {
+              // Mostrar alerta de éxito antes de redirigir
+              await Swal.fire({
+                  icon: 'success',
+                  title: '¡Bienvenido!',
+                  text: 'Inicio de sesión exitoso',
+                  confirmButtonColor: '#db4437',
+                  timer: 1500
+              });
               window.location.href = '/';
           } else {
               Swal.fire({
                   icon: 'error',
                   title: 'Error de inicio de sesión',
-                  text: data.message || 'Error al iniciar sesión'
+                  text: data.message || 'Credenciales inválidas',
+                  confirmButtonColor: '#db4437'
               });
           }
       } catch (error) {
@@ -101,7 +121,8 @@
           Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: 'Error al procesar la solicitud'
+              text: 'Error al procesar la solicitud',
+              confirmButtonColor: '#db4437'
           });
       }
   });
