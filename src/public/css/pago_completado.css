@@ -286,14 +286,14 @@ body {
 
 .btn-primary, .btn-secondary {
     padding: 12px 25px;
-    border-radius: 25px;
+    border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
 }
 
 .btn-primary {
-    background: #86a641;
+    background: #d94423;
     color: white;
 }
 
@@ -304,7 +304,7 @@ body {
 }
 
 .btn-primary:hover {
-    background: #748e37;
+    background: #86a641;
 }
 
 .btn-secondary:hover {

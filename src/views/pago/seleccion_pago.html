@@ -107,82 +107,11 @@
         </div>
     </main>
 
-    <style>
-    .metodos-pago {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    .cards-container {
-        display: grid;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .tarjeta-guardada {
-        background: #f8f9fa;
-        border: 2px solid #ddd;
-        border-radius: 10px;
-        padding: 15px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .tarjeta-guardada:hover {
-        border-color: #007bff;
-        transform: translateY(-2px);
-    }
-
-    .tarjeta-guardada.seleccionada {
-        border-color: #28a745;
-        background-color: #e8f5e9;
-        box-shadow: 0 0 10px rgba(40, 167, 69, 0.2);
-    }
-
-    .card-info {
-        display: grid;
-        gap: 5px;
-    }
-
-    .separador {
-        text-align: center;
-        margin: 20px 0;
-        position: relative;
-    }
-
-    .separador::before,
-    .separador::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 45%;
-        height: 1px;
-        background-color: #ddd;
-    }
-
-    .separador::before { left: 0; }
-    .separador::after { right: 0; }
-
-    .separador span {
-        background: white;
-        padding: 0 10px;
-        color: #666;
-    }
-
-    .checkbox-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin: 15px 0;
-    }
-    </style>
-
     <script src="/js/seleccion_pago.js"></script>
 
-  <!-- Footer -->
-  <%- include('../partials/footer') %>
-  <!-- Fin Footer -->
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+    <!-- Fin Footer -->
 </body>
 
 </html>

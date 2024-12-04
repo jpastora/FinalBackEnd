@@ -318,20 +318,20 @@ body {
 
 .btn-primario, .btn-secundario {
     padding: 12px 25px;
-    border-radius: 25px;
+    border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn-primario {
-    background: #86a641;
+    background: #d94423;
     color: white;
     border: none;
 }
 
 .btn-primario:hover {
-    background: #218838;
+    background: #86a641;
 }
 
 .btn-secundario {

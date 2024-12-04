@@ -126,13 +126,13 @@ body {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background-color: #86a641; /* Color por defecto */
-    border: 2px solid #86a641;
+    background-color: #d94423; /* Color por defecto */
+    border: 2px solid #d94423;
     margin-top: -8px; /* Ajuste para alinear con la línea */
 }
 
 .paso.completed .circulo {
-    background-color: #86a641; /* Color de pasos completados */
+    background-color: #d94423; /* Color de pasos completados */
 }
 
 .paso.active .circulo {
@@ -206,7 +206,7 @@ body {
 .boton-continuar {
     width: 100%;
     padding: 15px;
-    background-color: #28a745;
+    background-color: #d94423;
     color: white;
     border: none;
     border-radius: 5px;
@@ -217,7 +217,7 @@ body {
 }
 
 .boton-continuar:hover {
-    background-color: #218838;
+    background-color: #86a641;
 }
 
 .metodos-pago {
@@ -242,12 +242,12 @@ body {
 }
 
 .tarjeta-guardada:hover {
-    border-color: #007bff;
+    border-color: #d94423;
     transform: translateY(-2px);
 }
 
 .tarjeta-guardada.seleccionada {
-    border-color: #28a745;
+    border-color: #d94423;
     background-color: #e8f5e9;
     box-shadow: 0 0 10px rgba(40, 167, 69, 0.2);
 }
@@ -310,17 +310,17 @@ body {
 }
 
 .campo-grupo input:focus {
-    border-color: #007bff;
+    border-color: #d94423;
     outline: none;
 }
 
 .boton-continuar {
     width: 100%;
     padding: 15px;
-    background-color: #28a745;
+    background-color: #d94423;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
