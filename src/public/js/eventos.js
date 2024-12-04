@@ -151,17 +151,34 @@ async function guardarEvento(eventoId) {
 
 async function eliminarEventoGuardado(eventoId) {
     try {
+        console.log('Iniciando eliminación del evento:', eventoId); // Debug
+
         const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¿Deseas eliminar este evento de tus guardados?",
+            title: '¿Eliminar evento?',
+            text: "Esta acción no se puede deshacer",
             icon: 'warning',
+            iconColor: '#d94423',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar',
-            ...swalConfig
+            confirmButtonColor: '#d94423',
+            cancelButtonColor: '#6c757d',
+            reverseButtons: true
         });
 
         if (result.isConfirmed) {
+            // Mostrar loading
+            Swal.fire({
+                title: 'Eliminando...',
+                text: 'Por favor espera',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             const response = await fetch(`/eventos/eliminar-guardado/${eventoId}`, {
                 method: 'DELETE',
                 headers: {
@@ -170,28 +187,31 @@ async function eliminarEventoGuardado(eventoId) {
                 credentials: 'include'
             });
 
-            const data = await response.json();
+            console.log('Respuesta del servidor:', response); // Debug
 
-            if (response.ok) {
-                Swal.fire({
+            const data = await response.json();
+            console.log('Datos de respuesta:', data); // Debug
+
+            if (response.ok && data.success) {
+                await Swal.fire({
                     title: '¡Eliminado!',
                     text: 'El evento ha sido eliminado de tus guardados',
                     icon: 'success',
-                    ...swalConfig
-                }).then(() => {
-                    // Recargar la página para actualizar la lista
-                    location.reload();
+                    confirmButtonColor: '#d94423',
+                    timer: 1500
                 });
+                window.location.reload();
             } else {
                 throw new Error(data.message || 'Error al eliminar el evento');
             }
         }
     } catch (error) {
-        Swal.fire({
+        console.error('Error en eliminarEventoGuardado:', error);
+        await Swal.fire({
             title: 'Error',
             text: error.message || 'Ocurrió un error al eliminar el evento',
             icon: 'error',
-            ...swalConfig
+            confirmButtonColor: '#d94423'
         });
     }
 }

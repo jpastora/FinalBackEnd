@@ -12,7 +12,11 @@
     <link rel="stylesheet" href="../css/perfilEventosGuardados.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
-
+    <!-- Agregar SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-material-ui/material-ui.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -125,31 +129,6 @@
 
 <script src="/js/eventos.js"></script>
 
-<script>
-// Añadir esto justo antes del cierre del body
-async function eliminarEventoGuardado(eventoId) {
-    try {
-        const response = await fetch(`/eventos/eliminar-guardado/${eventoId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            // Recargar la página o eliminar el elemento del DOM
-            window.location.reload();
-        } else {
-            throw new Error(data.message || 'Error al eliminar el evento');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error al eliminar el evento');
-    }
-}
-</script>
 </body>
 
 </html>
