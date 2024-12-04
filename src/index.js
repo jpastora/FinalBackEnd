@@ -37,7 +37,7 @@ app.use(authMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads/eventos', express.static(path.join(__dirname, 'uploads/eventos'))); // Cambio aquí
 app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'ejs');
+app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 
 // Middleware para variables globales

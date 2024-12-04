@@ -149,6 +149,53 @@ async function guardarEvento(eventoId) {
     }
 }
 
+async function eliminarEventoGuardado(eventoId) {
+    try {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas eliminar este evento de tus guardados?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            ...swalConfig
+        });
+
+        if (result.isConfirmed) {
+            const response = await fetch(`/eventos/eliminar-guardado/${eventoId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                Swal.fire({
+                    title: '¡Eliminado!',
+                    text: 'El evento ha sido eliminado de tus guardados',
+                    icon: 'success',
+                    ...swalConfig
+                }).then(() => {
+                    // Recargar la página para actualizar la lista
+                    location.reload();
+                });
+            } else {
+                throw new Error(data.message || 'Error al eliminar el evento');
+            }
+        }
+    } catch (error) {
+        Swal.fire({
+            title: 'Error',
+            text: error.message || 'Ocurrió un error al eliminar el evento',
+            icon: 'error',
+            ...swalConfig
+        });
+    }
+}
+
 // Función para mostrar alerta de login
 function mostrarAlertaLogin() {
     Swal.fire({
@@ -234,3 +281,4 @@ window.mostrarAlertaLogin = mostrarAlertaLogin;
 window.agregarAlCarrito = agregarAlCarrito;
 window.decrementarCantidad = decrementarCantidad;
 window.incrementarCantidad = incrementarCantidad;
+window.eliminarEventoGuardado = eliminarEventoGuardado;
