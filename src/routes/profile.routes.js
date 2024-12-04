@@ -4,6 +4,7 @@ const User = require('../models/user');
 const multer = require('multer');
 const upload = multer({ dest: 'src/public/uploads/profiles/' });
 const bcrypt = require('bcrypt');
+const PaymentCard = require('../models/paymentCard');
 
 router.get('/', (req, res) => {
     res.redirect('/perfil/datos-personales');
@@ -123,8 +124,45 @@ router.get('/seguridad', (req, res) => {
     res.render('user/perfilSeguridad.html', { title: 'Seguridad' });
 });
 
-router.get('/metodospago', (req, res) => {
-    res.render('user/perfilMetodosPago.html', { title: 'Métodos de Pago' });
+router.get('/metodospago', async (req, res) => {
+    try {
+        const cards = await PaymentCard.find({ userId: req.session.user._id });
+        res.render('user/perfilMetodosPago.html', { 
+            title: 'Métodos de Pago',
+            cards: cards
+        });
+    } catch (error) {
+        res.status(500).render('error.html', { message: error.message });
+    }
+});
+
+router.post('/metodospago/agregar', async (req, res) => {
+    try {
+        const { cardholderName, cardNumber, expirationDate, cvv } = req.body;
+        const newCard = new PaymentCard({
+            userId: req.session.user._id,
+            cardholderName,
+            cardNumber,
+            expirationDate,
+            cvv
+        });
+        await newCard.save();
+        res.json({ success: true, message: 'Tarjeta agregada exitosamente' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.delete('/metodospago/:cardId', async (req, res) => {
+    try {
+        await PaymentCard.findOneAndDelete({
+            _id: req.params.cardId,
+            userId: req.session.user._id
+        });
+        res.json({ success: true, message: 'Tarjeta eliminada exitosamente' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
 });
 
 router.get('/eventos-guardados', async (req, res) => {

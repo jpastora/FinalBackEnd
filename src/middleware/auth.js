@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
     if (req.session && req.session.user) {
         res.locals.isAuthenticated = true;
         res.locals.currentUser = req.session.user;
-        res.locals.userId = req.session.user._id; // Cambiado de userId a _id
+        res.locals.userId = req.session.user._id; 
         res.locals.userRole = req.session.user.rol;
     } else {
         res.locals.isAuthenticated = false;

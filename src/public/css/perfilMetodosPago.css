@@ -146,7 +146,7 @@
 
 .botonAgregar {
     padding: 10px 20px;
-    background-color: #007bff; 
+    background-color: #d94423; 
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -156,11 +156,109 @@
 }
 
 .botonAgregar:hover {
-    background-color: #0056b3;
+    background-color: #86a641;
 }
 
 .datosTarjeta {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+#formTarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#formTarjeta input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+#formTarjeta input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#formTarjeta button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#formTarjeta button[type="submit"] {
+    background-color: #86a641;
+    color: white;
+}
+
+#formTarjeta button[type="submit"]:hover {
+    background-color: #d94423;
+}
+
+#formTarjeta button[type="button"] {
+    background-color: #86a641;
+    color: white;
+}
+
+#formTarjeta button[type="button"]:hover {
+    background-color: #c82333;
+}
+
+/* Validación de formulario */
+#formTarjeta input:invalid {
+    border-color: #dc3545;
+}
+
+#formTarjeta input:valid {
+    border-color: #86a641;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+
+    #formTarjeta input,
+    #formTarjeta button {
+        padding: 10px;
+    }
 }
