@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="/css/footer.css">
     <link rel='stylesheet'
       href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
-  </head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
   
   <body>
   
@@ -54,29 +55,130 @@
 
     <!-- Formulario de Pago -->
     <main class="resumenCompra">
-        <div class="formulario-pago">
-            <h2>Información de Pago</h2>
-            <form>
-                <label for="numero-tarjeta">Número tarjeta</label>
-                <input type="text" id="numero-tarjeta" placeholder="XXXX XXXX XXXX XXXX">
-
-                <label for="titular-tarjeta">Titular de la tarjeta</label>
-                <input type="text" id="titular-tarjeta" placeholder="FERNANDO GONZALEZ">
-
-                <div class="fila-expiracion-seguridad">
-                    <div class="campo">
-                        <label for="fecha-expiracion">Fecha de expiración</label>
-                        <input type="text" id="fecha-expiracion" placeholder="XX/XX">
-                    </div>
-                    <div class="campo">
-                        <label for="codigo-seguridad">Código de seguridad</label>
-                        <input type="text" id="codigo-seguridad" placeholder="XXX">
-                    </div>
+        <div class="metodos-pago">
+            <div class="tarjetas-guardadas">
+                <h2>Tarjetas Guardadas</h2>
+                <div id="lista-tarjetas" class="cards-container">
+                    <!-- Se llenará dinámicamente con las tarjetas -->
                 </div>
-                <a href="/pago/resumen"><button type="submit" class="boton-continuar">CONTINUAR</button></a>
-            </form>
+            </div>
+
+            <div class="separador">
+                <span>O</span>
+            </div>
+
+            <div class="formulario-pago">
+                <h2>Nueva Tarjeta</h2>
+                <form id="formPago" onsubmit="return false;">
+                    <div class="campo-grupo">
+                        <label for="numero-tarjeta">Número de Tarjeta</label>
+                        <input type="text" id="numero-tarjeta" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="titular-tarjeta">Titular de la Tarjeta</label>
+                        <input type="text" id="titular-tarjeta" placeholder="Como aparece en la tarjeta">
+                    </div>
+
+                    <div class="fila-expiracion-seguridad">
+                        <div class="campo-grupo">
+                            <label for="fecha-expiracion">Fecha de Expiración</label>
+                            <input type="text" id="fecha-expiracion" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="campo-grupo">
+                            <label for="codigo-seguridad">CVV</label>
+                            <input type="password" id="codigo-seguridad" placeholder="XXX" maxlength="3">
+                        </div>
+                    </div>
+
+                    <div class="opciones-guardado">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="guardar-tarjeta" checked>
+                            <span class="checkmark"></span>
+                            Guardar tarjeta para futuras compras
+                        </label>
+                    </div>
+
+                    <button type="submit" class="boton-continuar" onclick="procesarPago()">
+                        CONTINUAR CON EL PAGO
+                    </button>
+                </form>
+            </div>
         </div>
     </main>
+
+    <style>
+    .metodos-pago {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .cards-container {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .tarjeta-guardada {
+        background: #f8f9fa;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .tarjeta-guardada:hover {
+        border-color: #007bff;
+        transform: translateY(-2px);
+    }
+
+    .tarjeta-guardada.seleccionada {
+        border-color: #28a745;
+        background-color: #e8f5e9;
+        box-shadow: 0 0 10px rgba(40, 167, 69, 0.2);
+    }
+
+    .card-info {
+        display: grid;
+        gap: 5px;
+    }
+
+    .separador {
+        text-align: center;
+        margin: 20px 0;
+        position: relative;
+    }
+
+    .separador::before,
+    .separador::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: #ddd;
+    }
+
+    .separador::before { left: 0; }
+    .separador::after { right: 0; }
+
+    .separador span {
+        background: white;
+        padding: 0 10px;
+        color: #666;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 15px 0;
+    }
+    </style>
+
+    <script src="/js/seleccion_pago.js"></script>
 
   <!-- Footer -->
   <%- include('../partials/footer') %>

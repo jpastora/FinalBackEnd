@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibetickets - Pago Completado </title>
+    <title>Compra Completada - Vibetickets</title>
     <link rel="stylesheet" type="text/css" href="/css/pago_completado.css">
     <link rel="stylesheet" type="text/css" href="/css/menu.css">
     <link rel="stylesheet" type="text/css" href="/css/footer.css">
@@ -21,42 +21,38 @@
   
     <!-- Fin Menú y Autenticación -->
   
-  
-    <section class="heroeImangen" id="heroe__imangen">
-      <section>
-          <div class="heroe" id="heroe__principal">
-              <div class="titulo" id="administrarusuarios">
-              <h1>Pago Completado</h1>
-              </div>
-          </div>
-      </section>
-    </section>
+    <main class="completado-container">
+        <div class="completado-content">
+            <div class="success-icon">
+                <i class="fi fi-ss-check-circle"></i>
+            </div>
+            
+            <h1>¡Compra Realizada con Éxito!</h1>
+            <div class="orden-info">
+                <h2>Número de Orden: #<%= ordenId %></h2>
+                <p class="fecha"><%= new Date().toLocaleDateString('es-ES') %></p>
+            </div>
 
-    <!-- Barra de Proceso de Pago -->
-    <section class="procesoCompra">
-        <div class="barraProceso">
-            <div class="paso completed">
-                <span>Método de Pago</span>
-                <div class="circulo"></div>
+            <div class="resumen-tickets">
+                <h3>Resumen de tu Compra</h3>
+                <% tickets.forEach(ticket => { %>
+                    <div class="ticket-item">
+                        <h4><%= ticket.evento.nombre %></h4>
+                        <p>Cantidad: <%= ticket.cantidad %> tickets</p>
+                        <p>Total: ₡<%= ticket.precioTotal.toLocaleString() %></p>
+                    </div>
+                <% }); %>
             </div>
-            <div class="line"></div>
-            <div class="paso completed">
-                <span>Validación de Información</span>
-                <div class="circulo"></div>
+
+            <div class="total-compra">
+                <p><strong>Total Pagado:</strong> ₡<%= totalCompra.toLocaleString() %></p>
             </div>
-            <div class="line"></div>
-            <div class="paso completed">
-                <span>Transacción Completada</span>
-                <div class="circulo"></div>
+
+            <div class="buttons">
+                <a href="/perfil/tickets" class="btn-primary">Ver mis Tickets</a>
+                <a href="/" class="btn-secondary">Volver al Inicio</a>
             </div>
         </div>
-    </section>
-
-    <!-- Mensaje de Pago Completado -->
-    <main class="mensajePagoCompletado">
-        <h2>PAGO COMPLETADO</h2>
-        <div class="icono-completado">&#10004;</div>
-        <p>Regresando a la pantalla de inicio</p>
     </main>
 
   <!-- Footer -->
