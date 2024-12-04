@@ -6,6 +6,8 @@ const upload = multer({ dest: 'src/public/uploads/profiles/' });
 const bcrypt = require('bcrypt');
 const PaymentCard = require('../models/paymentCard');
 const profileController = require('../controllers/profile.controller');
+const { isAuth } = require('../middleware/checkAuth'); // Agregar esta línea
+const EventoGuardado = require('../models/eventoGuardado'); // Agregar esta línea
 
 router.get('/', (req, res) => {
     res.redirect('/perfil/datos-personales');
@@ -166,55 +168,49 @@ router.delete('/metodospago/:cardId', async (req, res) => {
     }
 });
 
-router.get('/eventos-guardados', async (req, res) => {
+router.get('/eventos-guardados', isAuth, async (req, res) => {
     try {
-        if (!req.session || !req.session.user) {
-            return res.redirect('/auth/login');
-        }
+        const userId = req.session.user._id;
         
-        const user = await User.findById(req.session.user._id)
-            .populate('eventosGuardados');
-        
-        if (!user) {
-            return res.status(404).render('error.html', { 
-                message: 'Usuario no encontrado' 
-            });
-        }
+        // Obtener eventos guardados de ambas fuentes
+        const [eventosGuardadosModelo, user] = await Promise.all([
+            EventoGuardado.find({ userId }).populate('eventoId'),
+            User.findById(userId).populate('eventosGuardados')
+        ]);
 
-        // Formatear fechas y horas correctamente
-        const eventos = user.eventosGuardados.map(evento => {
-            // Crear objeto de fecha a partir de la fecha del evento
-            const fecha = new Date(evento.fecha);
-            
-            // Formatear hora para mostrar AM/PM
-            const [hora, minutos] = evento.hora.split(':');
-            const horaDate = new Date();
-            horaDate.setHours(hora);
-            horaDate.setMinutes(minutos);
-            
-            return {
-                ...evento._doc,
-                fechaFormateada: fecha.toLocaleDateString('es-ES', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                }),
-                horaFormateada: horaDate.toLocaleTimeString('es-ES', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                }).replace(/\./g, '').toUpperCase() // Elimina puntos y convierte AM/PM a mayúsculas
-            };
-        });
+        // Combinar eventos de ambas fuentes
+        const eventosFromGuardados = eventosGuardadosModelo
+            .filter(eg => eg.eventoId)
+            .map(eg => eg.eventoId);
         
-        res.render('user/perfilEventosGuardados.html', { 
+        const eventosFromUser = user.eventosGuardados || [];
+        
+        // Combinar y eliminar duplicados
+        const todosEventos = [...new Set([...eventosFromGuardados, ...eventosFromUser])];
+
+        // Formatear los eventos
+        const eventosFormateados = todosEventos.map(evento => ({
+            _id: evento._id,
+            nombre: evento.nombre,
+            imagen: evento.imagen,
+            lugar: evento.lugar,
+            precio: evento.precio,
+            fechaFormateada: new Date(evento.fecha).toLocaleDateString('es-ES'),
+            horaFormateada: evento.hora
+        }));
+
+        console.log('Eventos encontrados:', eventosFormateados); // Debug
+
+        res.render('user/perfilEventosGuardados.html', {
             title: 'Eventos Guardados',
-            eventos: eventos
+            eventos: eventosFormateados,
+            query: req.query
         });
     } catch (error) {
-        console.error('Error en eventos guardados:', error);
-        res.status(500).render('error.html', { 
-            message: 'Error al cargar eventos guardados' 
+        console.error('Error al cargar eventos guardados:', error);
+        res.status(500).render('error.html', {
+            title: 'Error',
+            message: 'Error al cargar los eventos guardados'
         });
     }
 });

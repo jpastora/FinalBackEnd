@@ -50,7 +50,13 @@
 
 <div class="cajaExterna" id="Caja__Externa">
     <% if (locals.eventos && eventos.length > 0) { %>
-        <% eventos.forEach(evento => { %>
+        <% const eventosPorPagina = 3; %>
+        <% const paginaActual = parseInt(locals.query?.pagina || 1); %>
+        <% const inicio = (paginaActual - 1) * eventosPorPagina; %>
+        <% const fin = inicio + eventosPorPagina; %>
+        <% const eventosEnPagina = eventos.slice(inicio, fin); %>
+        
+        <% eventosEnPagina.forEach(evento => { %>
             <div class="tarjetaEvento">
                 <div class="imagenEvento">
                     <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
@@ -63,6 +69,9 @@
                             <h2 class="textoComprar">desde</h2>
                             <h1 class="montoPrecio">₡<%= evento.precio %></h1>
                             <a href="/eventos/evento/<%= evento._id %>" class="botonComprar">Comprar</a>
+                            <button onclick="eliminarEventoGuardado('<%= evento._id %>')" class="botonEliminar">
+                                <i class="fi fi-ss-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -82,6 +91,21 @@
                 </div>
             </div>
         <% }) %>
+
+        <!-- Paginación -->
+        <div class="paginacion">
+            <% if (paginaActual > 1) { %>
+                <a href="?pagina=<%= paginaActual - 1 %>" class="pagina-link">&laquo; Anterior</a>
+            <% } %>
+            
+            <% for(let i = 1; i <= Math.ceil(eventos.length / eventosPorPagina); i++) { %>
+                <a href="?pagina=<%= i %>" class="pagina-link <%= paginaActual === i ? 'activa' : '' %>"><%= i %></a>
+            <% } %>
+            
+            <% if (paginaActual < Math.ceil(eventos.length / eventosPorPagina)) { %>
+                <a href="?pagina=<%= paginaActual + 1 %>" class="pagina-link">Siguiente &raquo;</a>
+            <% } %>
+        </div>
     <% } else { %>
         <div class="mensajeVacio">
             <h2>No tienes eventos guardados</h2>
@@ -98,6 +122,8 @@
     <%- include('../partials/footer') %> <!-- Incluye el footer -->
     
     <!-- Fin Footer -->
+
+<script src="/js/eventos.js"></script>
 
 </body>
 

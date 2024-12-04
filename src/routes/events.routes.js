@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose'); // Agregar esta línea
+const mongoose = require('mongoose');
 const eventoController = require('../controllers/evento.controller');
 const upload = require('../middleware/upload');
 const Evento = require('../models/evento');
-const User = require('../models/user'); // Agregar esta línea
+const User = require('../models/user');
+const { isAuth } = require('../middleware/checkAuth'); // Agregar esta línea
+const EventoGuardado = require('../models/eventoGuardado'); // Agregar esta línea
 
 // Asegurarse que todas las rutas usen el controlador correcto
 router.get('/', eventoController.listarEventos);
@@ -127,6 +129,73 @@ router.post('/guardar/:id', async (req, res) => {
         res.status(500).json({ 
             success: false, 
             message: 'Error al guardar el evento: ' + error.message 
+        });
+    }
+});
+
+// Ruta para guardar evento
+router.post('/guardar/:eventoId', isAuth, async (req, res) => {
+    try {
+        const { eventoId } = req.params;
+        const userId = req.session.user._id;
+
+        // Verificar si el evento existe
+        const eventoExiste = await Evento.findById(eventoId);
+        if (!eventoExiste) {
+            return res.status(404).json({
+                success: false,
+                message: 'Evento no encontrado'
+            });
+        }
+
+        // Guardar en ambos modelos
+        await Promise.all([
+            // Guardar en EventoGuardado
+            EventoGuardado.findOneAndUpdate(
+                { userId, eventoId },
+                { userId, eventoId },
+                { upsert: true }
+            ),
+            // Actualizar array en User
+            User.findByIdAndUpdate(
+                userId,
+                { $addToSet: { eventosGuardados: eventoId } }
+            )
+        ]);
+
+        res.json({
+            success: true,
+            message: 'Evento guardado exitosamente'
+        });
+    } catch (error) {
+        console.error('Error al guardar evento:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error al guardar el evento'
+        });
+    }
+});
+
+// Ruta para eliminar evento guardado
+router.delete('/eliminar-guardado/:eventoId', isAuth, async (req, res) => {
+    try {
+        const { eventoId } = req.params;
+        const userId = req.session.user._id;
+
+        await EventoGuardado.findOneAndDelete({
+            userId,
+            eventoId
+        });
+
+        res.json({
+            success: true,
+            message: 'Evento eliminado de guardados exitosamente'
+        });
+    } catch (error) {
+        console.error('Error al eliminar evento guardado:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error al eliminar el evento guardado'
         });
     }
 });

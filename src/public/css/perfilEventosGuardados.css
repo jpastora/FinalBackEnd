@@ -420,3 +420,42 @@
         padding: 8px;
     }
 }
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pagina-link {
+    padding: 8px 12px;
+    border: 1px solid #d94423;
+    color: #d94423;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagina-link:hover {
+    background-color: #d94423;
+    color: white;
+}
+
+.pagina-link.activa {
+    background-color: #d94423;
+    color: white;
+}
+
+.botonEliminar {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.botonEliminar:hover {
+    background-color: #cc0000;
+}
