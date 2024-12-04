@@ -5,6 +5,7 @@ const PaymentCard = require('../models/paymentCard');
 const Ticket = require('../models/tickets');
 const User = require('../models/user');
 const Evento = require('../models/evento'); // Corregido: importación del modelo Evento
+const Orden = require('../models/orden'); // Importación del modelo Orden
 
 // Función auxiliar para obtener datos del carrito
 async function getCartData(userId) {
@@ -98,69 +99,73 @@ router.get('/api/payment-cards', async (req, res) => {
 
 router.post('/api/process-payment', async (req, res) => {
     try {
-        const { tarjetaId, usarTarjetaGuardada } = req.body;
         const userId = req.session.user._id;
-
         const cart = await Cart.findOne({ usuario: userId }).populate('items.evento');
+        
         if (!cart || !cart.items.length) {
             return res.status(400).json({ error: 'Carrito vacío' });
         }
 
-        // Verificar stock actualizado
+        // Verificar stock y crear array de tickets para la orden
+        const ticketsOrden = [];
+        let totalOrden = 0;
+
         for (const item of cart.items) {
             const evento = await Evento.findById(item.evento._id);
-            if (!evento) {
-                return res.status(404).json({ error: `Evento no encontrado: ${item.evento.nombre}` });
-            }
-            if (evento.tickets < item.cantidad) {
+            if (!evento || evento.tickets < item.cantidad) {
                 return res.status(400).json({ 
                     error: `No hay suficientes tickets para ${evento.nombre}` 
                 });
             }
+
+            const precioTotal = item.precioUnitario * item.cantidad;
+            ticketsOrden.push({
+                evento: item.evento._id,
+                cantidad: item.cantidad,
+                precioUnitario: item.precioUnitario,
+                precioTotal: precioTotal
+            });
+            totalOrden += precioTotal;
         }
 
-        // Crear tickets y actualizar inventario
-        const ticketsCreados = [];
-        for (const item of cart.items) {
-            const precioTotal = item.precioUnitario * item.cantidad;
-            
+        // Crear orden
+        const orden = new Orden({
+            usuario: userId,
+            tickets: ticketsOrden,
+            total: totalOrden
+        });
+        await orden.save();
+
+        // Actualizar inventario y crear tickets
+        for (const item of ticketsOrden) {
+            await Evento.findByIdAndUpdate(item.evento, {
+                $inc: { tickets: -item.cantidad }
+            });
+
             const ticket = new Ticket({
-                evento: item.evento._id,
+                evento: item.evento,
                 usuario: userId,
                 cantidad: item.cantidad,
                 precioUnitario: item.precioUnitario,
-                precioTotal: precioTotal, // Agregado el precio total
+                precioTotal: item.precioTotal,
+                orden: orden._id,
                 fechaCompra: new Date()
             });
-            
             await ticket.save();
-            ticketsCreados.push(ticket._id);
-
-            // Actualizar stock
-            await Evento.findByIdAndUpdate(item.evento._id, {
-                $inc: { tickets: -item.cantidad }
-            });
         }
 
-        // Actualizar usuario y limpiar carrito
-        await User.findByIdAndUpdate(userId, {
-            $push: { tickets: { $each: ticketsCreados } }
-        });
-        
+        // Limpiar carrito
         await Cart.findByIdAndDelete(cart._id);
 
         res.json({ 
             success: true,
             message: 'Compra realizada con éxito',
-            tickets: ticketsCreados
+            ordenId: orden._id
         });
 
     } catch (error) {
         console.error('Error en el proceso de pago:', error);
-        res.status(500).json({ 
-            error: 'Error al procesar el pago',
-            details: error.message 
-        });
+        res.status(500).json({ error: 'Error al procesar el pago' });
     }
 });
 
@@ -170,6 +175,30 @@ router.get('/api/resumen-compra', async (req, res) => {
         res.json(cartData);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener el resumen' });
+    }
+});
+
+router.get('/completado/:ordenId', async (req, res) => {
+    try {
+        const orden = await Orden.findById(req.params.ordenId)
+            .populate({
+                path: 'tickets.evento',
+                select: 'nombre precio' // Asegurarnos de obtener el nombre y precio
+            });
+
+        if (!orden) {
+            return res.redirect('/');
+        }
+
+        res.render('pago/pago_completado.html', {
+            ordenId: orden._id,
+            tickets: orden.tickets,
+            totalCompra: orden.total,
+            fecha: orden.fechaCreacion
+        });
+    } catch (error) {
+        console.error('Error al mostrar pago completado:', error);
+        res.redirect('/');
     }
 });
 

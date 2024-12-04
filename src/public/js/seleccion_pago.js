@@ -1,6 +1,21 @@
 document.addEventListener('DOMContentLoaded', async () => {
     cargarTarjetasGuardadas();
     inicializarFormulario();
+
+    // Agregar evento para habilitar el formulario al hacer clic en cualquier input
+    const formInputs = document.querySelectorAll('#formPago input');
+    formInputs.forEach(input => {
+        input.addEventListener('click', () => {
+            // Desseleccionar tarjeta guardada si existe
+            document.querySelectorAll('.tarjeta-guardada').forEach(card => {
+                card.classList.remove('seleccionada');
+            });
+            tarjetaSeleccionada = null;
+            
+            // Habilitar todos los inputs
+            formInputs.forEach(inp => inp.disabled = false);
+        });
+    });
 });
 
 let tarjetaSeleccionada = null;
@@ -90,37 +105,50 @@ function validarDatosPago(datos) {
 async function procesarPago() {
     try {
         let datosPago;
-        
+
         if (tarjetaSeleccionada) {
+            // Si hay una tarjeta guardada seleccionada
             datosPago = {
                 tarjetaId: tarjetaSeleccionada,
                 usarTarjetaGuardada: true
             };
         } else {
-            datosPago = obtenerDatosFormulario();
-            if (!validarDatosPago(datosPago)) return;
+            // Si es una tarjeta nueva
+            const datosTarjeta = obtenerDatosFormulario();
+            if (!validarDatosPago(datosTarjeta)) {
+                return;
+            }
+            datosPago = {
+                datosTarjeta,
+                usarTarjetaGuardada: false
+            };
         }
 
-        // Guardar datos de pago en sessionStorage y redirigir al resumen
+        // Guardar en sessionStorage y redirigir
         sessionStorage.setItem('datosPago', JSON.stringify(datosPago));
         window.location.href = '/pago/resumen';
-        
     } catch (error) {
         console.error('Error:', error);
-        mostrarError(error.message || 'Error al procesar el pago');
+        mostrarError('Error al procesar los datos de pago');
     }
 }
 
 function seleccionarTarjeta(tarjetaId) {
-    // Desseleccionar tarjeta anterior
+    // Desseleccionar todas las tarjetas
     document.querySelectorAll('.tarjeta-guardada').forEach(card => {
         card.classList.remove('seleccionada');
     });
     
-    // Seleccionar nueva tarjeta
+    // Seleccionar la tarjeta clickeada
     const tarjeta = document.querySelector(`.tarjeta-guardada[data-id="${tarjetaId}"]`);
-    tarjeta.classList.add('seleccionada');
-    tarjetaSeleccionada = tarjetaId;
+    if (tarjeta) {
+        tarjeta.classList.add('seleccionada');
+        tarjetaSeleccionada = tarjetaId;
+        
+        // Deshabilitar el formulario de nueva tarjeta
+        const formInputs = document.querySelectorAll('#formPago input');
+        formInputs.forEach(input => input.disabled = true);
+    }
 }
 
 function mostrarError(mensaje) {

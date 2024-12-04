@@ -69,7 +69,7 @@
 
             <div class="formulario-pago">
                 <h2>Nueva Tarjeta</h2>
-                <form id="formPago" onsubmit="return false;">
+                <form id="formPago" onsubmit="event.preventDefault(); procesarPago();">
                     <div class="campo-grupo">
                         <label for="numero-tarjeta">Número de Tarjeta</label>
                         <input type="text" id="numero-tarjeta" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
@@ -99,7 +99,7 @@
                         </label>
                     </div>
 
-                    <button type="submit" class="boton-continuar" onclick="procesarPago()">
+                    <button type="submit" class="boton-continuar">
                         CONTINUAR CON EL PAGO
                     </button>
                 </form>

@@ -30,18 +30,27 @@
             <h1>¡Compra Realizada con Éxito!</h1>
             <div class="orden-info">
                 <h2>Número de Orden: #<%= ordenId %></h2>
-                <p class="fecha"><%= new Date().toLocaleDateString('es-ES') %></p>
+                <p class="fecha"><%= new Date().toLocaleDateString('es-ES', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                }) %></p>
             </div>
 
             <div class="resumen-tickets">
                 <h3>Resumen de tu Compra</h3>
-                <% tickets.forEach(ticket => { %>
-                    <div class="ticket-item">
-                        <h4><%= ticket.evento.nombre %></h4>
-                        <p>Cantidad: <%= ticket.cantidad %> tickets</p>
-                        <p>Total: ₡<%= ticket.precioTotal.toLocaleString() %></p>
-                    </div>
-                <% }); %>
+                <% if (tickets && tickets.length > 0) { %>
+                    <% tickets.forEach(ticket => { %>
+                        <div class="ticket-item">
+                            <h4><%= ticket.evento.nombre %></h4>
+                            <p>Cantidad: <%= ticket.cantidad %> tickets</p>
+                            <p>Precio unitario: ₡<%= (ticket.precioTotal / ticket.cantidad).toLocaleString() %></p>
+                            <p>Total: ₡<%= ticket.precioTotal.toLocaleString() %></p>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No se encontraron detalles de la compra</p>
+                <% } %>
             </div>
 
             <div class="total-compra">
