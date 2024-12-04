@@ -100,6 +100,8 @@ header {
 
 .eventosHoy .cabeceraEventos {
     margin: 0 0 35px;
+    display: flex;
+    align-items: center;
 }
 
 .eventosHoy .cabeceraEventos h2 {
@@ -121,13 +123,12 @@ header {
     left: 0;
     top: 4px;
     background: #d94423;
-}
-
 .eventosHoy .cabeceraEventos .fechaHoy {
-    display: inline-block;
     font-size: 14px;
     line-height: 22px;
     color: #d94423;
+    margin-left: auto;
+}
     float: right;
 }
 
@@ -235,13 +236,14 @@ header {
     background: #d94423;
     text-transform: uppercase;
     border: none;
-    border-radius: 20px;
+    border-radius: 4px;
+    cursor: pointer;
     display: inline-block;
 }
 
 .eventosHoy .eventosContenido .comprarTicket:hover {
-    color: #d94423;
-    background: #fff;
+    color: #fff;
+    background: #86a641;
 }
 
 .eventosHoy .eventosContenido .eventoAgotado {
@@ -332,7 +334,8 @@ header {
     background: none;
     text-transform: uppercase;
     border: 2px solid #d94423;
-    border-radius: 20px;
+    border-radius: 4px;
+    cursor: pointer;
     font-weight: 700;
     display: inline-block;
     text-align: center;
@@ -350,9 +353,7 @@ header {
 }
 
 .seccionEventosFuturos .contenidoSeccion .imagenEventoFuturo {
-    max-width: auto;
-    min-height: auto;
-    max-height: 230px;
+    max-height: 400px;
 }
 
 .seccionEventosFuturos .contenidoSeccion ul {
@@ -425,12 +426,18 @@ header {
 
 .seccionEventosFuturos .contenidoSeccion .informacion p span {
     display: block;
-    color: #b3b3b3;
-    font-size: 11px;
-    font-family: "Montserrat-Light";
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-top: 5px;
+    font-family: "Montserrat-Bold";
 }
 
 .seccionEventosFuturos .contenidoSeccion .informacion .comprarTicket {
+    position: relative;
     min-width: fit-content;
     max-height: fit-content;
     font-size: 12px;
@@ -440,15 +447,18 @@ header {
     background: #86a641;
     text-transform: uppercase;
     border: none;
-    border-radius: 20px;
+    border-radius: 4px;
+    cursor: pointer;
     font-weight: 700;
+    display: inline-block;
+    margin-left: auto;
     width: 30%;
     text-align: center;
 }
 
 .seccionEventosFuturos .contenidoSeccion .informacion .comprarTicket:hover {
-    background: #fff;
-    color: #86a641;
+    background: #d94423;
+    color: #ffffff;
 }
 
 /* ----------------------------------------FIN Eventos próximos---------------------------------------- */

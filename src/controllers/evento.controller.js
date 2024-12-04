@@ -26,10 +26,12 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
         const { titulo, lugar, categoria, precio, fecha, hora } = req.body;
         
         const categoriaMap = {
-            'category-1': 'Deportes',
-            'category-2': 'Conciertos',
-            'category-3': 'Festivales',
-            'category-4': 'Teatro'
+            'Deportes': 'Deportes',
+            'Conciertos': 'Conciertos',
+            'Festivales': 'Festivales',
+            'Teatro': 'Teatro',
+            'Comedia': 'Comedia',
+            'Charlas': 'Charlas'
         };
 
         const nuevoEvento = new Evento({
@@ -39,6 +41,7 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
             precio: Number(precio),
             fecha: new Date(fecha),
             hora,
+            descripcion: req.body.descripcion,
             imagen: req.file ? `/uploads/eventos/${req.file.filename}` : '/img/default-event.png'
         });
 
@@ -59,37 +62,124 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
     }
 }];
 
+// ...existing code...
+
 const listarEventos = async (req, res) => {
     try {
-        console.log('Consultando eventos en MongoDB...');
-        const eventos = await Evento.find()
+        let { busqueda, categoria, lugar } = req.query;
+        let query = {};
+
+        // 1. Primero aplicar filtros exactos (lugar y categoría)
+        if (lugar) query.lugar = lugar;
+        if (categoria) query.categoria = categoria;
+
+        // 2. Luego manejar la búsqueda por texto
+        if (busqueda) {
+            const searchQuery = {
+                $or: [
+                    { nombre: { $regex: busqueda, $options: 'i' } },
+                    { descripcion: { $regex: busqueda, $options: 'i' } },
+                    { categoria: { $regex: busqueda, $options: 'i' } }
+                ]
+            };
+
+            // Si ya existen otros filtros, combinarlos con AND
+            query = Object.keys(query).length > 0 ? 
+                { $and: [searchQuery, query] } : 
+                searchQuery;
+        }
+
+        console.log('Query final:', JSON.stringify(query, null, 2));
+
+        const eventos = await Evento.find(query)
             .sort({ fecha: 1 })
-            .lean();
+            .exec();
 
-        console.log('Eventos encontrados:', eventos);
-
-        const eventosFormateados = eventos.map(evento => ({
-            ...evento,
-            fecha: evento.fecha.toLocaleDateString('es-ES'),
-            precio: evento.precio.toFixed(2)
-        }));
-
-        return res.render('eventos.html', {
-            title: 'Eventos',
-            eventos: eventosFormateados,
-            error: null
+        console.log(`Eventos encontrados: ${eventos.length}`);
+        
+        // Mantener todos los filtros en la respuesta
+        res.render('eventos.html', {
+            eventos,
+            filtros: {
+                busqueda: busqueda || '',
+                categoria: categoria || '',
+                lugar: lugar || ''
+            }
         });
+
     } catch (error) {
-        console.error('Error al listar eventos:', error);
-        return res.render('eventos.html', {
-            title: 'Eventos',
+        console.error('Error en listarEventos:', error);
+        res.render('eventos.html', {
             eventos: [],
-            error: 'Error al cargar los eventos: ' + error.message
+            error: 'Error al buscar eventos',
+            filtros: { busqueda: '', categoria: '', lugar: '' }
         });
     }
 };
 
+// ...existing code...
+
+const obtenerEvento = async (req, res) => {
+    try {
+        const evento = await Evento.findById(req.params.id);
+        if (!evento) {
+            return res.status(404).render('error.html', {
+                title: 'Evento no encontrado',
+                mensaje: 'El evento que buscas no existe'
+            });
+        }
+        
+        const eventosRelacionados = await Evento.find({
+            categoria: evento.categoria,
+            _id: { $ne: evento._id },
+            fecha: { $gte: new Date() }
+        })
+        .sort({ fecha: 1 })
+        .limit(5);
+        
+        return res.render('eventos/evento.html', {
+            title: evento.nombre,
+            evento,
+            eventosRelacionados
+        });
+    } catch (error) {
+        console.error('Error al obtener evento:', error);
+        return res.status(500).render('error.html', {
+            title: 'Error del servidor',
+            mensaje: 'Error al cargar el evento. Por favor, inténtalo más tarde.'
+        });
+    }
+};
+
+const obtenerEventosHoy = async () => {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const mañana = new Date(hoy);
+    mañana.setDate(mañana.getDate() + 1);
+
+    return await Evento.find({
+        fecha: {
+            $gte: hoy,
+            $lt: mañana
+        }
+    })
+    .sort({ hora: 1 })
+    .limit(4);
+};
+
+const obtenerProximosEventos = async () => {
+    const hoy = new Date();
+    return await Evento.find({
+        fecha: { $gt: hoy }
+    })
+    .sort({ fecha: 1 })
+    .limit(3);
+};
+
 module.exports = {
     crearEvento,
-    listarEventos
+    listarEventos,
+    obtenerEvento,
+    obtenerEventosHoy,
+    obtenerProximosEventos
 };

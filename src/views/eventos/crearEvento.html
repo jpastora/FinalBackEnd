@@ -13,6 +13,8 @@
   <link rel="stylesheet" type="text/css" href="/css/menuLateral.css">
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+  <!-- Agregar SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -20,159 +22,192 @@
   <!-- Menú y Autenticación -->
 
   <%- include('../partials/auth') %> <!-- Incluye el Auth -->
-  <%- include('../partials/menu') %> <!-- Incluye el menú -->
+    <%- include('../partials/menu') %> <!-- Incluye el menú -->
 
-  <!-- Fin Menú y Autenticación -->
+      <!-- Fin Menú y Autenticación -->
 
-  <!-- Sección de imagen de héroe para el encabezado del formulario -->
-  <section class="heroeImagen" id="Heroe__Imagen">
-    <section>
-      <div class="heroe" id="Heroe__Principal">
-        <div class="titulo" id="AdministrarUsuarios">
-          <h1>Crear Eventos</h1>
-        </div>
+      <!-- Sección de imagen de héroe para el encabezado del formulario -->
+      <section class="heroeImagen" id="Heroe__Imagen">
+        <section>
+          <div class="heroe" id="Heroe__Principal">
+            <div class="titulo" id="AdministrarUsuarios">
+              <h1>Crear Eventos</h1>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <div class="contenedorPrincipal">
+        <!-- Formulario para crear un nuevo evento -->
+        <form class="editarEvento" id="EditarEventoForm" enctype="multipart/form-data">
+
+          <!-- Imagen de muestra para la foto del evento -->
+          <div class="subirFoto" id="SubirFoto">
+            <img id="previewImagen" src="/img/eventoCategoria6.png" alt="Preview">
+          </div>
+
+          <!-- Campo para ingresar el nombre del evento -->
+          <div class="editarEventoInput">
+            <label class="name" for="nombre">Ingrese el nombre del Evento</label>
+            <input class="nombreEvento" type="text" id="nombre" name="nombre" placeholder="Nombre evento">
+          </div>
+
+          <!-- Fila para seleccionar el lugar y la categoría del evento -->
+          <div class="editarEventoFila">
+            <div class="editarEventoInput">
+              <label for="lugar">Seleccione el Lugar</label>
+              <select name="lugar" id="lugar">
+                <option value="sanJose">San José</option>
+                <option value="Heredia">Heredia</option>
+                <option value="Alajuela">Alajuela</option>
+                <option value="Cartago">Cartago</option>
+                <option value="Limon">Limon</option>
+                <option value="Puntarenas">Puntarenas</option>
+                <option value="Guanacaste">Guanacaste</option>
+              </select>
+            </div>
+            <div class="editarEventoInput">
+              <label for="categoria">Seleccione la Categoria</label>
+              <select name="categoria" id="categoria">
+                <option value="Deportes">Deportes</option>
+                <option value="Conciertos">Conciertos</option>
+                <option value="Festivales">Festivales</option>
+                <option value="Teatro">Teatro</option>
+                <option value="Charlas">Charlas</option>
+                <option value="Comedia">Comedia</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Opciones para cargar imagen del evento -->
+          <div class="editarEventoFila">
+            <div class="editarEventoInput">
+              <label class="imagenEvento" for="imagen">Foto de Evento</label>
+              <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg" required />
+            </div>
+          </div>
+
+          <!-- Campo para ingresar el precio del evento -->
+          <div class="precio">
+            <label for="numerotickets">Cantidad de tickets</label>
+            <input type="number" id="numerotickets" name="numerotickets" placeholder="20000">
+          </div>
+
+          <!-- Campo para ingresar el precio del evento -->
+          <div class="precio">
+            <label for="price">Precio</label>
+            <span class="currency-symbol">₡</span>
+            <input type="number" id="price" name="price" placeholder="Precio">
+          </div>
+
+          <!-- Campo para descripción -->
+          <div class="editarEventoInput">
+            <label for="descripcion">Descripción del Evento</label>
+            <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el evento..." required></textarea>
+          </div>
+
+          <!-- Campo para fecha y hora -->
+          <div class="editarEventoFila">
+            <div class="editarEventoInput">
+              <label for="fecha">Fecha del Evento</label>
+              <input type="date" id="fecha" name="fecha" required>
+            </div>
+            <div class="editarEventoInput">
+              <label for="hora">Hora del Evento</label>
+              <input type="time" id="hora" name="hora" required>
+            </div>
+          </div>
+
+          <!-- Botones para enviar o borrar el formulario -->
+          <div class="editarEventoBotones">
+            <button class="editarEventoBoton" type="submit">ENVIAR</button>
+            <button class="editarEventoBoton" type="reset">BORRAR</button>
+          </div>
+        </form>
       </div>
-    </section>
-  </section>
 
-  <div class="contenedorPrincipal">
-    <!-- Formulario para crear un nuevo evento -->
-    <form class="editarEvento" id="EditarEventoForm">
+      <!-- Footer -->
+      <%- include('../partials/footer') %>
+        <!-- Fin Footer -->
 
-      <!-- Imagen de muestra para la foto del evento -->
-      <div class="subirFoto" id="SubirFoto">
-        <img id="previewImagen" src="/img/eventoCategoria6.png" alt="Preview">
-      </div>
+        <script>
+          // Función para previsualizar la imagen
+          document.getElementById('imagen').addEventListener('change', function(e) {
+              const file = e.target.files[0];
+              if (file) {
+                  const reader = new FileReader();
+                  reader.onload = function(e) {
+                      document.getElementById('previewImagen').src = e.target.result;
+                  }
+                  reader.readAsDataURL(file);
+              }
+          });
 
-      <!-- Campo para ingresar el nombre del evento -->
-      <div class="editarEventoInput">
-        <label class="name" for="name">Ingrese el nombre del Evento</label>
-        <input class="nombreEvento" type="text" id="name" name="name" placeholder="Nombre evento">
-      </div>
+          document.getElementById('EditarEventoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-      <!-- Fila para seleccionar el lugar y la categoría del evento -->
-      <div class="editarEventoFila">
-        <div class="editarEventoInput">
-          <label for="lugar">Seleccione el Lugar</label>
-          <select name="lugar" id="lugar">
-            <option value="lugar1">San Jose</option>
-            <option value="lugar2">Heredia</option>
-            <option value="lugar3">Alajuela</option>
-            <option value="lugar4">Cartago</option>
-            <option value="lugar5">Limon</option>
-            <option value="lugar6">Puntarenas</option>
-            <option value="lugar7">Guanacaste</option>
-          </select>
-        </div>
-        <div class="editarEventoInput">
-          <label for="categories">Seleccione la Categoria</label>
-          <select name="categories" id="categories">
-            <option value="category-1">Deportes</option>
-            <option value="category-2">Conciertos</option>
-            <option value="category-3">Festivales</option>
-            <option value="category-4">Teatro</option>
-          </select>
-        </div>
-      </div>
+            const formData = new FormData();
+            formData.append('nombre', document.getElementById('nombre').value); 
+            formData.append('lugar', document.getElementById('lugar').value);
+            formData.append('categoria', document.getElementById('categoria').value);
+            formData.append('numerotickets', document.getElementById('numerotickets').value);
+            formData.append('precio', document.getElementById('price').value);
+            formData.append('fecha', document.getElementById('fecha').value);
+            formData.append('hora', document.getElementById('hora').value);
+            formData.append('descripcion', document.getElementById('descripcion').value);
+            formData.append('imagen', document.getElementById('imagen').files[0]);
 
-      <!-- Campo para ingresar una palabra clave -->
-      <div class="editarEventoFila">
-        <div class="editarEventoInput">
-          <label for="key-word">Palabra clave</label>
-          <input type="text" id="key-word" name="key-word" placeholder="Palabra Clave">
-        </div>
-      </div>
-
-      <!-- Opciones para cargar imagen del evento -->
-      <div class="editarEventoFila">
-        <div class="editarEventoInput">
-          <label class="imagenEvento" for="imagenEvento">Foto de Evento</label>
-          <input type="file" id="imagenEvento" name="imagenEvento" accept="image/png, image/jpeg" required />
-        </div>
-      </div>
-
-      <!-- Campo para ingresar el precio del evento -->
-      <div class="precio">
-        <label for="price">Precio</label>
-        <input type="text" id="price" name="price" placeholder="Precio">
-      </div>
-
-      <!-- Campo para fecha y hora -->
-      <div class="editarEventoFila">
-        <div class="editarEventoInput">
-          <label for="fecha">Fecha del Evento</label>
-          <input type="date" id="fecha" name="fecha" required>
-        </div>
-        <div class="editarEventoInput">
-          <label for="hora">Hora del Evento</label>
-          <input type="time" id="hora" name="hora" required>
-        </div>
-      </div>
-
-      <!-- Botones para enviar o borrar el formulario -->
-      <div class="editarEventoBotones">
-        <button class="editarEventoBoton" type="submit">ENVIAR</button>
-        <button class="editarEventoBoton" type="reset">BORRAR</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    // Función para previsualizar la imagen
-    document.getElementById('imagenEvento').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('previewImagen').src = e.target.result;
+            // Validación más completa
+            if (!formData.get('nombre') || !formData.get('lugar') || !formData.get('categoria') || 
+                !formData.get('numerotickets') || !formData.get('precio') || !formData.get('fecha') || 
+                !formData.get('hora') || !formData.get('descripcion')) {
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Campos incompletos!',
+                  text: 'Por favor complete todos los campos requeridos',
+                  confirmButtonColor: '#3085d6'
+              });
+              return;
             }
-            reader.readAsDataURL(file);
-        }
-    });
 
-    document.getElementById('EditarEventoForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData();
-      formData.append('titulo', document.getElementById('name').value);
-      formData.append('lugar', document.getElementById('lugar').value);
-      formData.append('categoria', document.getElementById('categories').value);
-      formData.append('precio', document.getElementById('price').value);
-      formData.append('fecha', document.getElementById('fecha').value);
-      formData.append('hora', document.getElementById('hora').value);
-      formData.append('imagenEvento', document.getElementById('imagenEvento').files[0]);
+            try {
+              const response = await fetch('/eventos/crear', {
+                method: 'POST',
+                body: formData // No establecer Content-Type, fetch lo hará automáticamente
+              });
 
-      if(!formData.get('titulo') || !formData.get('precio') || !formData.get('fecha') || !formData.get('hora')) {
-        alert('Por favor complete todos los campos requeridos');
-        return;
-      }
+              const data = await response.json();
 
-      try {
-        const response = await fetch('/eventos/crear', {
-          method: 'POST',
-          body: formData // No establecer Content-Type, fetch lo hará automáticamente
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          alert('Evento creado exitosamente');
-          window.location.href = '/eventos';
-        } else {
-          alert(data.mensaje || 'Error al crear el evento');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error al crear el evento');
-      }
-    });
-  </script>
-
-  <!-- Footer -->
-  <%- include('../partials/footer') %>
-  <!-- Fin Footer -->
-
+              if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'Evento creado exitosamente',
+                    confirmButtonColor: '#d94423'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/eventos';
+                    }
+                });
+              } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: data.mensaje || 'Error al crear el evento',
+                    confirmButtonColor: '#d94423'
+                });
+              }
+            } catch (error) {
+              console.error('Error:', error);
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  text: 'Error al crear el evento',
+                  confirmButtonColor: '#d94423'
+              });
+            }
+          });
+        </script>
 </body>
 
 </html>

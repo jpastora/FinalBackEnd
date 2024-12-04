@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <script defer src="js/buscador.js"></script>
 </head>
 
 <body>
@@ -26,8 +27,8 @@
 <section class="imagenHeroe" id="Imagen__Heroe">
     <div class="heroe" id="Heroe__Principal">
         <div class="barraBusqueda" id="Barra__Busqueda">
-            <input type="text" placeholder="Buscar Evento, Categoría...">
-            <button id="Boton__Busqueda">Buscar</button>
+            <input type="text" id="inputBusqueda" placeholder="Buscar Evento, Categoría..." autocomplete="off">
+            <button type="button" id="Boton__Busqueda">Buscar</button>
         </div>
     </div>
 </section>
@@ -35,44 +36,38 @@
 <!-- Fin Barra Buscador -->
 
 <!-- Linea de tiempo -->
-
 <section class="eventosHoy" id="Eventos__Hoy">
     <div class="contenedorEventos" id="Contenedor__Eventos">
         <div class="fila" id="fila">
             <div class="cabeceraEventos">
                 <h2>Eventos Hoy</h2>
-                <span class="fechaHoy"><i class="fa fa-calendar" aria-hidden="true"></i> <strong>12</strong>
-                    Octubre
-                    2024 </span>
+                <span class="fechaHoy">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <strong><%= new Date().getDate() %></strong>
+                    <%= new Date().toLocaleString('es-ES', { month: 'long' }) %>
+                    <%= new Date().getFullYear() %>
+                </span>
             </div>
             <div class="eventosContenido" id="eventos__contenido">
                 <ul class="lineaventos" id="linea__eventos">
-                    <li class="evento1" id="evento__1">
-                        <span class="horaEvento" id="hora__evento">08:00 <strong>PM</strong></span>
-                        <strong class="nombreEvento" id="nombre__evento">The Beatles</strong>
-                        <a href="#" class="comprarTicket" id="comprar__ticket">Comprar</a>
-                    </li>
-                    <li class="evento2" id="evento__2">
-                        <span class="horaEvento" id="hora__evento">08:00 <strong>PM</strong></span>
-                        <strong class="nombreEvento" id="nombre__evento">The Beatles</strong>
-                        <a href="#" class="comprarTicket" id="comprar__ticket">Comprar</a>
-                    </li>
-                    <li class="evento3" id="evento__3">
-                        <span class="horaEvento" id="hora__evento">08:00 <strong>PM</strong></span>
-                        <strong class="nombreEvento" id="nombre__evento">The Beatles</strong>
-                        <a href="#" class="eventoAgotado" id="evento__agotado">Agotado</a>
-                    </li>
-                    <li class="evento4" id="evento__4">
-                        <span class="horaEvento" id="hora__evento">08:00 <strong>PM</strong></span>
-                        <strong class="nombreEvento" id="nombre__evento">The Beatles</strong>
-                        <a href="#" class="eventoAgotado" id="evento__agotado">Agotado</a>
-                    </li>
+                    <% eventosHoy.forEach(evento => { %>
+                        <li class="evento1" id="evento__1">
+                            <span class="horaEvento" id="hora__evento">
+                                <%= evento.hora %> <strong>PM</strong>
+                            </span>
+                            <strong class="nombreEvento" id="nombre__evento">
+                                <%= evento.nombre %>
+                            </strong>
+                            <a href="/eventos/evento/<%= evento._id %>" class="comprarTicket" id="comprar__ticket">
+                                Comprar
+                            </a>
+                        </li>
+                    <% }) %>
                 </ul>
             </div>
             <div class="etiquetaTodosEventos"></div>
-            <strong class="etiquetaTodosEventos"><a href="#">Todos los eventos</strong></a>
+            <strong class="etiquetaTodosEventos"><a href="/eventos">Todos los eventos</a></strong>
         </div>
-    </div>
     </div>
 </section>
 
@@ -86,72 +81,29 @@
             <div class="cabeceraSeccion">
                 <h2>próximos eventos</h2>
                 <div class="filaInferior">
-                    <p> Nam fringilla consectetur enim. Nam euismod, neque eu vehicula ultricies, magna libero
-                        placerat nisi, eget scelerisque ante enim non dui. Cras id arcu massa. Nam porttitor
-                        euismod
-                        tincidunt. Aliquam venenatis ac neque at euismod. Suspendisse non dui et ex cursus
-                        finibus
-                        in vitae metus. Nullam vitae imperdiet ante.
-                        <br><br> Suspendisse hendrerit, diam eu viverra suscipit, ipsum diam imperdiet nunc, et
-                        rutrum purus ex eget nisl. Nulla condimentum scelerisque lacus non molestie. Curabitur
-                        vel
-                        diam consectetur, tristique arcu sit amet, mollis nulla. Nullam turpis erat, ultricies
-                        id
-                        nunc sit amet, rutrum faucibus lectus.
-                    </p>
-                    <a href="#">Ver todos los eventos</a>
+                    <a href="/eventos">Ver todos los eventos</a>
                 </div>
             </div>
             <div class="contenidoSeccion">
                 <ul class="limpiarFlotado">
-                    <li class="eventoFuturo1" id="Evento__Futuro1">
-                        <div class="fecha">
-                            <a href="#">
-                                <span class="dia">25</span>
-                                <span class="mes">Agosto</span>
-                                <span class="ano">2016</span>
+                    <% proximosEventos.forEach((evento, index) => { %>
+                        <li class="eventoFuturo<%= index + 1 %>" id="Evento__Futuro<%= index + 1 %>">
+                            <div class="fecha">
+                                <a href="/eventos/evento/<%= evento._id %>">
+                                    <span class="dia"><%= new Date(evento.fecha).getDate() %></span>
+                                    <span class="mes"><%= new Date(evento.fecha).toLocaleString('es-ES', { month: 'long' }) %></span>
+                                    <span class="ano"><%= new Date(evento.fecha).getFullYear() %></span>
+                                </a>
+                            </div>
+                            <a href="/eventos/evento/<%= evento._id %>">
+                                <img class="imagenEventoFuturo" src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
                             </a>
-                        </div>
-                        <a href="#">
-                            <img class="imagenEventoFuturo" src="img/evento_futuro-1.png" alt="imagen">
-                        </a>
-                        <div class="informacion">
-                            <p>BMW Open Championship <span>San Francisco</span></p>
-                            <a href="#" class="comprarTicket">Comprar</a>
-                        </div>
-                    </li>
-                    <li class="eventoFuturo2" id="Evento__Futuro2">
-                        <div class="fecha">
-                            <a href="#">
-                                <span class="dia">26</span>
-                                <span class="mes">Agosto</span>
-                                <span class="ano">2016</span>
-                            </a>
-                        </div>
-                        <a href="#">
-                            <img class="imagenEventoFuturo" src="img/evento_futuro-2.png" alt="imagen">
-                        </a>
-                        <div class="informacion">
-                            <p>Kiai Kanjeng Orchestra <span>San Francisco</span></p>
-                            <a href="#" class="comprarTicket">Comprar</a>
-                        </div>
-                    </li>
-                    <li class="eventoFuturo3" id="Evento__Futuro3">
-                        <div class="fecha">
-                            <a href="#">
-                                <span class="dia">27</span>
-                                <span class="mes">Agosto</span>
-                                <span class="ano">2016</span>
-                            </a>
-                        </div>
-                        <a href="#">
-                            <img class="imagenEventoFuturo" src="img/evento_futuro-3.png" alt="imagen">
-                        </a>
-                        <div class="informacion">
-                            <p>Envato Author SF Meetup <span>San Francisco</span></p>
-                            <a href="#" class="comprarTicket">Comprar</a>
-                        </div>
-                    </li>
+                            <div class="informacion">
+                                <p><%= evento.nombre %> <span><%= evento.lugar %></span></p>
+                                <a href="/eventos/evento/<%= evento._id %>" class="comprarTicket">Comprar</a>
+                            </div>
+                        </li>
+                    <% }) %>
                 </ul>
             </div>
         </div>
@@ -171,34 +123,28 @@
             <div class="contenidoSeccion">
                 <ul class="fila limpiarFlotado">
                     <li class="categoria1 columnaPequeña4">
-                        <img class="categoriaImagen" id="categoria__imagen" src="img/eventoCategoria1.png"
-                            alt="imagen">
-                        <a href="#"><span>Conciertos</span></a>
+                        <img class="categoriaImagen" src="img/eventoCategoria1.png" alt="Conciertos">
+                        <a href="/eventos?categoria=Conciertos"><span>Conciertos</span></a>
                     </li>
                     <li class="categoria2 columnaPequeña4">
-                        <img class="categoriaImagen" id="categoria__imagen" src="img/eventoCategoria2.png"
-                            alt="imagen">
-                        <a href="#"><span>Comedia</span></a>
+                        <img class="categoriaImagen" src="img/eventoCategoria2.png" alt="Comedia">
+                        <a href="/eventos?categoria=Comedia"><span>Comedia</span></a>
                     </li>
                     <li class="categoria3 columnaPequeña4">
-                        <img class="categoriaImagen" id="categoria__imagen" src="img/eventoCategoria3.png"
-                            alt="imagen">
-                        <a href="#"><span>Deportes</span></a>
+                        <img class="categoriaImagen" src="img/eventoCategoria3.png" alt="Deportes">
+                        <a href="/eventos?categoria=Deportes"><span>Deportes</span></a>
                     </li>
                     <li class="categoria4 columnaPequeña4">
-                        <img class="categoriaImagen" id="categoria__imagen" src="img/eventoCategoria4.png"
-                            alt="imagen">
-                        <a href="#"><span>Festivales</span></a>
+                        <img class="categoriaImagen" src="img/eventoCategoria4.png" alt="Festivales">
+                        <a href="/eventos?categoria=Festivales"><span>Festivales</span></a>
                     </li>
                     <li class="categoria5 columnaPequeña4">
-                        <img class="categoriaImagen" id="categoria__imagen" src="img/eventoCategoria5.png"
-                            alt="imagen">
-                        <a href="#"><span>Charlas</span></a>
+                        <img class="categoriaImagen" src="img/eventoCategoria5.png" alt="Charlas">
+                        <a href="/eventos?categoria=Charlas"><span>Charlas</span></a>
                     </li>
                     <li class="categoria6 columnaPequeña4">
-                        <img class="categoriaImagen" id="categoria__imagen" src="img/eventoCategoria6.png"
-                            alt="imagen">
-                        <a href="#"><span>Teatro</span></a>
+                        <img class="categoriaImagen" src="img/eventoCategoria6.png" alt="Teatro">
+                        <a href="/eventos?categoria=Teatro"><span>Teatro</span></a>
                     </li>
                 </ul>
             </div>

@@ -40,6 +40,12 @@
   position: relative;
 }
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat-Regular', sans-serif;
+}
 .titulo {
   color: #ffffff;
   font-size: 2em;
@@ -67,12 +73,10 @@
 .formulario {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr auto;
-  /* Última columna para el botón de buscar */
   gap: 15px;
   padding: 25px;
   text-align: center;
   align-items: center;
-  /* Alinea verticalmente los elementos */
 }
 
 /* Estilo para las etiquetas */
@@ -109,21 +113,17 @@
 
 /* Botón de buscar alineado y con altura igual a los campos */
 .formulario_boton {
-  padding: 8px 20px;
-  margin-top: 50px;
-  height: 45px;
-  /* Altura uniforme para el botón */
-  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #db4437;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1em;
-  text-align: center;
-  box-sizing: border-box;
-  border: 1px;
-  border-style: ridge;
-  border-radius: 5px;
-  color: #d94423;
-  transition: 0.5s;
-  background-color: #ffffff;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
 }
 
 .formulario_boton:hover {
@@ -131,34 +131,41 @@
 }
 
 .boxdeafuera {
-  background-color: rgb(0, 0, 0);
-  padding: 25px 25px;
-  height: fit-content;
-  width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+max-width: 100%;
 }
 
 .evento1,
 .evento2 {
+  display: flex;
+  max-width: 1000px;
   height: 300px;
-  width: auto;
-  background-color: #ffffff;
-  margin: 50px 25px;
-  display: grid;
-  grid-template-columns: 4fr 1fr;
+  padding-right: 20px;
+  margin-bottom: 30px;
   border-radius: 10px;
-  z-index: 0;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
 .fotoevento {
-  background: url("../img/eventoCategoria3.png") no-repeat center center;
-  background-size: cover;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  display: block;
+
+}
+
+.fotoevento img {
+  width: 300px;
+  height: 300px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  
   margin-bottom: 7px;
+
 }
 
 .fotoevento2 {
-  background: url("../img/eventoCategoria2.png") no-repeat center center;
   background-size: cover;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -191,27 +198,30 @@
 }
 
 .precio {
-  color: rgb(194, 192, 192);
+  color: rgb(0, 0, 0);
+  text-align: center;
 }
 
-.boton_comprar {
-  padding: 8px 20px;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  height: 45px;
-  /* Altura uniforme para el botón */
-  border-radius: 5px;
+.boton_comprar{
+  display: block;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #db4437;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1em;
-  text-align: center;
-  box-sizing: border-box;
-  border: 1px;
-  border-style: ridge;
-  border-radius: 5px;
-  color: #ffffff;
-  transition: 0.5s;
-  background-color: #86a641;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
   text-decoration: none;
+  text-align: center;
+}
+
+.boton_comprar:hover {
+  background-color: #86a641;
 }
 
 .cuadrodeprecio {
@@ -220,10 +230,10 @@
   align-items: center;
 }
 
-.lugar,
-.fecha,
-.hora {
-  color: #000000;
+.lugar h1,
+.fecha h1,
+.hora h1 {
+  color: #86a641;
   margin-top: -165px;
   text-align: center;
 }
@@ -231,5 +241,8 @@
 .hora h2,
 .lugar h2,
 .fecha h2 {
-  color: rgb(194, 192, 192);
+  color: rgb(0, 0, 0);
+  font-family: 'Montserrat-Light', sans-serif;
+  text-align: center;
+
 }

@@ -24,73 +24,150 @@
 
   <!-- Fin Menú y Autenticación -->
 
-  <section class="heroeImagen" id="Heroe__Imagen">
-    <section>
-      <div class="heroe" id="Heroe__Principal">
-        <div class="titulo" id="Administrar__Usuarios">
-          <h1>Campeonato Nacional</h1>
+  <% if (typeof evento !== 'undefined' && evento) { %>
+    <section class="heroeImagen" id="Heroe__Imagen">
+      <section>
+        <div class="heroe" id="Heroe__Principal">
+          <div class="titulo" id="Administrar__Usuarios">
+            <h1><%= evento.nombre %></h1>
+          </div>
         </div>
-      </div>
+      </section>
     </section>
-  </section>
 
-  <!-------------------------------------------informacion del evento---------------------------------------------->
-  <div class="infoEvento">
-    <div class="lugar">
-      <h1>Lugar</h1>
-      <h2>San José</h2>
-    </div>
-    <div class="fecha">
-      <h1>Fecha</h1>
-      <h2>15 de Septiembre, 2024.</h2>
-    </div>
-    <div class="hora">
-      <h1>Hora</h1>
-      <h2>11:30am.</h2>
-    </div>
-  </div>
-  <!-------------------------------------------evento---------------------------------------------->
-  <div class="eventoCompleto">
-    <div class="fotoInfo">
-      <div class="imagenEvento"> <img src="/img/eventoCategoria3.png" alt="Imagen de evento">
+    <div class="infoEvento">
+      <div class="lugar">
+        <h1>Lugar</h1>
+        <h2><%= evento.lugar %></h2>
       </div>
-      <h3 class="descripcionEvento">
-        ¡No te pierdas el emocionante Campeonato de Fútbol en San José!
-        Acompáñanos el 15 de septiembre de 2024 a las 11:30 a.m. para vivir la
-        pasión del fútbol y apoyar a tus equipos favoritos en un evento lleno
-        de emoción y energía. Prepárate para disfrutar de un gran día y
-        comparte esta experiencia con amigos y familia. ¡Te esperamos!
-      </h3>
-    </div>
-    <div class="asientosGuardarReservar">
-      <div class="opcionesAsientos">
-        <h2>Seleccione la cantidad de asientos</h2>
-        <div class="asiento1">
-          <h1>Palco Oeste |</h1>
-          <h2>₡ 33.000</h2>
-          <input class="cantidadAsientos" type="number" />
-        </div>
-        <div class="asiento2">
-          <h1>Palco Este |</h2>
-            <h2>₡ 12.000</h2>
-            <input class="cantidadAsientos" type="number" />
-        </div>
-        <div class="asiento3">
-          <h1>Platea Oeste |</h1>
-          <h2>₡ 27.000</h2>
-          <input class="cantidadAsientos" type="number" />
-        </div>
+      <div class="fecha">
+        <h1>Fecha</h1>
+        <h2><%= new Date(evento.fecha).toLocaleDateString('es-ES', { 
+          weekday: 'long', 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        }) %></h2>
       </div>
-      <div class="botones">
-        <input type="submit" value="Guardar" class="boton" />
-        <input type="submit" value="Reservar" class="boton" />
+      <div class="hora">
+        <h1>Hora</h1>
+        <h2><%= evento.hora %></h2>
       </div>
     </div>
-  </div>
+
+    <div class="eventoCompleto">
+      <div class="fotoInfo">
+        <div class="imagenEvento">
+            <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
+        </div>
+        <div class="descripcionEvento">
+            <h3><%= evento.descripcion || 'Sin descripción disponible' %></h3>
+        </div>
+      </div>
+      <div class="asientosGuardarReservar">
+        <div class="opcionesAsientos">
+            <h2>Seleccione la cantidad de tickets</h2>
+            <div class="ticket-option">
+                <div class="ticket-info">
+                    <h3>Entrada General</h3>
+                    <p class="precio">₡<%= evento.precio.toLocaleString() %></p>
+                </div>
+                <div class="ticket-cantidad">
+                    <button class="btn-cantidad" onclick="decrementarCantidad()">-</button>
+                    <input type="number" id="cantidadTickets" value="1" min="1" max="<%= evento.numerotickets %>" />
+                    <button class="btn-cantidad" onclick="incrementarCantidad()">+</button>
+                </div>
+            </div>
+            <p class="tickets-disponibles">Tickets disponibles: <%= evento.numerotickets %></p>
+        </div>
+        <div class="total-seccion">
+            <div class="total-info">
+                <span>Total</span>
+                <span class="precio-total">₡<%= evento.precio.toLocaleString() %></span>
+            </div>
+        </div>
+        <div class="botones">
+            <% if (evento.numerotickets > 0) { %>
+                <button onclick="guardarEvento('<%= evento._id %>')" class="btn-guardar">Guardar</button>
+                <a href="/pago/seleccion?evento=<%= evento._id %>" class="btn-comprar">Comprar Tickets</a>
+            <% } else { %>
+                <button class="btn-agotado" disabled>Agotado</button>
+            <% } %>
+        </div>
+      </div>
+    </div>
+
+    <% if (eventosRelacionados && eventosRelacionados.length > 0) { %>
+      <section class="eventos-relacionados">
+        <h2>Eventos que te pueden interesar</h2>
+        <div class="eventos-grid">
+          <% eventosRelacionados.forEach(relacionado => { %>
+            <div class="evento-card">
+              <a href="/eventos/evento/<%= relacionado._id %>">
+                <img src="<%= relacionado.imagen %>" alt="<%= relacionado.nombre %>">
+                <div class="evento-info">
+                  <h3><%= relacionado.nombre %></h3>
+                  <p class="fecha">
+                    <i class="fi fi-ss-calendar"></i>
+                    <%= new Date(relacionado.fecha).toLocaleDateString('es-ES', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    }) %>
+                  </p>
+                  <p class="precio">₡<%= relacionado.precio.toLocaleString() %></p>
+                </div>
+              </a>
+            </div>
+          <% }) %>
+        </div>
+      </section>
+    <% } %>
+  <% } else { %>
+    <div class="error-mensaje">
+      <h2>Evento no encontrado</h2>
+      <p>Lo sentimos, el evento que buscas no existe o ha sido eliminado.</p>
+      <a href="/eventos" class="btn-volver">Ver otros eventos</a>
+    </div>
+  <% } %>
 
   <!-- Footer -->
   <%- include('../partials/footer') %>
   <!-- Fin Footer -->
+
+  <script>
+    function incrementarCantidad() {
+        const input = document.getElementById('cantidadTickets');
+        const max = parseInt(input.max);
+        const currentValue = parseInt(input.value);
+        if (currentValue < max) {
+            input.value = currentValue + 1;
+            actualizarTotal();
+        }
+    }
+
+    function decrementarCantidad() {
+        const input = document.getElementById('cantidadTickets');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+            actualizarTotal();
+        }
+    }
+
+    function actualizarTotal() {
+        const cantidad = parseInt(document.getElementById('cantidadTickets').value);
+        const precioUnitario = <%= evento.precio %>;
+        const total = cantidad * precioUnitario;
+        document.querySelector('.precio-total').textContent = '₡' + total.toLocaleString();
+    }
+
+    function guardarEvento(eventoId) {
+        // Implementar lógica para guardar evento
+        alert('Evento guardado en favoritos');
+    }
+
+    document.getElementById('cantidadTickets').addEventListener('change', actualizarTotal);
+  </script>
 
 </body>
 

@@ -34,7 +34,7 @@ app.use(authMiddleware);
 
 // Configuración de vistas y archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); 
+app.use('/uploads/eventos', express.static(path.join(__dirname, 'uploads/eventos'))); // Cambio aquí
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -54,7 +54,7 @@ connectDB();
 // Rutas públicas
 app.use('/', mainRoutes);
 app.use('/auth', authRoutes);      // Rutas de autenticación después
-app.use('/eventos', eventsRoutes); // Otras rutas después
+app.use('/eventos', eventsRoutes); // Asegúrate de que esta línea esté antes de otras rutas que puedan interferir
 
 // Rutas protegidas
 app.use('/perfil', checkAuth, profileRoutes);
@@ -107,19 +107,7 @@ function gracefulShutdown() {
     process.exit(0);
 }
 
-// Your other imports and middleware setup here
 
-// Routes
-app.get('/', checkAuth, (req, res) => {
-    res.send('Welcome to the homepage');
-});
-
-// Single server shutdown handler
-process.on('SIGINT', () => {
-    console.log('Cerrando servidor...');
-    mongoose.connection.close();
-    process.exit(0);
-});
 
 module.exports = app;
 
