@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cantidadInput = document.getElementById('cantidadTickets');
     if (cantidadInput) {
         cantidadInput.addEventListener('change', actualizarTotal);
+        actualizarTotal(); // Calcular total inicial
     }
 });
 
@@ -67,17 +68,18 @@ function incrementarCantidad() {
 
 function decrementarCantidad() {
     const input = document.getElementById('cantidadTickets');
-    if (parseInt(input.value) > 1) {
-        input.value = parseInt(input.value) - 1;
+    const currentValue = parseInt(input.value);
+    if (currentValue > 1) {
+        input.value = currentValue - 1;
         actualizarTotal();
     }
 }
 
 function actualizarTotal() {
     const cantidad = parseInt(document.getElementById('cantidadTickets').value);
-    const precioUnitario = document.querySelector('.precio').textContent.replace('₡', '').replace(',', '');
-    const total = cantidad * parseInt(precioUnitario);
-    document.querySelector('.precio-total').textContent = '₡' + total.toLocaleString();
+    const precioUnitario = parseFloat(document.querySelector('.precio').textContent.replace('₡', '').replace(',', ''));
+    const total = cantidad * precioUnitario;
+    document.querySelector('.precio-total').textContent = `₡${total.toLocaleString()}`;
 }
 
 async function guardarEvento(eventoId) {
@@ -91,7 +93,7 @@ async function guardarEvento(eventoId) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'include' // Cambiado de 'same-origin' a 'include'
+            credentials: 'include' 
         });
         
         const data = await response.json();
@@ -143,4 +145,45 @@ async function guardarEvento(eventoId) {
             icon: 'error'
         });
     }
+}
+
+function agregarAlCarrito(eventoId, precio) {
+    const cantidad = parseInt(document.getElementById('cantidadTickets').value);
+    
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            eventoId: eventoId,
+            cantidad: cantidad,
+            precio: precio
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                title: '¡Éxito!',
+                text: 'Evento agregado al carrito',
+                icon: 'success',
+                confirmButtonText: 'Ir al carrito',
+                showCancelButton: true,
+                cancelButtonText: 'Seguir comprando'
+                confirmButtonColor: '#d94423',
+                cancelButtonColor: '#d94423'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/pago/carrito';
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Error',
+                text: data.message || 'Error al agregar al carrito',
+                icon: 'error'
+            });
+        }
+    });
 }

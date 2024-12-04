@@ -107,7 +107,7 @@ exports.addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
     try {
         const { itemId } = req.params;
-        const cart = await Cart.findOne({ usuario: req.session.user.userId });
+        const cart = await Cart.findOne({ usuario: req.session.user._id }); // Cambiado de userId a _id
         
         if (!cart) {
             return res.status(404).json({ success: false, message: 'Carrito no encontrado' });
@@ -131,7 +131,7 @@ const updateCartItem = async (req, res) => {
         const { itemId } = req.params;
         const { cantidad } = req.body;
         
-        const cart = await Cart.findOne({ usuario: req.session.user.userId });
+        const cart = await Cart.findOne({ usuario: req.session.user._id }); // Cambiado de userId a _id
         
         if (!cart) {
             return res.status(404).json({ 
@@ -152,7 +152,6 @@ const updateCartItem = async (req, res) => {
         }
 
         cart.items[itemIndex].cantidad = cantidad;
-
         cart.total = cart.items.reduce((total, item) => {
             return total + (item.precioUnitario * item.cantidad);
         }, 0);
@@ -161,7 +160,8 @@ const updateCartItem = async (req, res) => {
 
         res.json({ 
             success: true, 
-            message: 'Cantidad actualizada correctamente' 
+            message: 'Cantidad actualizada correctamente',
+            cart: cart
         });
     } catch (error) {
         console.error('Error al actualizar cantidad:', error);
