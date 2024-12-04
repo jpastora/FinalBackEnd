@@ -1,13 +1,69 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user'); // Agregar esta línea
+const User = require('../models/user');
+const multer = require('multer');
+const upload = multer({ dest: 'src/public/uploads/profiles/' });
 
 router.get('/', (req, res) => {
     res.redirect('/perfil/datos-personales');
 });
 
-router.get('/datos-personales', (req, res) => {
-    res.render('user/perfilDatosPers.html', { title: 'Datos Personales' });
+router.get('/datos-personales', async (req, res) => {
+    try {
+        if (!req.session.user || !req.session.user._id) { // Cambiado de userId a _id
+            return res.redirect('/auth/login');
+        }
+
+        const user = await User.findById(req.session.user._id); // Cambiado de userId a _id
+        if (!user) {
+            return res.status(404).render('error.html', {
+                title: 'Error',
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        res.render('user/perfilDatosPers.html', {
+            title: 'Datos Personales',
+            userData: {
+                name: user.name,
+                email: user.email,
+                id: user.id,
+                profileImage: user.profileImage
+            }
+        });
+    } catch (error) {
+        console.error('Error al cargar datos de usuario:', error);
+        res.status(500).render('error.html', {
+            title: 'Error',
+            message: 'Error al cargar datos de usuario'
+        });
+    }
+});
+
+router.post('/actualizar-perfil', upload.single('perfilImg'), async (req, res) => {
+    try {
+        const { nombre, email, cedula } = req.body;
+        const userId = req.session.user._id; // Cambiado de userId a _id
+
+        const updateData = {
+            name: nombre,
+            email: email,
+            id: cedula
+        };
+
+        if (req.file) {
+            updateData.profileImage = `/uploads/profiles/${req.file.filename}`;
+        }
+
+        await User.findByIdAndUpdate(userId, updateData);
+
+        res.json({ success: true, message: 'Perfil actualizado correctamente' });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error al actualizar perfil' 
+        });
+    }
 });
 
 router.get('/seguridad', (req, res) => {

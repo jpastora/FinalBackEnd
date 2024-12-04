@@ -48,18 +48,23 @@ app.use((req, res, next) => {
     next();
 });
 
+// Middleware para debugging de sesión
+app.use((req, res, next) => {
+    console.log('Sesión actual:', req.session);
+    console.log('Usuario autenticado:', !!req.session.user);
+    next();
+});
+
 // Conexión a la base de datos
 connectDB();
 
 // Rutas públicas
-app.use('/', mainRoutes);
-app.use('/auth', authRoutes);      // Rutas de autenticación después
-app.use('/eventos', eventsRoutes); // Asegúrate de que esta línea esté antes de otras rutas que puedan interferir
-
-// Rutas protegidas
-app.use('/perfil', checkAuth, profileRoutes);
+app.use('/auth', authRoutes);
+app.use('/eventos', eventsRoutes);
+app.use('/perfil', checkAuth, profileRoutes); // Asegurarse que esta ruta esté antes de mainRoutes
 app.use('/admin', checkAuth, checkAdmin, adminRoutes);
 app.use('/pago', checkAuth, paymentRoutes);
+app.use('/', mainRoutes); // Debe ir al final
 
 // Manejo de errores - 404
 app.use((req, res) => {

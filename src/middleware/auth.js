@@ -12,27 +12,23 @@ const sessionConfig = {
 };
 
 const authMiddleware = (req, res, next) => {
-    // Configurar variables locales para las vistas
-    res.locals.isAuthenticated = req.session && req.session.user ? true : false;
-    res.locals.currentUser = req.session.user || null;
+    // Debugging
+    console.log('AuthMiddleware - Sesión:', req.session);
     
-    // Configurar rol de usuario
     if (req.session && req.session.user) {
-        res.locals.userId = req.session.user.userId;
+        res.locals.isAuthenticated = true;
+        res.locals.currentUser = req.session.user;
+        res.locals.userId = req.session.user._id; // Cambiado de userId a _id
         res.locals.userRole = req.session.user.rol;
     } else {
+        res.locals.isAuthenticated = false;
+        res.locals.currentUser = null;
         res.locals.userId = null;
         res.locals.userRole = null;
     }
 
-    // Guardar URL original para redirección post-login
-    if (!req.session.user && !req.path.startsWith('/auth')) {
-        req.session.returnTo = req.originalUrl;
-    }
-
     next();
 };
-
 
 // Function to check authentication and roles
 function checkAuth(req, res, next) {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
 const Evento = require('../models/evento'); // Agregar esta línea
+const User = require('../models/user');
 
 // Rutas principales
 router.get('/', async (req, res) => {
@@ -57,29 +58,10 @@ router.get('/eventos/categorias', (req, res) => {
     res.render('eventos/categorias.html', { title: 'Categorías' });
 });
 
-// Rutas de perfil
+// Eliminar todas las rutas que empiecen con /perfil
+// Solo mantener esta redirección
 router.get('/perfil', (req, res) => {
     res.redirect('/perfil/datos-personales');
-});
-
-router.get('/perfil/datos-personales', (req, res) => {
-    res.render('user/perfilDatosPers.html', { title: 'Datos Personales' });
-});
-
-router.get('/perfil/seguridad', (req, res) => {
-    res.render('user/perfilSeguridad.html', { title: 'Seguridad' });
-});
-
-router.get('/perfil/metodospago', (req, res) => {
-    res.render('user/perfilMetodosPago.html', { title: 'Métodos de Pago' });
-});
-
-router.get('/perfil/eventos-guardados', (req, res) => {
-    res.render('user/perfilEventosGuardados.html', { title: 'Eventos Guardados' });
-});
-
-router.get('/perfil/mis-tickets', (req, res) => {
-    res.render('user/perfilMisTickets.html', { title: 'Mis Tickets' });
 });
 
 // Rutas de pago
