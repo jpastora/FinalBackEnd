@@ -149,3 +149,56 @@ header {
     opacity: 1;
     visibility: visible;
 }
+
+/* Estilos para el menú de perfil */
+.menuPerfil {
+    position: relative;
+}
+
+.submenuPerfil {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #333;
+    padding: 10px 0;
+    list-style: none;
+    min-width: 200px;
+    border-radius: 5px;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.submenuPerfil li {
+    width: 100%;
+}
+
+.submenuPerfil a {
+    color: #fff;
+    padding: 12px 20px;
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.submenuPerfil a:hover {
+    background-color: #d94423;
+    color: #fff;
+}
+
+.menuPerfil:hover .submenuPerfil {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

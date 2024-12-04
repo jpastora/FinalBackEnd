@@ -3,7 +3,15 @@
         <% if (typeof user !== 'undefined' && user && user.rol === 'admin') { %>
             <a href="/admin/datos-personales">Ver cuenta</a>
         <% } else { %>
-            <a href="/perfil/datos-personales">Ver cuenta</a>
+            <div class="menuPerfil">
+                <a href="/perfil/datos-personales">Ver cuenta</a>
+                <ul class="submenuPerfil">
+                    <li><a href="/perfil/datos-personales">Datos personales</a></li>
+                    <li><a href="/perfil/seguridad">Seguridad</a></li>
+                    <li><a href="/perfil/eventos-guardados">Eventos Guardados</a></li>
+                    <li><a href="/perfil/metodospago">Métodos de pago</a></li>
+                </ul>
+            </div>
         <% } %>
         <a href="/auth/logout">Logout</a>
         <a href="/pago/carrito"><i class="fi fi-ss-shopping-cart"></i></a>
