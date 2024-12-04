@@ -72,10 +72,12 @@
                             <h2 class="textoComprar">Precio</h2>
                             <h2 class="textoComprar">desde</h2>
                             <h1 class="montoPrecio">₡<%= evento.precio %></h1>
+                            <div class="botones">
                             <a href="/eventos/evento/<%= evento._id %>" class="botonComprar">Comprar</a>
                             <button onclick="eliminarEventoGuardado('<%= evento._id %>')" class="botonEliminar">
                                 <i class="fi fi-ss-trash"></i>
                             </button>
+                            </div>
                         </div>
                     </div>
                 </div>
