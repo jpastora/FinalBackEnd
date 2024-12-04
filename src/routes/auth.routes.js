@@ -9,13 +9,24 @@ require('dotenv').config();
 // Rutas POST para autenticación
 router.post('/login', async (req, res) => {
     try {
-        await authController.login(req, res);
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        
+        if (user && await bcrypt.compare(password, user.password)) {
+            req.session.user = {
+                _id: user._id,
+                email: user.email,
+                name: user.name,
+                rol: user.rol
+            };
+            await req.session.save(); // Asegurar que la sesión se guarde
+            res.json({ success: true });
+        } else {
+            res.status(401).json({ success: false, message: 'Credenciales inválidas' });
+        }
     } catch (error) {
         console.error('Error en login:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Error al procesar el login'
-        });
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
     }
 });
 

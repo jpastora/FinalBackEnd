@@ -30,7 +30,15 @@ const userSchema = new mongoose.Schema({
     rol: { 
         type: String, 
         default: 'user' 
-    }
+    },
+    eventosGuardados: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Evento'
+    }],
+    tickets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ticket'
+    }]
 });
 
 const User = mongoose.model('User', userSchema);
