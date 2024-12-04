@@ -13,6 +13,8 @@
   <link rel="stylesheet"
     href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css">
   <script src="js/validacionEvento2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/eventos.js" defer></script>
 </head>
 
 <body>
@@ -134,40 +136,6 @@
   <!-- Footer -->
   <%- include('../partials/footer') %>
   <!-- Fin Footer -->
-
-  <script>
-    function incrementarCantidad() {
-        const input = document.getElementById('cantidadTickets');
-        const max = parseInt(input.max);
-        const currentValue = parseInt(input.value);
-        if (currentValue < max) {
-            input.value = currentValue + 1;
-            actualizarTotal();
-        }
-    }
-
-    function decrementarCantidad() {
-        const input = document.getElementById('cantidadTickets');
-        if (parseInt(input.value) > 1) {
-            input.value = parseInt(input.value) - 1;
-            actualizarTotal();
-        }
-    }
-
-    function actualizarTotal() {
-        const cantidad = parseInt(document.getElementById('cantidadTickets').value);
-        const precioUnitario = <%= evento.precio %>;
-        const total = cantidad * precioUnitario;
-        document.querySelector('.precio-total').textContent = '₡' + total.toLocaleString();
-    }
-
-    function guardarEvento(eventoId) {
-        // Implementar lógica para guardar evento
-        alert('Evento guardado en favoritos');
-    }
-
-    document.getElementById('cantidadTickets').addEventListener('change', actualizarTotal);
-  </script>
 
 </body>
 
