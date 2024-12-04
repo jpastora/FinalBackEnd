@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { MailerSend, EmailParams, Sender, Recipient } = require('mailersend');
-const authController = require('../controllers/auth.controller');  // Corregir importación
+const authController = require('../controllers/auth.controller');  // Correct import
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+
+router.get('/profile', authController.getUserData);
 
 // Rutas POST para autenticación
 router.post('/login', async (req, res) => {

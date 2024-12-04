@@ -55,6 +55,16 @@ const login = async (req, res) => {
     }
 };
 
+const getUserData = async (req, res) => {
+    try {
+        const user = await User.findById(req.session.user.userId);
+        res.render('auth', { isAuthenticated: !!user, user });
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
 const register = async (req, res) => {
     try {
         // Validación de campos requeridos
@@ -172,6 +182,7 @@ const logout = (req, res) => {
 
 module.exports = {
     login,
+    getUserData,
     register,
     recoverPassword,
     logout
