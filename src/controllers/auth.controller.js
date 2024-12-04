@@ -57,14 +57,15 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        if (!req.body.name || !req.body.email || !req.body.password) {
+        // Validación de campos requeridos
+        if (!req.body.name || !req.body.email || !req.body.password || !req.body.id || !req.body.phone) {
             return res.status(400).json({
                 success: false,
-                message: 'Faltan campos requeridos'
+                message: 'Todos los campos son requeridos'
             });
         }
 
-        // Verificar si ya existe un usuario con el mismo ID o email
+        // Verificación de usuario existente
         const existingUser = await User.findOne({
             $or: [
                 { id: req.body.id },
@@ -93,29 +94,30 @@ const register = async (req, res) => {
             rol: 'user'
         });
 
-        const savedUser = await newUser.save();
-        await sendConfirmationEmail(savedUser);
+        await newUser.save();
+        
+        // Intenta enviar el email pero no bloquees el registro si falla
+        try {
+            await sendConfirmationEmail(newUser);
+        } catch (emailError) {
+            console.error('Error al enviar email de confirmación:', emailError);
+            // Continúa con el registro aunque falle el email
+        }
 
         return res.status(200).json({
             success: true,
             message: 'Usuario registrado exitosamente'
         });
+
     } catch (error) {
         console.error('Error en registro:', error);
         
-        if (error.code === 11000) {
-            const field = Object.keys(error.keyPattern)[0];
-            return res.status(400).json({
-                success: false,
-                message: field === 'id' 
-                    ? 'Ya existe un usuario con esta identificación'
-                    : 'Ya existe un usuario con este correo electrónico'
-            });
-        }
-
+        // Asegúrate de que siempre se envíe una respuesta JSON
         return res.status(400).json({
             success: false,
-            message: error.message || 'Error al registrar usuario'
+            message: error.code === 11000 
+                ? 'Ya existe un usuario con esta identificación o correo electrónico'
+                : 'Error al registrar usuario'
         });
     }
 };
