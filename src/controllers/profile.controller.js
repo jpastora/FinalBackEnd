@@ -1,42 +1,44 @@
 const Ticket = require('../models/tickets');
+const Orden = require('../models/orden');
+const Evento = require('../models/evento');
 
 const getMisTickets = async (req, res) => {
     try {
-        const { busqueda, lugar, categoria } = req.query;
-        let query = { usuario: req.session.user.userId };
+        const userId = req.session.user._id;
+        
+        // Obtener las órdenes del usuario
+        const ordenes = await Orden.find({ usuario: userId })
+            .populate('tickets.evento')
+            .sort({ fechaCreacion: -1 });
 
-        // Obtener categorías y lugares únicos para el select
-        const uniqueCategories = await Ticket.distinct('evento.categoria').populate('evento');
-        const uniquePlaces = await Ticket.distinct('evento.lugar').populate('evento');
+        // Obtener los tickets individuales del usuario
+        const tickets = await Ticket.find({ usuario: userId })
+            .populate('evento')
+            .sort({ fechaCompra: -1 });
 
-        let tickets = await Ticket.find(query).populate({
-            path: 'evento',
-            select: 'nombre lugar fecha hora categoria'
-        });
+        // Obtener lugares y categorías únicos para los filtros
+        const lugares = await Evento.distinct('lugar');
+        const categorias = await Evento.distinct('categoria');
 
-        // Aplicar filtros
-        if (busqueda) {
-            tickets = tickets.filter(ticket => 
-                ticket.evento.nombre.toLowerCase().includes(busqueda.toLowerCase())
-            );
-        }
-        if (lugar && lugar !== 'disabled selected') {
-            tickets = tickets.filter(ticket => ticket.evento.lugar === lugar);
-        }
-        if (categoria && categoria !== 'disabled selected') {
-            tickets = tickets.filter(ticket => ticket.evento.categoria === categoria);
-        }
+        // Obtener los filtros de la query
+        const filtros = {
+            busqueda: req.query.busqueda || '',
+            lugar: req.query.lugar || '',
+            categoria: req.query.categoria || ''
+        };
 
-        res.render('user/perfilMisTickets.html', { 
+        res.render('user/perfilMisTickets.html', {
             tickets,
-            categorias: uniqueCategories,
-            lugares: uniquePlaces,
-            filtros: { busqueda, lugar, categoria }
+            ordenes,
+            lugares,
+            categorias,
+            filtros
         });
-
     } catch (error) {
         console.error('Error al obtener tickets:', error);
-        res.status(500).send('Error al obtener los tickets');
+        res.status(500).render('error', {
+            message: 'Error al cargar los tickets'
+        });
     }
 };
 

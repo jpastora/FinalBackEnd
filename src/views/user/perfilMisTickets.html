@@ -41,87 +41,103 @@
 
             <div class="contenedorPrincipal"> <!--Contenedor Principal-->
 
-<!-------------------------------------------Barra Lateral Usuario---------------------------------------------->
+                <!-------------------------------------------Barra Lateral Usuario---------------------------------------------->
 
-<%- include('../partials/menu_usuario') %> <!-- Incluye menu de usuario-->
+                <%- include('../partials/menu_usuario') %> <!-- Incluye menu de usuario-->
 
-<!-------------------------------------------FIN Barra Lateral Usuario---------------------------------------------->  
+                    <!-------------------------------------------FIN Barra Lateral Usuario---------------------------------------------->
 
-                <div class="contenedorSecundario"> <!--Contenedor Secundario-->
+                    <div class="contenedorSecundario"> <!--Contenedor Secundario-->
 
-                    <!-------------------------------------------Filtro---------------------------------------------->
 
-                    <div>
-                        <form class="formularioBusqueda" method="GET">
-                            <div class="grupoBusqueda">
-                                <label class="etiquetaFormulario">Buscar por palabra</label>
-                                <div class="grupoInput">
-                                    <input type="text" class="campoInput" name="busqueda"
-                                        placeholder="Buscar evento..." value="<%= filtros.busqueda || '' %>"/>
-                                </div>
-                            </div>
-                            
-                            <div class="grupoBusqueda">
-                                <label class="etiquetaFormulario">Lugar</label>
-                                <div class="grupoInput">
-                                    <select class="campoInput" name="lugar">
-                                        <option value="">Todos los lugares</option>
-                                        <% lugares.forEach(function(lugar) { %>
-                                            <option value="<%= lugar %>" <%= filtros.lugar === lugar ? 'selected' : '' %>>
-                                                <%= lugar %>
-                                            </option>
-                                        <% }); %>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="grupoBusqueda">
-                                <label class="etiquetaFormulario">Categoría</label>
-                                <div class="grupoInput">
-                                    <select class="campoInput" name="categoria">
-                                        <option value="">Todas las categorías</option>
-                                        <% categorias.forEach(function(categoria) { %>
-                                            <option value="<%= categoria %>" <%= filtros.categoria === categoria ? 'selected' : '' %>>
-                                                <%= categoria %>
-                                            </option>
-                                        <% }); %>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="grupoBusqueda grupoBtnEnviar">
-                                <button type="submit" class="botonBuscar">Buscar</button>
-                                <a href="/perfil/mis-tickets" class="botonLimpiar">Limpiar</a>
-                            </div>
-                        </form>
-                    </div>
 
-                    <!-------------------------------------------FIN filtro---------------------------------------------->
+                        <!-------------------------------------------Mis Tickets---------------------------------------------->
 
-                    <!-------------------------------------------Mis Tickets---------------------------------------------->
+                        <div class="seccionTickets">
+                            <!-- Sección de Órdenes -->
+                            <h2 class="seccionTitulo">Mis Órdenes</h2>
+                            <% if (ordenes && ordenes.length> 0) { %>
+                                <% ordenes.forEach(orden=> { %>
+                                    <div class="ordenContenedor">
+                                        <div class="ordenEncabezado">
+                                            <span><strong>Orden #:</strong>
+                                                <%= orden._id %>
+                                            </span>
+                                            <span><strong>Fecha:</strong>
+                                                <%= new Date(orden.fechaCreacion).toLocaleDateString('es-ES') %>
+                                            </span>
+                                            <span><strong>Total:</strong> ₡<%= orden.total %></span>
+                                            <span class="estadoOrden <%= orden.estado %>">
+                                                <%= orden.estado %>
+                                            </span>
+                                        </div>
+                                        <div class="ordenDetalles">
+                                            <% orden.tickets.forEach(ticket=> { %>
+                                                <div class="ticketOrden">
+                                                    <div class="detalleTicket"><strong>Evento:</strong>
+                                                        <%= ticket.evento.nombre %>
+                                                    </div>
+                                                    <div class="detalleTicket"><strong>Cantidad:</strong>
+                                                        <%= ticket.cantidad %>
+                                                    </div>
+                                                    <div class="detalleTicket"><strong>Precio unitario:</strong> ₡<%=
+                                                            ticket.precioUnitario %>
+                                                    </div>
+                                                    <div class="detalleTicket"><strong>Subtotal:</strong> ₡<%=
+                                                            ticket.precioTotal %>
+                                                    </div>
+                                                </div>
+                                                <% }); %>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <p class="noRegistros">No tienes órdenes registradas.</p>
+                                            <% } %>
 
-                    <div class="seccionTickets">
-                        <% if (tickets && tickets.length > 0) { %>
-                            <% tickets.forEach(ticket => { %>
-                                <h2 class="tituloEvento"><%= ticket.evento.nombre %></h2>
-                                <div class="infoTicket">
-                                    <div class="detalleTicket"><strong>Lugar:</strong> <%= ticket.evento.lugar %></div>
-                                    <div class="detalleTicket"><strong>Fecha:</strong> <%= new Date(ticket.evento.fecha).toLocaleDateString('es-ES') %></div>
-                                    <div class="detalleTicket"><strong>Hora:</strong> <%= ticket.evento.hora %></div>
-                                    <div class="detalleTicket"><strong>Compra:</strong> <%= new Date(ticket.fechaCompra).toLocaleDateString('es-ES') %></div>
-                                    <div class="detalleTicket"><strong>Cantidad:</strong> <%= ticket.cantidad %></div>
-                                    <div class="detalleTicket"><strong>Total:</strong> ₡<%= ticket.precioTotal %></div>
-                                    <a href="/ticket/<%= ticket._id %>" class="botonVerTicket">VER TICKET</a>
-                                </div>
-                            <% }); %>
-                        <% } else { %>
-                            <p class="noTickets">No has comprado tickets aún.</p>
-                        <% } %>
-                    </div>
+                                                <!-- Sección de Tickets Individuales -->
+                                                <h2 class="seccionTitulo">Mis Tickets Individuales</h2>
+                                                <% if (tickets && tickets.length> 0) { %>
+                                                    <% tickets.forEach(ticket=> { %>
+                                                        <h2 class="tituloEvento">
+                                                            <%= ticket.evento.nombre %>
+                                                        </h2>
+                                                        <div class="infoTicket">
+                                                            <div class="detalleTicket"><strong>Lugar:</strong>
+                                                                <%= ticket.evento.lugar %>
+                                                            </div>
+                                                            <div class="detalleTicket"><strong>Fecha:</strong>
+                                                                <%= new
+                                                                    Date(ticket.evento.fecha).toLocaleDateString('es-ES')
+                                                                    %>
+                                                            </div>
+                                                            <div class="detalleTicket"><strong>Hora:</strong>
+                                                                <%= ticket.evento.hora %>
+                                                            </div>
+                                                            <div class="detalleTicket"><strong>Compra:</strong>
+                                                                <%= new
+                                                                    Date(ticket.fechaCompra).toLocaleDateString('es-ES')
+                                                                    %>
+                                                            </div>
+                                                            <div class="detalleTicket"><strong>Cantidad:</strong>
+                                                                <%= ticket.cantidad %>
+                                                            </div>
+                                                            <div class="detalleTicket"><strong>Total:</strong> ₡<%=
+                                                                    ticket.precioTotal %>
+                                                            </div>
+                                                            <a href="/ticket/<%= ticket._id %>"
+                                                                class="botonVerTicket">VER TICKET</a>
+                                                        </div>
+                                                        <% }); %>
+                                                            <% } else { %>
+                                                                <p class="noRegistros">No tienes tickets individuales.
+                                                                </p>
+                                                                <% } %>
+                        </div>
 
-                    <!-------------------------------------------FIN Mis Tickets---------------------------------------------->
+                        <!-------------------------------------------FIN Mis Tickets---------------------------------------------->
 
-                </div> <!--FIN Contenedor Secundario-->
+                    </div> <!--FIN Contenedor Secundario-->
             </div> <!--FIN Contenedor Principal-->
 
             <!-- Footer -->
