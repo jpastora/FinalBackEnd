@@ -17,9 +17,9 @@
   <!-- Menú y Autenticación -->
 
   <%- include('../partials/auth') %> <!-- Incluye el Auth -->
-  <%- include('../partials/menu') %> <!-- Incluye el menú -->
+    <%- include('../partials/menu') %> <!-- Incluye el menú -->
 
-  <!-- Fin Menú y Autenticación -->
+      <!-- Fin Menú y Autenticación -->
 
 
       <section class="heroeImangen" id="heroe__imangen">
@@ -34,18 +34,31 @@
 
 
       <main class="contenedorCarrito">
-        <% if (cart && cart.items && cart.items.length > 0) { %>
-          <% cart.items.forEach(item => { %>
+        <% if (cart && cart.items && cart.items.length> 0) { %>
+          <% cart.items.forEach(item=> { %>
             <div class="evento" data-item-id="<%= item._id %>">
               <div class="infoEvento">
-                <h2><%= item.evento.nombre %></h2>
-                <p><strong>Lugar:</strong> <%= item.evento.lugar %></p>
-                <p><strong>Fecha:</strong> <%= new Date(item.evento.fecha).toLocaleDateString('es-ES') %></p>
-                <p><strong>Hora:</strong> <%= item.evento.hora %></p>
-                <p><strong>Precio:</strong> ₡<%= item.precioUnitario.toLocaleString() %></p>
-                <p><strong>Cantidad:</strong> 
-                  <input type="number" class="cantidadInput" value="<%= item.cantidad %>" min="1" 
-                         data-precio="<%= item.precioUnitario %>">
+                <h2>
+                  <%= item.evento.nombre %>
+                </h2>
+                <p><strong>Lugar:</strong>
+                  <%= item.evento.lugar %>
+                </p>
+                <p><strong>Fecha:</strong>
+                  <%= new Date(item.evento.fecha).toLocaleDateString('es-ES') %>
+                </p>
+                <p><strong>Hora:</strong>
+                  <%= item.evento.hora %>
+                </p>
+                <p><strong>Precio:</strong> ₡<%= item.precioUnitario.toLocaleString() %>
+                </p>
+                <div class="ticket-cantidad">
+                <p><strong>Cantidad:</strong>
+                  <button class="btn-cantidad" onclick="decrementarCantidad(event)">-</button>
+                    <input type="number" class="cantidadInput" value="<%= item.cantidad %>" min="1"
+                    data-precio="<%= item.precioUnitario %>">
+                  <button class="btn-cantidad" onclick="incrementarCantidad(event)">+</button>
+                </div>
                 </p>
                 <button class="eliminarItem" onclick="eliminarDelCarrito('<%= item._id %>')">Eliminar</button>
               </div>
@@ -53,88 +66,29 @@
                 <img src="<%= item.evento.imagen %>" alt="<%= item.evento.nombre %>">
               </div>
             </div>
-          <% }); %>
+            <% }); %>
 
-          <div class="resumenCompra">
-            <p><strong>Subtotal:</strong> ₡<%= subtotal.toLocaleString() %></p>
-            <p><strong>IVA (13%):</strong> ₡<%= iva.toLocaleString() %></p>
-            <p><strong>Total:</strong> ₡<%= total.toLocaleString() %></p>
-            <button class="botonPagar" onclick="window.location.href='/pago/seleccion'">Proceder al Pago</button>
-          </div>
-        <% } else { %>
-          <div class="carritoVacio">
-            <p>Tu carrito está vacío</p>
-            <a href="/eventos" class="botonContinuar">Ver Eventos</a>
-          </div>
-        <% } %>
+              <div class="resumenCompra">
+                <p><strong>Subtotal:</strong> ₡<%= subtotal.toLocaleString() %>
+                </p>
+                <p><strong>IVA (13%):</strong> ₡<%= iva.toLocaleString() %>
+                </p>
+                <p><strong>Total:</strong> ₡<%= total.toLocaleString() %>
+                </p>
+                <button class="botonPagar" onclick="window.location.href='/pago/seleccion'">Proceder al Pago</button>
+              </div>
+              <% } else { %>
+                <div class="carritoVacio">
+                  <p>Tu carrito está vacío</p>
+                  <a href="/eventos" class="botonContinuar">Ver Eventos</a>
+                </div>
+                <% } %>
       </main>
 
-      <script>
-        async function eliminarDelCarrito(itemId) {
-          try {
-            const response = await fetch(`/cart/remove/${itemId}`, {
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            
-            if (!response.ok) {
-              throw new Error('Error en la respuesta del servidor');
-            }
-            
-            const data = await response.json();
-            if (data.success) {
-              location.reload();
-            } else {
-              throw new Error(data.message || 'Error al eliminar item');
-            }
-          } catch (error) {
-            console.error('Error:', error);
-            alert('Error al eliminar el item del carrito');
-          }
-        }
-
-        document.querySelectorAll('.cantidadInput').forEach(input => {
-          input.addEventListener('change', async function() {
-            const itemId = this.closest('.evento').dataset.itemId;
-            const cantidad = parseInt(this.value);
-            
-            if (cantidad < 1) {
-              this.value = 1;
-              return;
-            }
-            
-            try {
-              const response = await fetch(`/cart/update/${itemId}`, {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ cantidad })
-              });
-              
-              if (!response.ok) {
-                throw new Error('Error en la respuesta del servidor');
-              }
-              
-              const data = await response.json();
-              if (data.success) {
-                location.reload();
-              } else {
-                throw new Error(data.message || 'Error al actualizar cantidad');
-              }
-            } catch (error) {
-              console.error('Error:', error);
-              alert('Error al actualizar la cantidad');
-            }
-          });
-        });
-      </script>
-
-  <!-- Footer -->
-  <%- include('../partials/footer') %>
-  <!-- Fin Footer -->
+      <!-- Footer -->
+      <%- include('../partials/footer') %>
+      <!-- Fin Footer -->
+      <script src="/js/pagos.js"></script>
 </body>
 
 </html>
