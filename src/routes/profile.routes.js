@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const multer = require('multer');
 const upload = multer({ dest: 'src/public/uploads/profiles/' });
+const bcrypt = require('bcrypt');
 
 router.get('/', (req, res) => {
     res.redirect('/perfil/datos-personales');
@@ -62,6 +63,58 @@ router.post('/actualizar-perfil', upload.single('perfilImg'), async (req, res) =
         res.status(500).json({ 
             success: false, 
             message: 'Error al actualizar perfil' 
+        });
+    }
+});
+
+router.post('/actualizar-contrasena', async (req, res) => {
+    try {
+        const { antiguaContrasena, nuevaContrasena, repetirContrasena } = req.body;
+        const userId = req.session.user._id;
+
+        // Verificar que las contraseñas nuevas coincidan
+        if (nuevaContrasena !== repetirContrasena) {
+            return res.json({ 
+                success: false, 
+                message: 'Las contraseñas no coinciden' 
+            });
+        }
+
+        // Obtener usuario
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.json({ 
+                success: false, 
+                message: 'Usuario no encontrado' 
+            });
+        }
+
+        // Verificar contraseña antigua
+        const isValidPassword = await bcrypt.compare(antiguaContrasena, user.password);
+        if (!isValidPassword) {
+            return res.json({ 
+                success: false, 
+                message: 'La contraseña actual es incorrecta' 
+            });
+        }
+
+        // Encriptar nueva contraseña
+        const hashedPassword = await bcrypt.hash(nuevaContrasena, 10);
+        
+        // Actualizar contraseña
+        await User.findByIdAndUpdate(userId, { 
+            password: hashedPassword 
+        });
+
+        res.json({ 
+            success: true, 
+            message: 'Contraseña actualizada correctamente' 
+        });
+    } catch (error) {
+        console.error('Error al actualizar contraseña:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error al actualizar la contraseña' 
         });
     }
 });
