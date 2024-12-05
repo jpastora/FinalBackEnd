@@ -27,6 +27,7 @@ router.post('/crear', upload.eventos.single('imagen'), async (req, res) => {
 
         const eventoData = {
             ...req.body,
+            // Corregir la ruta para que coincida con la estructura de carpetas
             imagen: `/uploads/eventos/${req.file.filename}` 
         };
 

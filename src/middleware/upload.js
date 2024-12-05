@@ -3,9 +3,10 @@ const path = require('path');
 const fs = require('fs');
 
 const createUploadMiddleware = (type) => {
-    // Corregir la ruta del directorio para que sea relativa a la raíz del proyecto
-    const uploadDir = path.join(__dirname, 'public', 'uploads', type);
-
+    // Asegurar que la ruta sea correcta y relativa a la raíz del proyecto
+    const uploadDir = path.join(__dirname, '..', 'public', 'uploads', type);
+    console.log('Upload directory:', uploadDir); // Para debugging
+    
     // Crear el directorio si no existe
     if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });

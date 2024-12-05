@@ -48,7 +48,7 @@ router.get('/datos-personales', async (req, res) => {
 router.post('/actualizar-perfil', upload.profiles.single('perfilImg'), async (req, res) => {
     try {
         const { nombre, email, cedula } = req.body;
-        const userId = req.session.user._id; // Cambiado de userId a _id
+        const userId = req.session.user._id; 
 
         const updateData = {
             name: nombre,
@@ -57,6 +57,7 @@ router.post('/actualizar-perfil', upload.profiles.single('perfilImg'), async (re
         };
 
         if (req.file) {
+            // Corregir la ruta para que coincida con la estructura de carpetas
             updateData.profileImage = `/uploads/profiles/${req.file.filename}`;
         }
 
