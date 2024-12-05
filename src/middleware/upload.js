@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Usar path.join para la ruta del directorio
-const uploadDir = path.join(__dirname, '..', 'uploads', 'eventos');
+const uploadDir = path.join(__dirname, 'public', 'uploads', 'eventos');
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });

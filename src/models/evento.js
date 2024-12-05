@@ -50,7 +50,7 @@ const eventoSchema = new mongoose.Schema({
     },
     imagen: {
         type: String,
-        default: '/img/default-event.png'
+        default: '/public/uploads/eventos/1733172139529-10.jpg'
     }
 }, {
     timestamps: true
