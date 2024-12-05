@@ -60,7 +60,14 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
             
             document.getElementById('EditarEventoForm').reset();
             document.getElementById('previewImagen').src = '/img/eventoCategoria6.png';
-            window.location.href = '/eventos';
+            
+            // Verificar que tenemos el ID del evento antes de redirigir
+            if (data.evento && data.evento._id) {
+                window.location.href = `/eventos/evento/${data.evento._id}`;
+            } else {
+                console.error('No se recibió el ID del evento');
+                window.location.href = '/eventos'; // Redirección fallback a la lista de eventos
+            }
         } else {
             await Swal.fire({
                 title: 'Error',
