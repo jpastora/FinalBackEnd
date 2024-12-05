@@ -50,18 +50,18 @@
         <!-------------------------------------------Formulario de Perfil--------------------------------------------->
 
         <section class="perfilUsuario" id="Perfil__Usuario">
-            <form class="formularioPerfil" id="Formulario__Perfil">
+            <form class="formularioPerfil" id="Formulario__Perfil" method="POST" action="/perfil/actualizar-perfil" enctype="multipart/form-data">
                 <div class="campoPerfil" id="Campo__Nombre">
                     <label for="nombre">Nombre Completo:</label>
-                    <input type="text" id="Dato__Nombre" name="nombre" placeholder="Juan Perez">
+                    <input type="text" id="Dato__Nombre" name="nombre" value="<%= user.name %>" required>
                 </div>
                 <div class="campoPerfil" id="Campo__Email">
                     <label for="email">Email:</label>
-                    <input type="email" id="Dato__Email" name="email" placeholder="juanp@prueba.com">
+                    <input type="email" id="Dato__Email" name="email" value="<%= user.email %>">
                 </div>
                 <div class="campoPerfil" id="Campo__Cedula">
                     <label for="cedula">Cédula:</label>
-                    <input type="text" id="Dato__Cedula" name="cedula" placeholder="113615689">
+                    <input type="text" id="Dato__Cedula" name="cedula" value="<%= user.id %>">
                 </div>
                 <div class="campoPerfil" id="Campo__Foto">
                     <label for="perfilImg">Cambiar foto de perfil:</label>
