@@ -42,7 +42,7 @@ const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
             fecha: new Date(fecha),
             hora,
             descripcion: req.body.descripcion,
-            imagen: req.file ? `/uploads/eventos/${req.file.filename}` : '/img/default-event.png'
+            imagen: req.file ? `/public/uploads/eventos/${req.file.filename}` : '/img/1733172139529-10.jpg'
         });
 
         await nuevoEvento.save();

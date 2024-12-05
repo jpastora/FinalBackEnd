@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const multer = require('multer');
-const upload = multer({ dest: 'src/public/uploads/profiles/' });
+const upload = require('../middleware/upload');
 const bcrypt = require('bcrypt');
 const PaymentCard = require('../models/paymentCard');
 const profileController = require('../controllers/profile.controller');
@@ -45,10 +45,10 @@ router.get('/datos-personales', async (req, res) => {
     }
 });
 
-router.post('/actualizar-perfil', upload.single('perfilImg'), async (req, res) => {
+router.post('/actualizar-perfil', upload.profiles.single('perfilImg'), async (req, res) => {
     try {
         const { nombre, email, cedula } = req.body;
-        const userId = req.session.user._id; // Cambiado de userId a _id
+        const userId = req.session.user._id; 
 
         const updateData = {
             name: nombre,
@@ -57,6 +57,7 @@ router.post('/actualizar-perfil', upload.single('perfilImg'), async (req, res) =
         };
 
         if (req.file) {
+            // Corregir la ruta para que coincida con la estructura de carpetas
             updateData.profileImage = `/uploads/profiles/${req.file.filename}`;
         }
 

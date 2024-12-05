@@ -15,7 +15,8 @@ router.get('/crear', (req, res) => {
     res.render('eventos/crearEvento.html', { title: 'Crear Evento' });
 });
 
-router.post('/crear', upload.single('imagen'), async (req, res) => {
+// Cambiamos upload.single por upload.eventos.single
+router.post('/crear', upload.eventos.single('imagen'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({
@@ -26,7 +27,8 @@ router.post('/crear', upload.single('imagen'), async (req, res) => {
 
         const eventoData = {
             ...req.body,
-            imagen: `/uploads/${req.file.filename}` 
+            // Corregir la ruta para que coincida con la estructura de carpetas
+            imagen: `/uploads/eventos/${req.file.filename}` 
         };
 
         const evento = new Evento(eventoData);
