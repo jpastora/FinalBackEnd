@@ -7,12 +7,15 @@
   <title>Crear Eventos</title>
 
   <!-- ESTILOS -->
-  <link rel="stylesheet" type="text/css" href="/css/crearEvento.css">
+  <link rel="stylesheet" type="text/css" href="/css/editarEventos.css">
   <link rel="stylesheet" type="text/css" href="/css/menu.css">
   <link rel="stylesheet" type="text/css" href="/css/footer.css">
   <link rel="stylesheet" type="text/css" href="/css/menuLateral.css">
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+  <!-- Agregar SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/editarEventos.js" defer></script>
 </head>
 
 <body>
@@ -38,83 +41,103 @@
   <div class="contenedorPrincipal">
 
     <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
+    
   <%- include('../partials/menu_admin') %> <!-- Incluye el menú admin-->
+
     <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
+      <!-- Formulario para crear un nuevo evento -->
+       <section class="contenedorEditor">
+      <form class="editarEvento" id="EditarEventoForm" enctype="multipart/form-data">
 
-    <!-- Formulario para crear un nuevo evento -->
-    <form class="editarEvento" id="EditarEventoForm">
-
-      <!-- Imagen de muestra para la foto del evento -->
-      <div class="subirFoto" id="SubirFoto">
-        <img src="/img/eventoCategoria6.png" alt="">
-      </div>
-
-      <!-- Campo para ingresar el nombre del evento -->
-      <div class="editarEventoInput">
-        <label class="name" for="name">Ingrese el nombre del Evento</label>
-        <input class="nombreEvento" type="text" id="name" name="name" placeholder="Nombre evento">
-      </div>
-
-      <!-- Fila para seleccionar el lugar y la categoría del evento -->
-      <div class="editarEventoFila">
-        <div class="editarEventoInput">
-          <label for="lugar">Seleccione el Lugar</label>
-          <select name="lugar" id="lugar">
-            <option value="lugar1">San Jose</option>
-            <option value="lugar2">Heredia</option>
-            <option value="lugar3">Alajuela</option>
-            <option value="lugar4">Cartago</option>
-            <option value="lugar5">Limon</option>
-            <option value="lugar6">Puntarenas</option>
-            <option value="lugar7">Guanacaste</option>
-          </select>
+        <!-- Imagen de muestra para la foto del evento -->
+        <div class="subirFoto" id="SubirFoto">
+          <img id="previewImagen" src="/uploads/eventos/1733172139529-10.jpg" alt="Preview">
         </div>
+
+        <!-- Campo para ingresar el nombre del evento -->
         <div class="editarEventoInput">
-          <label for="categories">Seleccione la Categoria</label>
-          <select name="categories" id="categories">
-            <option value="category-1">Deportes</option>
-            <option value="category-2">Concierto</option>
-            <option value="category-3">Festivales</option>
-            <option value="category-4">Teatro</option>
-            <option value="category-5">Espectáculos familiares</option>
-          </select>
+          <label class="name" for="nombre">Ingrese el nombre del Evento</label>
+          <input class="nombreEvento" type="text" id="nombre" name="nombre" placeholder="Nombre evento">
         </div>
-      </div>
 
-      <!-- Campo para ingresar una palabra clave -->
-      <div class="editarEventoFila">
+        <!-- Fila para seleccionar el lugar y la categoría del evento -->
+        <div class="editarEventoFila">
+          <div class="editarEventoInput">
+            <label for="lugar">Seleccione el Lugar</label>
+            <select name="lugar" id="lugar">
+              <option value="San José">San José</option>
+              <option value="Heredia">Heredia</option>
+              <option value="Alajuela">Alajuela</option>
+              <option value="Cartago">Cartago</option>
+              <option value="Limon">Limon</option>
+              <option value="Puntarenas">Puntarenas</option>
+              <option value="Guanacaste">Guanacaste</option>
+            </select>
+          </div>
+          <div class="editarEventoInput">
+            <label for="categoria">Seleccione la Categoria</label>
+            <select name="categoria" id="categoria">
+              <option value="Deportes">Deportes</option>
+              <option value="Conciertos">Conciertos</option>
+              <option value="Festivales">Festivales</option>
+              <option value="Teatro">Teatro</option>
+              <option value="Charlas">Charlas</option>
+              <option value="Comedia">Comedia</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Opciones para cargar imagen del evento -->
+        <div class="editarEventoFila">
+          <div class="editarEventoInput">
+            <label class="imagenEvento" for="imagen">Foto de Evento</label>
+            <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg" required />
+          </div>
+        </div>
+
+        <!-- Campo para ingresar el precio del evento -->
+        <div class="precio">
+          <label for="numerotickets">Cantidad de tickets</label>
+          <input type="number" id="numerotickets" name="numerotickets" placeholder="20000">
+        </div>
+
+        <!-- Campo para ingresar el precio del evento -->
+        <div class="precio">
+          <label for="price">Precio</label>
+          <span class="currency-symbol">₡</span>
+          <input type="number" id="price" name="price" placeholder="Precio">
+        </div>
+
+        <!-- Campo para descripción -->
         <div class="editarEventoInput">
-          <label for="key-word">Palabra clave</label>
-          <input type="text" id="key-word" name="key-word" placeholder="Palabra Clave">
+          <label for="descripcion">Descripción del Evento</label>
+          <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el evento..." required></textarea>
         </div>
-      </div>
 
-      <!-- Opciones para cargar una imagen de portada y foto del evento -->
-      <div class="editarEventoFila">
-        <div class="editarEventoInput">
-          <label for="test">Cambiar Portada</label>
-          <input type="text" id="test" name="test" placeholder="imagen.png">
+        <!-- Campo para fecha y hora -->
+        <div class="editarEventoFila">
+          <div class="editarEventoInput">
+            <label for="fecha">Fecha del Evento</label>
+            <input type="date" id="fecha" name="fecha" required>
+          </div>
+          <div class="editarEventoInput">
+            <label for="hora">Hora del Evento</label>
+            <input type="time" id="hora" name="hora" required>
+          </div>
         </div>
-        <div class="editarEventoInput">
-          <label class="imagenEvento" for="imagenEvento">Foto de Evento</label>
-          <input type="file" id="imagenEvento" name="imagenEvento" accept="image/png, image/jpeg" />
+
+        <!-- Botones para enviar o borrar el formulario -->
+        <div class="editarEventoBotones">
+          <button class="editarEventoBoton" type="submit">ENVIAR</button>
+          <button class="editarEventoBoton" type="reset">BORRAR</button>
         </div>
-      </div>
+      </form>
+    </div>
+  </section>
 
-      <!-- Campo para ingresar el precio del evento -->
-      <div class="precio">
-        <label for="price">Precio</label>
-        <input type="text" id="price" name="price" placeholder="Precio">
-      </div>
-
-
-      <!-- Botones para enviar o borrar el formulario -->
-      <div class="editarEventoBotones">
-        <button class="editarEventoBoton" type="submit">ENVIAR</button>
-        <button class="editarEventoBoton" type="reset">BORRAR</button>
-      </div>
-    </form>
-  </div>
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+      <!-- Fin Footer -->
 
   <!-- Footer -->
   <%- include('../partials/footer') %>
