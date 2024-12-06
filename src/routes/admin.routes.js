@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
+const userController = require('../controllers/user.controller');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/profiles/' });
 
 // Asegurarse que esta ruta esté antes de las rutas con parámetros
 router.get('/eventos/listar', eventoController.listarEventosAdmin);
@@ -66,5 +69,11 @@ router.get('/editar-evento', checkUserRole('admin'), (req, res) => {
 router.get('/crear-evento', checkUserRole('admin'), (req, res) => {
     res.render('admin/adminCrearEvento.html', { title: 'Crear Evento' });
 });
+
+// API routes for user management
+router.get('/api/users', userController.getAllUsers);
+router.get('/api/users/:id', userController.getUser);
+router.put('/api/users/:id', upload.single('profileImage'), userController.updateUser);
+router.delete('/api/users/:id', userController.deleteUser);
 
 module.exports = router;

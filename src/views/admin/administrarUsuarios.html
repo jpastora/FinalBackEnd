@@ -49,19 +49,15 @@
 
         <div class="contenedorDatos">
             <div class="filtrosBusqueda">
-                <form>
+                <form id="searchForm">
                     <div class="campoBusqueda">
-                        <label for="usuario">Filtrar por usuario o correo</label>
-                        <input type="text" id="Usuario__Campo" name="usuario" placeholder="Busqueda">
-                    </div>
-                    <div class="campoFecha">
-                        <label for="fecha">Fecha de ingreso:</label>
-                        <input type="date" id="Fecha__Campo" name="fecha">
+                        <label for="searchTerm">Filtrar por usuario o correo</label>
+                        <input type="text" id="searchTerm" name="searchTerm" placeholder="Buscar...">
                     </div>
                     <div class="campoRol">
                         <label for="rol">Rol:</label>
-                        <select id="Rol__Selector" name="rol">
-                            <option value="">Seleccionar rol</option>
+                        <select id="rolFilter" name="rol">
+                            <option value="">Todos</option>
                             <option value="admin">Administrador</option>
                             <option value="user">Usuario</option>
                         </select>
@@ -77,93 +73,56 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Nombre</th>
                             <th>Correo</th>
-                            <th>Fecha de Ingreso</th>
                             <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>117505050</td>
-                            <td>juan.perez@gmail.com</td>
-                            <td>14/20/24</td>
-                            <td>Usuario</td>
-                            <td><i class='bx bxs-edit'></i></td>
-                        </tr>
+                    <tbody id="userTableBody">
+                        <!-- La tabla se llenará dinámicamente -->
                     </tbody>
                 </table>
+                <div class="paginacion">
+                    <button id="prevPage">Anterior</button>
+                    <span id="currentPage">1</span>
+                    <button id="nextPage">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- Modal para editar usuario -->
+            <div id="editUserModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Editar Usuario</h2>
+                    <form id="editUserForm">
+                        <input type="hidden" id="userId">
+                        <div>
+                            <label for="editName">Nombre:</label>
+                            <input type="text" id="editName" required>
+                        </div>
+                        <div>
+                            <label for="editEmail">Email:</label>
+                            <input type="email" id="editEmail" required>
+                        </div>
+                        <div>
+                            <label for="editRol">Rol:</label>
+                            <select id="editRol">
+                                <option value="user">Usuario</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="editPassword">Nueva Contraseña:</label>
+                            <input type="password" id="editPassword">
+                        </div>
+                        <div>
+                            <label for="editImage">Imagen de Perfil:</label>
+                            <input type="file" id="editImage" accept="image/*">
+                        </div>
+                        <button type="submit">Guardar Cambios</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -174,6 +133,7 @@
 
     <!-------------------------------------------Fin Footer---------------------------------------------->
 
+    <script src="/js/listaUsuarios.js"></script>
 </body>
 
 </html>
