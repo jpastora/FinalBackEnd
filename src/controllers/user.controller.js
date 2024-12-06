@@ -3,11 +3,11 @@ const User = require('../models/user');
 const getUserProfile = async (req, res) => {
     try {
         const userId = req.session.user.id; 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).select('name email id profileImage');
         if (!user) {
             return res.status(404).send('User not found');
         }
-        res.render('admin/adminDatosPers', { user }); 
+        res.render('user/perfilDatosPers', { user }); 
     } catch (error) {
         console.error('Error fetching user data:', error);
         res.status(500).send('Internal Server Error');

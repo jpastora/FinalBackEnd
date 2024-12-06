@@ -12,17 +12,17 @@
     <link rel="stylesheet" href="/css/perfilDatoPers.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
-
+    <script src="/js/perfil.js" defer></script>
 </head>
 
 <body>
 
-    <!-------------------------------------------Menú---------------------------------------------->
+    <!-- Menú y Autenticación -->
 
-    <%- include('../partials/auth') %>
-    <%- include('../partials/menu') %>
+    <%- include('../partials/auth') %> <!-- Incluye el Auth -->
+    <%- include('../partials/menu') %> <!-- Incluye el menú -->
 
-    <!-------------------------------------------FIN Menú---------------------------------------------->
+    <!-- Fin Menú y Autenticación -->
 
     <!-------------------------------------------Banner---------------------------------------------->
 
@@ -40,12 +40,11 @@
 
     <div class="contenedorPrincipal" id="Contenedor__Principal"> <!--Contenedor Principal-->
 
-        <!-------------------------------------------Sección Barra Lateral---------------------------------------------->
+        <!-------------------------------------------Barra Lateral Usuario---------------------------------------------->
 
-        <%- include('../partials/menu_admin') %> <!-- Incluye el menú admin-->
-        
-        <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
+        <%- include('../partials/menu_admin') %> <!-- Incluye menu de admin-->
 
+        <!-------------------------------------------FIN Barra Lateral Usuario---------------------------------------------->    
 
         <!-------------------------------------------Formulario de Perfil--------------------------------------------->
 
@@ -53,69 +52,39 @@
             <form class="formularioPerfil" id="Formulario__Perfil" method="POST" action="/perfil/actualizar-perfil" enctype="multipart/form-data">
                 <div class="campoPerfil" id="Campo__Nombre">
                     <label for="nombre">Nombre Completo:</label>
-                    <input type="text" id="Dato__Nombre" name="nombre" value="<%= user.name %>" required>
+                    <input type="text" id="Dato__Nombre" name="nombre" value="<%= userData ? userData.name : '' %>" required>
                 </div>
                 <div class="campoPerfil" id="Campo__Email">
                     <label for="email">Email:</label>
-                    <input type="email" id="Dato__Email" name="email" value="<%= user.email %>">
+                    <input type="email" id="Dato__Email" name="email" value="<%= userData ? userData.email : '' %>" required>
                 </div>
                 <div class="campoPerfil" id="Campo__Cedula">
                     <label for="cedula">Cédula:</label>
-                    <input type="text" id="Dato__Cedula" name="cedula" value="<%= user.id %>">
+                    <input type="text" id="Dato__Cedula" name="cedula" value="<%= userData ? userData.id : '' %>" required>
                 </div>
                 <div class="campoPerfil" id="Campo__Foto">
                     <label for="perfilImg">Cambiar foto de perfil:</label>
                     <input type="file" id="Perfil__Imagen" name="perfilImg" accept="image/*">
                 </div>
                 <div class="botonesPerfil" id="Botones__Perfil">
-                    <button type="submit" class="botonEnviar" id="Boton__Enviar">Enviar</button>
-                    <button type="reset" class="botonBorrar" id="Boton__Borrar">Borrar</button>
+                    <button type="submit" class="botonEnviar" id="Boton__Enviar">Guardar Cambios</button>
+                    <button type="reset" class="botonBorrar" id="Boton__Borrar">Restablecer</button>
                 </div>
             </form>
             <div class="imagenPerfil" id="Imagen__Perfil">
-                <img src="<%= user.profileImage %>" alt="Foto de perfil">
+                <img src="<%= userData && userData.profileImage ? userData.profileImage : '/img/imagenPerfil.png' %>" alt="Foto de perfil">
             </div>
-        </section>
-
-        <!-- Nueva sección de historial -->
-        <section class="historialCambios" id="Historial__Cambios">
-            <h2>Historial de Cambios</h2>
-            <table class="tablaHistorial">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Tipo de Cambio</th>
-                        <th>Descripción</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2024-02-20</td>
-                        <td>Actualización de Email</td>
-                        <td>Cambio de correo electrónico</td>
-                        <td>Completado</td>
-                    </tr>
-                    <tr>
-                        <td>2024-02-15</td>
-                        <td>Cambio de Foto</td>
-                        <td>Actualización imagen de perfil</td>
-                        <td>Completado</td>
-                    </tr>
-                </tbody>
-            </table>
         </section>
 
         <!-------------------------------------------FIN Formulario de Perfil--------------------------------------------->
 
-
     </div> <!--FIN Contenedor Principal-->
 
-    <!-------------------------------------------Footer---------------------------------------------->
+    <!-- Footer -->
 
-    <%- include('../partials/footer') %>
+    <%- include('../partials/footer') %> <!-- Incluye el footer -->
 
-    <!-------------------------------------------Fin Footer---------------------------------------------->
+    <!-- Fin Footer -->
 
 </body>
 
