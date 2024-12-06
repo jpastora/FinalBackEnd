@@ -57,44 +57,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div class="datosTarjeta">
-                                <img src="/img/masterCard.png" alt="MasterCard" class="iconoTarjeta">
-                                <span>XXXX - XXXX - XXXX - 6547</span>
-                                <p>JUAN VAINAS</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="accionesTarjeta">
-                                <img src="/img/basura.png" alt="Delete" class="iconoAccion">
-                                <img src="/img/lapiz.png" alt="Edit" class="iconoAccion">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="datosTarjeta">
-                                <img src="/img/visa.png" alt="Visa" class="iconoTarjeta">
-                                <span>XXXX - XXXX - XXXX - 6547</span>
-                                <p>JUAN VAINAS</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="accionesTarjeta">
-                                <img src="/img/basura.png" alt="Delete" class="iconoAccion">
-                                <img src="/img/lapiz.png" alt="Edit" class="iconoAccion">
-                            </div>
-                        </td>
-                    </tr>
+                    <% if (locals.cards && cards.length > 0) { %>
+                        <% cards.forEach(card => { %>
+                            <tr>
+                                <td>
+                                    <img src="../img/<%= card.cardNumber.startsWith('4') ? 'visa.png' : 'mastercard.png' %>" alt="Card" class="iconoTarjeta">
+                                    <div class="datosTarjeta">
+                                        <span>XXXX - XXXX - XXXX - <%= card.lastFourDigits %></span>
+                                        <p><%= card.cardholderName %></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="accionesTarjeta">
+                                        <img src=".../img/basura.png" alt="Delete" class="iconoAccion" onclick="eliminarTarjeta('<%= card._id %>')">
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="2">No hay tarjetas registradas</td>
+                        </tr>
+                    <% } %>
                 </tbody>
             </table>
             <div class="agregarTarjeta">
-                <button class="botonAgregar">Agregar otro método</button>
+                <button class="botonAgregar" onclick="mostrarFormularioTarjeta()">Agregar otro método</button>
+            </div>
+
+            <!-- Modal para agregar tarjeta -->
+            <div id="modalTarjeta" class="modal">
+                <div class="modal-content">
+                    <h2>Agregar Tarjeta</h2>
+                    <form id="formTarjeta">
+                        <input type="text" name="cardholderName" placeholder="Nombre en la tarjeta" required>
+                        <input type="text" name="cardNumber" placeholder="Número de tarjeta" required pattern="[0-9]{16}">
+                        <input type="text" name="expirationDate" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})">
+                        <input type="text" name="cvv" placeholder="CVV" required pattern="[0-9]{3,4}">
+                        <button type="submit">Guardar</button>
+                        <button type="button" onclick="cerrarModal()">Cancelar</button>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <!-------------------------------------------FIN Metodos Pago---------------------------------------------->
 
     </div> <!--FIN Contenedor Principal-->
 
@@ -103,6 +108,50 @@
     <%- include('../partials/footer') %>
 
     <!-------------------------------------------Fin Footer---------------------------------------------->
+
+    <script>
+    function mostrarFormularioTarjeta() {
+        document.getElementById('modalTarjeta').style.display = 'block';
+    }
+
+    function cerrarModal() {
+        document.getElementById('modalTarjeta').style.display = 'none';
+    }
+
+    document.getElementById('formTarjeta').onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        try {
+            const response = await fetch('/perfil/metodospago/agregar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+            if (response.ok) {
+                location.reload();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    async function eliminarTarjeta(cardId) {
+        if (confirm('¿Está seguro de eliminar esta tarjeta?')) {
+            try {
+                const response = await fetch(`/perfil/metodospago/${cardId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    location.reload();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+    </script>
 
 </body>
 
