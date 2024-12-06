@@ -7,7 +7,11 @@ const getUserProfile = async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
-        res.render('user/perfilDatosPers', { user }); 
+        if (user.role === 'admin') {
+            res.render('admin/adminDatosPers', { user });
+        } else {
+            res.render('user/perfilDatosPers', { user });
+        }
     } catch (error) {
         console.error('Error fetching user data:', error);
         res.status(500).send('Internal Server Error');
