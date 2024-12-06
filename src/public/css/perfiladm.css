@@ -185,14 +185,12 @@ body {
 }
 
 .tablaUsuarios {
-    background-color: #f4f4f4; 
-    width: 100%;
-    border-radius: 5px; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-    margin-top: 40px;
-    margin-left: 0;
-    overflow-x: auto; /* Allow table to scroll horizontally if needed */
-    border: 1px solid #e0e0e0;
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto; 
 }
 
 table {
