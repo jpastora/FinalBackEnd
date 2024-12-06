@@ -15,35 +15,81 @@ router.get('/crear', (req, res) => {
     res.render('eventos/crearEvento.html', { title: 'Crear Evento' });
 });
 
-// Cambiamos upload.single por upload.eventos.single
+// Cambiamos la ruta de creación/edición para manejar ambos casos
 router.post('/crear', upload.eventos.single('imagen'), async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).json({
-                success: false,
-                mensaje: 'Se requiere una imagen'
+        const eventoId = req.body.eventoId;
+
+        // Si es edición y no hay nueva imagen, no requerir imagen
+        if (eventoId && !req.file) {
+            const eventoExistente = await Evento.findById(eventoId);
+            if (!eventoExistente) {
+                return res.status(404).json({
+                    success: false,
+                    mensaje: 'Evento no encontrado'
+                });
+            }
+
+            // Usar la imagen existente
+            const eventoData = {
+                ...req.body,
+                imagen: eventoExistente.imagen // Mantener la imagen existente
+            };
+
+            const eventoActualizado = await Evento.findByIdAndUpdate(
+                eventoId,
+                eventoData,
+                { new: true }
+            );
+
+            return res.status(200).json({
+                success: true,
+                mensaje: 'Evento actualizado exitosamente',
+                evento: eventoActualizado
             });
         }
 
+        // Para creación nueva, requerir imagen
+        if (!eventoId && !req.file) {
+            return res.status(400).json({
+                success: false,
+                mensaje: 'Se requiere una imagen para crear un nuevo evento'
+            });
+        }
+
+        // Procesar el resto de la lógica normal
         const eventoData = {
             ...req.body,
-            // Corregir la ruta para que coincida con la estructura de carpetas
-            imagen: `/uploads/eventos/${req.file.filename}` 
+            imagen: req.file ? `/uploads/eventos/${req.file.filename}` : '/img/1733172139529-10.jpg'
         };
 
-        const evento = new Evento(eventoData);
-        await evento.save();
-
-        res.status(201).json({
-            success: true,
-            mensaje: 'Evento creado exitosamente',
-            evento
-        });
+        if (eventoId) {
+            // Actualización con nueva imagen
+            const eventoActualizado = await Evento.findByIdAndUpdate(
+                eventoId,
+                eventoData,
+                { new: true }
+            );
+            return res.status(200).json({
+                success: true,
+                mensaje: 'Evento actualizado exitosamente',
+                evento: eventoActualizado
+            });
+        } else {
+            // Creación nueva
+            const evento = new Evento(eventoData);
+            await evento.save();
+            return res.status(201).json({
+                success: true,
+                mensaje: 'Evento creado exitosamente',
+                evento
+            });
+        }
     } catch (error) {
-        console.error('Error al crear evento:', error);
+        console.error('Error:', error);
         res.status(500).json({
             success: false,
-            mensaje: 'Error al crear el evento',
+            mensaje: 'Error al procesar el evento',
             error: error.message
         });
     }

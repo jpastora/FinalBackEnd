@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/evento.controller');
 
+// Asegurarse que esta ruta esté antes de las rutas con parámetros
 router.get('/eventos/listar', eventoController.listarEventosAdmin);
+
 router.get('/eventos/:id', eventoController.obtenerEventoPorId);
 router.delete('/eventos/:id', eventoController.eliminarEvento);
 

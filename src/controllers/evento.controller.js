@@ -21,42 +21,53 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const crearEvento = [upload.single('imagenEvento'), async (req, res) => {
+const crearEvento = [upload.single('imagen'), async (req, res) => {
     try {
-        const { titulo, lugar, categoria, precio, fecha, hora } = req.body;
+        const eventoId = req.body.eventoId; // Para identificar si es edición
         
-        const categoriaMap = {
-            'Deportes': 'Deportes',
-            'Conciertos': 'Conciertos',
-            'Festivales': 'Festivales',
-            'Teatro': 'Teatro',
-            'Comedia': 'Comedia',
-            'Charlas': 'Charlas'
+        const eventoData = {
+            nombre: req.body.nombre,
+            lugar: req.body.lugar,
+            categoria: req.body.categoria,
+            precio: Number(req.body.precio),
+            fecha: new Date(req.body.fecha),
+            hora: req.body.hora,
+            descripcion: req.body.descripcion,
+            numerotickets: req.body.numerotickets
         };
 
-        const nuevoEvento = new Evento({
-            nombre: titulo,
-            lugar,
-            categoria: categoriaMap[categoria],
-            precio: Number(precio),
-            fecha: new Date(fecha),
-            hora,
-            descripcion: req.body.descripcion,
-            imagen: req.file ? `/public/uploads/eventos/${req.file.filename}` : '/img/1733172139529-10.jpg'
-        });
+        // Solo actualizar la imagen si se proporcionó una nueva
+        if (req.file) {
+            eventoData.imagen = `/uploads/eventos/${req.file.filename}`;
+        }
 
-        await nuevoEvento.save();
-        
+        let evento;
+        if (eventoId) {
+            // Edición
+            evento = await Evento.findByIdAndUpdate(
+                eventoId,
+                eventoData,
+                { new: true }
+            );
+        } else {
+            // Creación
+            if (!req.file) {
+                eventoData.imagen = '/img/1733172139529-10.jpg';
+            }
+            evento = new Evento(eventoData);
+            await evento.save();
+        }
+
         res.status(201).json({
             success: true,
-            mensaje: 'Evento creado exitosamente',
-            eventoId: nuevoEvento._id
+            mensaje: eventoId ? 'Evento actualizado exitosamente' : 'Evento creado exitosamente',
+            evento
         });
     } catch (error) {
-        console.error('Error al crear evento:', error);
+        console.error('Error:', error);
         res.status(500).json({
             success: false,
-            mensaje: 'Error al crear el evento',
+            mensaje: 'Error al procesar el evento',
             error: error.message
         });
     }
@@ -160,22 +171,29 @@ const obtenerEventoPorId = async (req, res) => {
                 mensaje: 'Evento no encontrado'
             });
         }
+        
+        // Asegurar que todos los campos estén presentes
+        const eventoFormateado = {
+            _id: evento._id,
+            nombre: evento.nombre,
+            lugar: evento.lugar || '', // Asegurar que lugar tenga un valor
+            categoria: evento.categoria,
+            precio: evento.precio || evento.price,
+            fecha: evento.fecha,
+            hora: evento.hora,
+            descripcion: evento.descripcion,
+            imagen: evento.imagen,
+            numerotickets: evento.numerotickets
+        };
+
+        console.log('Evento a enviar:', eventoFormateado); // Debug
+
         res.json({
             success: true,
-            evento: {
-                _id: evento._id,
-                nombre: evento.nombre,
-                lugar: evento.lugar,
-                categoria: evento.categoria,
-                precio: evento.precio,
-                fecha: evento.fecha,
-                hora: evento.hora,
-                descripcion: evento.descripcion,
-                imagen: evento.imagen,
-                numerotickets: evento.numerotickets
-            }
+            evento: eventoFormateado
         });
     } catch (error) {
+        console.error('Error en obtenerEventoPorId:', error);
         res.status(500).json({
             success: false,
             mensaje: 'Error al obtener el evento',
@@ -224,9 +242,12 @@ const listarEventosAdmin = async (req, res) => {
             };
         }
 
-        const eventos = await Evento.find(query).sort({ fecha: 1 });
+        const eventos = await Evento.find(query)
+            .sort({ fecha: 1 })
+            .lean(); // Usar lean() para mejor rendimiento
         
-        // Transformar los datos para la respuesta
+        console.log('Eventos encontrados:', eventos.length); // Debug
+
         const eventosFormateados = eventos.map(evento => ({
             _id: evento._id,
             nombre: evento.nombre,
@@ -240,13 +261,13 @@ const listarEventosAdmin = async (req, res) => {
             numerotickets: evento.numerotickets
         }));
 
-        res.json({ 
+        return res.json({ 
             success: true, 
             eventos: eventosFormateados 
         });
     } catch (error) {
         console.error('Error en listarEventosAdmin:', error);
-        res.status(500).json({ 
+        return res.status(500).json({ 
             success: false, 
             mensaje: 'Error al listar eventos',
             error: error.message 

@@ -10,10 +10,13 @@ document.getElementById('imagen').addEventListener('change', function(e) {
     }
 });
 
+// Modificar el event listener del formulario para manejar tanto creación como edición
 document.getElementById('EditarEventoForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
+    const eventoId = e.target.dataset.eventoId; // Obtener ID si es edición
+    
     formData.append('nombre', document.getElementById('nombre').value); 
     formData.append('lugar', document.getElementById('lugar').value);
     formData.append('categoria', document.getElementById('categoria').value);
@@ -22,9 +25,19 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
     formData.append('fecha', document.getElementById('fecha').value);
     formData.append('hora', document.getElementById('hora').value);
     formData.append('descripcion', document.getElementById('descripcion').value);
-    formData.append('imagen', document.getElementById('imagen').files[0]);
 
-    // Validación más completa
+    // Si es edición, agregar el ID
+    if (eventoId) {
+        formData.append('eventoId', eventoId);
+    }
+
+    // Solo agregar imagen si se seleccionó una nueva
+    const imagenFile = document.getElementById('imagen').files[0];
+    if (imagenFile) {
+        formData.append('imagen', imagenFile);
+    }
+
+    // Validación de campos requeridos (excepto imagen para edición)
     if (!formData.get('nombre') || !formData.get('lugar') || !formData.get('categoria') || 
         !formData.get('numerotickets') || !formData.get('precio') || !formData.get('fecha') || 
         !formData.get('hora') || !formData.get('descripcion')) {
@@ -32,7 +45,18 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
             icon: 'error',
             title: '¡Campos incompletos!',
             text: 'Por favor complete todos los campos requeridos',
-            confirmButtonColor: '#3085d6'
+            confirmButtonColor: '#d94423'
+        });
+        return;
+    }
+
+    // Si es creación nueva, validar que haya imagen
+    if (!eventoId && !imagenFile) {
+        Swal.fire({
+            icon: 'error',
+            title: '¡Imagen requerida!',
+            text: 'Se requiere una imagen para crear un nuevo evento',
+            confirmButtonColor: '#d94423'
         });
         return;
     }
@@ -49,25 +73,16 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
         if (response.ok && data.success) {
             await Swal.fire({
                 title: '¡Éxito!',
-                text: 'El evento ha sido creado correctamente',
+                text: eventoId ? 'El evento ha sido actualizado correctamente' : 'El evento ha sido creado correctamente',
                 icon: 'success',
-                showConfirmButton: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#d94423',
-                timer: 3000,
-                timerProgressBar: true
+                confirmButtonColor: '#d94423'
             });
             
             document.getElementById('EditarEventoForm').reset();
             document.getElementById('previewImagen').src = '/img/eventoCategoria6.png';
+            delete e.target.dataset.eventoId;
+            cargarEventos();
             
-            // Verificar que tenemos el ID del evento antes de redirigir
-            if (data.evento && data.evento._id) {
-                window.location.href = `/eventos/evento/${data.evento._id}`;
-            } else {
-                console.error('No se recibió el ID del evento');
-                window.location.href = '/eventos'; // Redirección fallback a la lista de eventos
-            }
         } else {
             await Swal.fire({
                 title: 'Error',
@@ -92,7 +107,7 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
 // Función mejorada para cargar eventos
 async function cargarEventos(busqueda = '') {
     try {
-        console.log('Cargando eventos con búsqueda:', busqueda);
+        console.log('Iniciando carga de eventos...'); // Debug
         const response = await fetch(`/admin/eventos/listar?busqueda=${encodeURIComponent(busqueda)}`);
         
         if (!response.ok) {
@@ -100,24 +115,32 @@ async function cargarEventos(busqueda = '') {
         }
         
         const data = await response.json();
-        console.log('Datos recibidos:', data);
+        console.log('Datos recibidos:', data); // Debug
         
         const tbody = document.getElementById('listaEventosBody');
+        if (!tbody) {
+            console.error('No se encontró el elemento listaEventosBody');
+            return;
+        }
+
         tbody.innerHTML = '';
         
-        if (data.success && data.eventos.length > 0) {
+        if (data.success && data.eventos && data.eventos.length > 0) {
             data.eventos.forEach(evento => {
                 tbody.innerHTML += `
                     <tr>
                         <td>
-                            <img src="${evento.imagen}" alt="${evento.nombre}" class="evento-imagen">
+                            <img src="${evento.imagen || '/img/default-event.jpg'}" 
+                                 alt="${evento.nombre}" 
+                                 class="evento-imagen"
+                                 onerror="this.src='/img/default-event.jpg'">
                         </td>
-                        <td>${evento.nombre}</td>
-                        <td>${new Date(evento.fecha).toLocaleDateString()}</td>
-                        <td>${evento.lugar}</td>
-                        <td>${evento.categoria}</td>
-                        <td>₡${evento.price?.toLocaleString() || 0}</td>
-                        <td>${evento.numerotickets || 0}</td>
+                        <td>${evento.nombre || ''}</td>
+                        <td>${evento.fecha ? new Date(evento.fecha).toLocaleDateString() : ''}</td>
+                        <td>${evento.lugar || ''}</td>
+                        <td>${evento.categoria || ''}</td>
+                        <td>₡${evento.price ? evento.price.toLocaleString() : '0'}</td>
+                        <td>${evento.numerotickets || '0'}</td>
                         <td class="accionesBotones">
                             <button class="botonEditar" onclick="editarEvento('${evento._id}')">
                                 <i class="fi fi-ss-pencil"></i>
@@ -132,7 +155,9 @@ async function cargarEventos(busqueda = '') {
         } else {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="8" style="text-align: center;">No hay eventos disponibles</td>
+                    <td colspan="8" style="text-align: center; padding: 20px;">
+                        No hay eventos disponibles
+                    </td>
                 </tr>
             `;
         }
@@ -141,7 +166,8 @@ async function cargarEventos(busqueda = '') {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'No se pudieron cargar los eventos'
+            text: 'No se pudieron cargar los eventos',
+            confirmButtonColor: '#d94423'
         });
     }
 }
@@ -203,16 +229,32 @@ async function editarEvento(id) {
         
         if (data.success && data.evento) {
             const evento = data.evento;
+            
+            // Quitar el required del input de imagen
+            const imagenInput = document.getElementById('imagen');
+            imagenInput.removeAttribute('required');
+            
             // Rellenar el formulario con los datos del evento
-            document.getElementById('nombre').value = evento.nombre;
-            document.getElementById('lugar').value = evento.lugar;
-            document.getElementById('categoria').value = evento.categoria;
-            document.getElementById('numerotickets').value = evento.numerotickets;
-            document.getElementById('price').value = evento.price;
-            document.getElementById('descripcion').value = evento.descripcion;
-            document.getElementById('fecha').value = new Date(evento.fecha).toISOString().split('T')[0];
-            document.getElementById('hora').value = evento.hora;
-            document.getElementById('previewImagen').src = evento.imagen;
+            document.getElementById('nombre').value = evento.nombre || '';
+            document.getElementById('lugar').value = evento.lugar || '';
+            document.getElementById('categoria').value = evento.categoria || '';
+            document.getElementById('numerotickets').value = evento.numerotickets || '';
+            document.getElementById('price').value = evento.precio || evento.price || '';
+            document.getElementById('descripcion').value = evento.descripcion || '';
+            
+            // Formatear fecha correctamente
+            if (evento.fecha) {
+                const fecha = new Date(evento.fecha);
+                fecha.setMinutes(fecha.getMinutes() + fecha.getTimezoneOffset());
+                document.getElementById('fecha').value = fecha.toISOString().split('T')[0];
+            }
+            
+            document.getElementById('hora').value = evento.hora || '';
+            
+            // Actualizar imagen preview
+            if (evento.imagen) {
+                document.getElementById('previewImagen').src = evento.imagen;
+            }
             
             // Cambiar el comportamiento del formulario para actualizar
             const form = document.getElementById('EditarEventoForm');
@@ -254,7 +296,12 @@ async function eliminarEvento(id) {
             });
 
             if (response.ok) {
-                Swal.fire('¡Eliminado!', 'El evento ha sido eliminado.', 'success');
+                await Swal.fire({
+                    title: '¡Eliminado!',
+                    text: 'El evento ha sido eliminado.',
+                    icon: 'success',
+                    confirmButtonColor: '#d94423'
+                });
                 cargarEventos(); // Recargar la tabla
             } else {
                 throw new Error('Error al eliminar');
@@ -265,7 +312,8 @@ async function eliminarEvento(id) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'No se pudo eliminar el evento'
+            text: 'No se pudo eliminar el evento',
+            confirmButtonColor: '#d94423'
         });
     }
 }
