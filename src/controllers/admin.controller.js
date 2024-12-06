@@ -16,5 +16,4 @@ const getAdminProfile = async (req, res) => {
 
 module.exports = {
     getAdminProfile,
-    // ...existing code...
 };
