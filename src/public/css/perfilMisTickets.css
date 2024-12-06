@@ -320,3 +320,28 @@
     padding: 20px;
     font-style: italic;
 }
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pagina {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagina.active {
+    background-color: #d94423;
+    color: white;
+    border-color: #d94423;
+}
+
+.pagina:hover:not(.active) {
+    background-color: #f0f0f0;
+}
