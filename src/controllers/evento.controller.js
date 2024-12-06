@@ -151,6 +151,39 @@ const obtenerEvento = async (req, res) => {
     }
 };
 
+const obtenerEventoPorId = async (req, res) => {
+    try {
+        const evento = await Evento.findById(req.params.id);
+        if (!evento) {
+            return res.status(404).json({
+                success: false,
+                mensaje: 'Evento no encontrado'
+            });
+        }
+        res.json({
+            success: true,
+            evento: {
+                _id: evento._id,
+                nombre: evento.nombre,
+                lugar: evento.lugar,
+                categoria: evento.categoria,
+                precio: evento.precio,
+                fecha: evento.fecha,
+                hora: evento.hora,
+                descripcion: evento.descripcion,
+                imagen: evento.imagen,
+                numerotickets: evento.numerotickets
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            mensaje: 'Error al obtener el evento',
+            error: error.message
+        });
+    }
+};
+
 const obtenerEventosHoy = async () => {
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
@@ -176,10 +209,88 @@ const obtenerProximosEventos = async () => {
     .limit(3);
 };
 
+const listarEventosAdmin = async (req, res) => {
+    try {
+        const { busqueda } = req.query;
+        let query = {};
+
+        if (busqueda) {
+            query = {
+                $or: [
+                    { nombre: { $regex: busqueda, $options: 'i' } },
+                    { lugar: { $regex: busqueda, $options: 'i' } },
+                    { categoria: { $regex: busqueda, $options: 'i' } }
+                ]
+            };
+        }
+
+        const eventos = await Evento.find(query).sort({ fecha: 1 });
+        
+        // Transformar los datos para la respuesta
+        const eventosFormateados = eventos.map(evento => ({
+            _id: evento._id,
+            nombre: evento.nombre,
+            fecha: evento.fecha,
+            lugar: evento.lugar,
+            categoria: evento.categoria,
+            price: evento.precio,
+            imagen: evento.imagen,
+            descripcion: evento.descripcion,
+            hora: evento.hora,
+            numerotickets: evento.numerotickets
+        }));
+
+        res.json({ 
+            success: true, 
+            eventos: eventosFormateados 
+        });
+    } catch (error) {
+        console.error('Error en listarEventosAdmin:', error);
+        res.status(500).json({ 
+            success: false, 
+            mensaje: 'Error al listar eventos',
+            error: error.message 
+        });
+    }
+};
+
+// ...existing code...
+
+const eliminarEvento = async (req, res) => {
+    try {
+        const evento = await Evento.findByIdAndDelete(req.params.id);
+        if (!evento) {
+            return res.status(404).json({ 
+                success: false, 
+                mensaje: 'Evento no encontrado' 
+            });
+        }
+        
+        // Eliminar imagen asociada si existe
+        if (evento.imagen && evento.imagen !== '/img/1733172139529-10.jpg') {
+            const imagePath = path.join(__dirname, '../public', evento.imagen);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
+        res.json({ success: true, mensaje: 'Evento eliminado correctamente' });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            mensaje: 'Error al eliminar evento',
+            error: error.message 
+        });
+    }
+};
+
 module.exports = {
     crearEvento,
     listarEventos,
     obtenerEvento,
+    obtenerEventoPorId,
     obtenerEventosHoy,
-    obtenerProximosEventos
+    obtenerProximosEventos,
+    listarEventosAdmin,
+    eliminarEvento
 };

@@ -238,3 +238,153 @@
 .editarEventoBoton:hover {
   background-color: #86a641;
 }
+
+/* Estilos para el buscador */
+.busquedaEventos {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.busquedaEventos input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.busquedaEventos button {
+  padding: 10px 20px;
+  background-color: #d94423;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.busquedaEventos button:hover {
+  background-color: #86a641;
+}
+
+/* Estilos para la tabla de eventos */
+.tablaEventos {
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.tablaEventos table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.tablaEventos th, 
+.tablaEventos td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tablaEventos th {
+  background-color: #d94423;
+  color: white;
+  font-weight: bold;
+}
+
+.tablaEventos tr:hover {
+  background-color: #f5f5f5;
+}
+
+.tablaEventos .acciones {
+  display: flex;
+  gap: 5px;
+}
+
+.tablaEventos button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tablaEventos .editar {
+  background-color: #86a641;
+  color: white;
+}
+
+.tablaEventos .eliminar {
+  background-color: #d94423;
+  color: white;
+}
+
+.tablaEventos button:hover {
+  opacity: 0.8;
+}
+
+/* Estilos para la lista de eventos */
+.listaEventos {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.listaEventos table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.listaEventos th {
+  background-color: #d94423;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.listaEventos td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.listaEventos tr:hover {
+  background-color: #f9f9f9;
+}
+
+.listaEventos .evento-imagen {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.accionesBotones {
+  display: flex;
+  gap: 8px;
+}
+
+.botonEditar {
+  background-color: #86a641;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.botonEliminar {
+  background-color: #d94423;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.botonEditar:hover, .botonEliminar:hover {
+  opacity: 0.9;
+}

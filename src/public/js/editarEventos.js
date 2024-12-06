@@ -88,3 +88,189 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
         });
     }
 });
+
+// Función mejorada para cargar eventos
+async function cargarEventos(busqueda = '') {
+    try {
+        console.log('Cargando eventos con búsqueda:', busqueda);
+        const response = await fetch(`/admin/eventos/listar?busqueda=${encodeURIComponent(busqueda)}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Datos recibidos:', data);
+        
+        const tbody = document.getElementById('listaEventosBody');
+        tbody.innerHTML = '';
+        
+        if (data.success && data.eventos.length > 0) {
+            data.eventos.forEach(evento => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>
+                            <img src="${evento.imagen}" alt="${evento.nombre}" class="evento-imagen">
+                        </td>
+                        <td>${evento.nombre}</td>
+                        <td>${new Date(evento.fecha).toLocaleDateString()}</td>
+                        <td>${evento.lugar}</td>
+                        <td>${evento.categoria}</td>
+                        <td>₡${evento.price?.toLocaleString() || 0}</td>
+                        <td>${evento.numerotickets || 0}</td>
+                        <td class="accionesBotones">
+                            <button class="botonEditar" onclick="editarEvento('${evento._id}')">
+                                <i class="fi fi-ss-pencil"></i>
+                            </button>
+                            <button class="botonEliminar" onclick="confirmarEliminar('${evento._id}')">
+                                <i class="fi fi-ss-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        } else {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" style="text-align: center;">No hay eventos disponibles</td>
+                </tr>
+            `;
+        }
+    } catch (error) {
+        console.error('Error al cargar eventos:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudieron cargar los eventos'
+        });
+    }
+}
+
+// Función para confirmar eliminación
+async function confirmarEliminar(id) {
+    const result = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d94423',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+        eliminarEvento(id);
+    }
+}
+
+// Función de búsqueda con debounce
+let timeoutId;
+const searchInput = document.getElementById('searchInput');
+
+if (searchInput) {
+    searchInput.addEventListener('input', () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            buscarEventos();
+        }, 300);
+    });
+}
+
+function buscarEventos() {
+    const busqueda = searchInput?.value.trim() || '';
+    cargarEventos(busqueda);
+}
+
+// Asegurarse de cargar eventos cuando se carga la página
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Página cargada, iniciando carga de eventos'); // Debug
+    cargarEventos();
+});
+
+// Función mejorada para editar evento
+async function editarEvento(id) {
+    try {
+        console.log('Editando evento con ID:', id); // Debug
+        const response = await fetch(`/admin/eventos/${id}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Datos del evento:', data); // Debug
+        
+        if (data.success && data.evento) {
+            const evento = data.evento;
+            // Rellenar el formulario con los datos del evento
+            document.getElementById('nombre').value = evento.nombre;
+            document.getElementById('lugar').value = evento.lugar;
+            document.getElementById('categoria').value = evento.categoria;
+            document.getElementById('numerotickets').value = evento.numerotickets;
+            document.getElementById('price').value = evento.price;
+            document.getElementById('descripcion').value = evento.descripcion;
+            document.getElementById('fecha').value = new Date(evento.fecha).toISOString().split('T')[0];
+            document.getElementById('hora').value = evento.hora;
+            document.getElementById('previewImagen').src = evento.imagen;
+            
+            // Cambiar el comportamiento del formulario para actualizar
+            const form = document.getElementById('EditarEventoForm');
+            form.dataset.eventoId = id;
+            
+            // Scroll al formulario
+            form.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            throw new Error('No se recibieron datos válidos del evento');
+        }
+    } catch (error) {
+        console.error('Error al cargar evento:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo cargar el evento para editar',
+            confirmButtonColor: '#d94423'
+        });
+    }
+}
+
+// Función para eliminar evento
+async function eliminarEvento(id) {
+    try {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d94423',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (result.isConfirmed) {
+            const response = await fetch(`/admin/eventos/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                Swal.fire('¡Eliminado!', 'El evento ha sido eliminado.', 'success');
+                cargarEventos(); // Recargar la tabla
+            } else {
+                throw new Error('Error al eliminar');
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo eliminar el evento'
+        });
+    }
+}
+
+// Cargar eventos inicialmente
+document.addEventListener('DOMContentLoaded', () => {
+    cargarEventos();
+});

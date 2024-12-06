@@ -44,6 +44,36 @@
     <!-------------------------------------------Fin Sección Barra Lateral---------------------------------------------->
       <!-- Formulario para crear un nuevo evento -->
        <section class="contenedorEditor">
+
+    <!-- Sección de búsqueda -->
+    <div class="busquedaEventos">
+      <input type="text" id="searchInput" placeholder="Buscar por nombre, lugar o categoría...">
+      <button onclick="buscarEventos()">
+        <i class="fi fi-ss-search"></i> Buscar
+      </button>
+    </div>
+
+    <!-- Una única lista de eventos -->
+    <div class="listaEventos">
+      <table>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Fecha</th>
+            <th>Lugar</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Tickets</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="listaEventosBody">
+          <!-- Los eventos se cargarán aquí dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+
       <form class="editarEvento" id="EditarEventoForm" enctype="multipart/form-data">
 
         <!-- Imagen de muestra para la foto del evento -->
@@ -139,6 +169,9 @@
   <!-- Footer -->
   <%- include('../partials/footer') %>
   <!-- Fin Footer -->
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/editarEventos.js"></script>
 
 </body>
 

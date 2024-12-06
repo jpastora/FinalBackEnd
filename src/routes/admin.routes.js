@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const eventoController = require('../controllers/evento.controller');
+
+router.get('/eventos/listar', eventoController.listarEventosAdmin);
+router.get('/eventos/:id', eventoController.obtenerEventoPorId);
+router.delete('/eventos/:id', eventoController.eliminarEvento);
 
 router.get('/', (req, res) => {
     res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
