@@ -33,8 +33,11 @@ app.use(session({
 }));
 app.use(authMiddleware);
 
-// Configuración de vistas y archivos estáticos
+// Configuración de archivos estáticos - asegúrate que esta línea esté antes de las rutas
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/img', express.static(path.join(__dirname, 'public/img')));
+
+// Configuración de vistas y archivos estáticos
 app.use('/uploads/eventos', express.static(path.join(__dirname, 'uploads/eventos'))); // Cambio aquí
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -73,6 +76,12 @@ app.use((req, res, next) => {
 
 // Conexión a la base de datos
 connectDB();
+
+// Cargar modelos antes de las rutas - Asegúrate de que esto esté antes de las rutas
+const User = require('./models/user');
+const Ticket = require('./models/tickets');
+const Evento = require('./models/evento');
+const Orden = require('./models/orden');
 
 // Rutas públicas
 app.use('/auth', authRoutes);

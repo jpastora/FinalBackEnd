@@ -6,7 +6,7 @@ const upload = require('../middleware/upload');
 const bcrypt = require('bcrypt');
 const PaymentCard = require('../models/paymentCard');
 const profileController = require('../controllers/profile.controller');
-const { isAuth } = require('../middleware/checkAuth'); // Agregar esta línea
+const { isAuth, checkAuth } = require('../middleware/checkAuth'); // Agregar esta línea
 const EventoGuardado = require('../models/eventoGuardado'); // Agregar esta línea
 
 router.get('/', (req, res) => {
@@ -217,5 +217,7 @@ router.get('/eventos-guardados', isAuth, async (req, res) => {
 });
 
 router.get('/mis-tickets', profileController.getMisTickets);
+router.get('/tickets', checkAuth, profileController.getMisTickets);
+router.get('/ticket/:id', checkAuth, profileController.getTicketDetail);
 
 module.exports = router;

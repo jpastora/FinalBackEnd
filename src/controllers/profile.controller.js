@@ -1,6 +1,7 @@
 const Ticket = require('../models/tickets');
 const Orden = require('../models/orden');
 const Evento = require('../models/evento');
+const User = require('../models/user'); // Añadir esta importación
 
 const getMisTickets = async (req, res) => {
     try {
@@ -63,6 +64,49 @@ const getMisTickets = async (req, res) => {
     }
 };
 
+const getTicketDetail = async (req, res) => {
+    try {
+        console.log('ID del ticket solicitado:', req.params.id);
+        
+        const ticket = await Ticket.findById(req.params.id)
+            .populate('evento')
+            .populate('usuario', 'name email');
+
+        console.log('Ticket encontrado:', ticket);
+
+        if (!ticket) {
+            console.log('Ticket no encontrado');
+            return res.status(404).render('error.html', {
+                title: 'Error',
+                message: 'Ticket no encontrado'
+            });
+        }
+
+        // Generar el QR code con datos mínimos y seguros
+        const qrData = {
+            id: ticket._id.toString(),
+            numero: ticket.numeroTicket
+        };
+        
+        const qrCodeUrl = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=L|1&chl=${encodeURIComponent(JSON.stringify(qrData))}`;
+        
+        console.log('URL del QR code:', qrCodeUrl);
+
+        res.render('user/ticketDetalle.html', {
+            title: 'Detalle del Ticket',
+            ticket,
+            qrCodeUrl
+        });
+    } catch (error) {
+        console.error('Error al obtener ticket:', error);
+        res.status(500).render('error.html', {
+            title: 'Error',
+            message: 'Error al cargar el detalle del ticket'
+        });
+    }
+};
+
 module.exports = {
     getMisTickets,
+    getTicketDetail,
 };

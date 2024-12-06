@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - VibeTickets</title>
+    <base href="/">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/bannerPerfil.css">
+    <link rel="stylesheet" href="css/ticketDetalle.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+</head>
+<body>
+    <%- include('../partials/auth') %>
+    <%- include('../partials/menu') %>
+
+    <section class="imagenHero">
+        <div class="heroe">
+            <div class="titulo">
+                <h1>Ticket #<%= ticket.numeroTicket %></h1>
+            </div>
+        </div>
+    </section>
+
+    <div class="contenedor-principal">
+        <div class="ticket-container">
+            <div class="ticket-header">
+                <div class="logo-container">
+                    <img src="img/VibeTickets-Logo-naranja.png" alt="VibeTickets Logo" class="logo">
+                </div>
+                <div class="qr-code">
+                    <% if (ticket && ticket.numeroTicket) { %>
+                        <img src="<%= qrCodeUrl %>" alt="QR Code del Ticket <%= ticket.numeroTicket %>">
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="ticket-content">
+                <div class="ticket-section evento-info">
+                    <h2><%= ticket.evento.nombre %></h2>
+                    <div class="info-grid">
+                        <div class="iconos">
+
+                        <div class="info-item">
+                            <i class="fi fi-ss-marker"></i>
+                            <p><%= ticket.evento.lugar %></p>
+                        </div>
+                        <div class="info-item">
+                            <i class="fi fi-ss-calendar"></i>
+                            <p><%= new Date(ticket.evento.fecha).toLocaleDateString('es-ES') %></p>
+                        </div>
+                        <div class="info-item">
+                            <i class="fi fi-ss-clock"></i>
+                            <p><%= ticket.evento.hora %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="ticket-section compra-info">
+                    <div class=">
+                        <div class="info-item">
+                            <span class="label">Ticket ID:</span>
+                            <p class="value"><%= ticket.numeroTicket || 'No disponible' %></p>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Comprador:</span>
+                            <p class="value"><%= ticket.usuario.name %></p>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Email:</span>
+                            <p class="value"><%= ticket.usuario.email %></p>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Fecha de Compra:</span>
+                            <p class="value"><%= new Date(ticket.fechaCompra).toLocaleDateString('es-ES') %></p>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Cantidad:</span>
+                            <p class="value"><%= ticket.cantidad %> entrada(s)</p>
+                        </div>
+                        <div class="info-item total">
+                            <span class="label">Total:</span>
+                            <p class="value">₡<%= ticket.precioTotal.toLocaleString() %></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ticket-actions">
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fi fi-ss-print"></i> Imprimir Ticket
+                    </button>
+                    <a href="/perfil/tickets" class="btn-back">
+                        <i class="fi fi-ss-angle-left"></i> Volver a Mis Tickets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

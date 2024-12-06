@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeTickets</title>
-    <link rel="stylesheet" href="../css/menu.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/bannerPerfil.css">
-    <link rel="stylesheet" href="../css/menuLateral.css">
-    <link rel="stylesheet" href="../css/perfilMisTickets.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/bannerPerfil.css">
+    <link rel="stylesheet" href="/css/menuLateral.css">
+    <link rel="stylesheet" href="/css/perfilMisTickets.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
     <link rel='stylesheet'
         href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
@@ -137,8 +137,7 @@
                                                             <div class="detalleTicket"><strong>Total:</strong> ₡<%=
                                                                     ticket.precioTotal %>
                                                             </div>
-                                                            <a href="/ticket/<%= ticket._id %>"
-                                                                class="botonVerTicket">VER TICKET</a>
+                                                            <a href="/perfil/ticket/<%= ticket._id %>" class="botonVerTicket">VER TICKET</a>
                                                         </div>
                                                         <% }); %>
 
