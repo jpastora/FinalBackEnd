@@ -190,10 +190,10 @@
 .subirFoto img {
   width: 400px;
   height: 400px;
-  object-fit: contain; /* Añadir esta línea */
+  object-fit: contain;
   border-radius: 10%;
   border: 2px solid #86a641;
-  background-color: #f5f5f5; /* Añadir esta línea */
+  background-color: #f5f5f5; 
 }
 
 /* Campo de precio del evento */
@@ -331,12 +331,12 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  overflow-x: auto; /* Permitir scroll horizontal si es necesario */
+  overflow-x: auto; 
 }
 
 .listaEventos table {
   width: 100%;
-  min-width: 1000px; /* Ancho mínimo para asegurar legibilidad */
+  min-width: 1000px; 
   border-collapse: collapse;
 }
 

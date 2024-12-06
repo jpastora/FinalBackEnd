@@ -194,9 +194,9 @@ body {
 }
 
 table {
-    width: 100%; /* Change from 130% to 100% */
+    width: 100%; 
     border-collapse: collapse; 
-    min-width: 800px; /* Ensure minimum width for content */
+    min-width: 600px; 
 }
 
 th, td {
