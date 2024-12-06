@@ -4,16 +4,33 @@ const Evento = require('../models/evento');
 
 const getMisTickets = async (req, res) => {
     try {
+        // Parámetros de paginación
+        const ordenesPage = parseInt(req.query.ordenesPage) || 1;
+        const ticketsPage = parseInt(req.query.ticketsPage) || 1;
+        const limit = 5;
+
         const userId = req.session.user._id;
-        
-        // Obtener las órdenes del usuario
+
+        // Obtener total de documentos para la paginación
+        const totalOrdenes = await Orden.countDocuments({ usuario: userId });
+        const totalTickets = await Ticket.countDocuments({ usuario: userId });
+
+        // Calcular páginas totales
+        const totalOrdenesPages = Math.ceil(totalOrdenes / limit);
+        const totalTicketsPages = Math.ceil(totalTickets / limit);
+
+        // Obtener órdenes paginadas
         const ordenes = await Orden.find({ usuario: userId })
             .populate('tickets.evento')
+            .skip((ordenesPage - 1) * limit)
+            .limit(limit)
             .sort({ fechaCreacion: -1 });
 
-        // Obtener los tickets individuales del usuario
+        // Obtener tickets paginados
         const tickets = await Ticket.find({ usuario: userId })
             .populate('evento')
+            .skip((ticketsPage - 1) * limit)
+            .limit(limit)
             .sort({ fechaCompra: -1 });
 
         // Obtener lugares y categorías únicos para los filtros
@@ -32,7 +49,11 @@ const getMisTickets = async (req, res) => {
             ordenes,
             lugares,
             categorias,
-            filtros
+            filtros,
+            ordenesPage,
+            ticketsPage,
+            totalOrdenesPages,
+            totalTicketsPages
         });
     } catch (error) {
         console.error('Error al obtener tickets:', error);

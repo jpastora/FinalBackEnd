@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const ordenSchema = new mongoose.Schema({
@@ -13,19 +12,31 @@ const ordenSchema = new mongoose.Schema({
             ref: 'Evento',
             required: true
         },
-        cantidad: Number,
-        precioUnitario: Number,
-        precioTotal: Number
+        cantidad: {
+            type: Number,
+            required: true
+        },
+        precioUnitario: {
+            type: Number,
+            required: true
+        },
+        precioTotal: {
+            type: Number,
+            required: true
+        }
     }],
-    total: Number,
-    fechaCreacion: {
-        type: Date,
-        default: Date.now
+    total: {
+        type: Number,
+        required: true
     },
     estado: {
         type: String,
-        enum: ['completado', 'pendiente', 'cancelado'],
-        default: 'completado'
+        enum: ['pendiente', 'completado', 'cancelado'],
+        default: 'pendiente'
+    },
+    fechaCreacion: {
+        type: Date,
+        default: Date.now
     }
 });
 

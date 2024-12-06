@@ -1,16 +1,60 @@
 const User = require('../models/user');
+const Ticket = require('../models/tickets');
 
 const getUserProfile = async (req, res) => {
     try {
-        const userId = req.session.user.id; 
+        const userId = req.session.user.id;
         const user = await User.findById(userId).select('name email id profileImage');
+        
+        // Parámetros de paginación
+        const ordenesPage = parseInt(req.query.ordenesPage) || 1;
+        const ticketsPage = parseInt(req.query.ticketsPage) || 1;
+        const limit = 5;
+
+        // Obtener total de documentos para la paginación
+        const totalOrdenes = await Orden.countDocuments({ usuario: userId });
+        const totalTickets = await Ticket.countDocuments({ usuario: userId });
+
+        // Calcular páginas totales
+        const totalOrdenesPages = Math.ceil(totalOrdenes / limit);
+        const totalTicketsPages = Math.ceil(totalTickets / limit);
+
+        // Obtener ordenes paginadas
+        const ordenes = await Orden.find({ usuario: userId })
+            .skip((ordenesPage - 1) * limit)
+            .limit(limit)
+            .sort({ fechaCreacion: -1 });
+
+        // Obtener tickets paginados
+        const tickets = await Ticket.find({ usuario: userId })
+            .skip((ticketsPage - 1) * limit)
+            .limit(limit)
+            .sort({ fechaCompra: -1 });
+
         if (!user) {
             return res.status(404).send('User not found');
         }
+        
         if (user.role === 'admin') {
-            res.render('admin/adminDatosPers', { user });
+            res.render('admin/adminDatosPers', { 
+                user,
+                ordenes,
+                tickets,
+                ordenesPage,
+                ticketsPage,
+                totalOrdenesPages,
+                totalTicketsPages
+            });
         } else {
-            res.render('user/perfilDatosPers', { user });
+            res.render('user/perfilMisTickets', { 
+                user,
+                ordenes,
+                tickets,
+                ordenesPage,
+                ticketsPage,
+                totalOrdenesPages,
+                totalTicketsPages
+            });
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
