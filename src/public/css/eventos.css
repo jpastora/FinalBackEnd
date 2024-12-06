@@ -131,11 +131,26 @@
 }
 
 .boxdeafuera {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.eventos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.contenedor-paginacion {
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  clear: both;
 }
 
 .evento1,
@@ -245,4 +260,31 @@ max-width: 100%;
   font-family: 'Montserrat-Light', sans-serif;
   text-align: center;
 
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.btn-pagina {
+  padding: 0.5rem 1rem;
+  background-color: #d94423;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-pagina:hover {
+  background-color: #b33015;
+}
+
+.pagina-actual {
+  font-weight: bold;
+  color: #333;
 }

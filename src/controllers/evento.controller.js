@@ -77,14 +77,14 @@ const crearEvento = [upload.single('imagen'), async (req, res) => {
 
 const listarEventos = async (req, res) => {
     try {
-        let { busqueda, categoria, lugar } = req.query;
+        let { busqueda, categoria, lugar, page = 1 } = req.query;
+        const limit = 10;
         let query = {};
 
-        // 1. Primero aplicar filtros exactos (lugar y categoría)
+        // Construir query de filtros
         if (lugar) query.lugar = lugar;
         if (categoria) query.categoria = categoria;
 
-        // 2. Luego manejar la búsqueda por texto
         if (busqueda) {
             const searchQuery = {
                 $or: [
@@ -93,28 +93,39 @@ const listarEventos = async (req, res) => {
                     { categoria: { $regex: busqueda, $options: 'i' } }
                 ]
             };
-
-            // Si ya existen otros filtros, combinarlos con AND
             query = Object.keys(query).length > 0 ? 
                 { $and: [searchQuery, query] } : 
                 searchQuery;
         }
 
-        console.log('Query final:', JSON.stringify(query, null, 2));
+        // Calcular total de documentos y páginas
+        const totalEventos = await Evento.countDocuments(query);
+        const totalPaginas = Math.ceil(totalEventos / limit);
+        page = parseInt(page);
 
+        // Validar página actual
+        if (page < 1) page = 1;
+        if (page > totalPaginas && totalPaginas > 0) page = totalPaginas;
+
+        // Obtener eventos paginados
         const eventos = await Evento.find(query)
             .sort({ fecha: 1 })
+            .skip((page - 1) * limit)
+            .limit(limit)
             .exec();
 
-        console.log(`Eventos encontrados: ${eventos.length}`);
-        
-        // Mantener todos los filtros en la respuesta
         res.render('eventos.html', {
             eventos,
             filtros: {
                 busqueda: busqueda || '',
                 categoria: categoria || '',
                 lugar: lugar || ''
+            },
+            paginacion: {
+                actual: page,
+                total: totalPaginas,
+                hasNext: page < totalPaginas,
+                hasPrev: page > 1
             }
         });
 
@@ -123,7 +134,8 @@ const listarEventos = async (req, res) => {
         res.render('eventos.html', {
             eventos: [],
             error: 'Error al buscar eventos',
-            filtros: { busqueda: '', categoria: '', lugar: '' }
+            filtros: { busqueda: '', categoria: '', lugar: '' },
+            paginacion: null
         });
     }
 };

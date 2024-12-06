@@ -87,64 +87,85 @@
 
       <!-------------------------------------------Eventos---------------------------------------------->
       <div class="boxdeafuera">
+        <!-- Mensajes de error -->
         <% if (typeof error !=='undefined' && error) { %>
           <div class="error-message">
             <%= error %>
           </div>
-          <% } %>
+        <% } %>
 
-            <% if (typeof eventos !=='undefined' && eventos.length> 0) { %>
-              <% eventos.forEach(function(evento) { %>
-                <div class="evento1">
-                  <div class="fotoevento">
-                    <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
+        <!-- Lista de eventos -->
+        <div class="eventos-lista">
+          <% if (typeof eventos !=='undefined' && eventos.length> 0) { %>
+            <% eventos.forEach(function(evento) { %>
+              <div class="evento1">
+                <div class="fotoevento">
+                  <img src="<%= evento.imagen %>" alt="<%= evento.nombre %>">
+                </div>
+                <script type="application/json" class="evento-data hidden">
+                  {
+                    "nombre": "<%= evento.nombre %>",
+                    "lugar": "<%= evento.lugar %>",
+                    "categoria": "<%= evento.categoria %>"
+                  }
+                </script>
+                <div class="textoevento">
+                  <div class="tituloevento">
+                    <h2>
+                      <%= evento.nombre %>
+                    </h2>
                   </div>
-                  <script type="application/json" class="evento-data hidden">
-                    {
-                      "nombre": "<%= evento.nombre %>",
-                      "lugar": "<%= evento.lugar %>",
-                      "categoria": "<%= evento.categoria %>"
-                    }
-                  </script>
-                  <div class="textoevento">
-                    <div class="tituloevento">
-                      <h2>
-                        <%= evento.nombre %>
-                      </h2>
-                    </div>
-                    <div class="cuadrodeprecio">
-                      <h2 class="comprar">Precio</h2>
-                        <h1 class="precio">₡<%= evento.precio.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') %>
-                      </h1>
-                      <a  href="/eventos/evento/<%= evento.id %>" class="boton_comprar">Comprar</a>
-                    </div>
-                    <div class="lugar">
-                      <h1>Lugar</h1>
-                      <h2>
-                        <%= evento.lugar %>
-                      </h2>
-                    </div>
-                    <div class="fecha">
-                      <h1>Fecha</h1>
-                      <h2>
-                        <%= new Date(evento.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' }) %>
-                      </h2>
-                    </div>
-                    <div class="hora">
-                      <h1>Hora</h1>
-                      <h2>
-                        <%= evento.hora %>
-                      </h2>
-                    </div>
+                  <div class="cuadrodeprecio">
+                    <h2 class="comprar">Precio</h2>
+                      <h1 class="precio">₡<%= evento.precio.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') %>
+                    </h1>
+                    <a  href="/eventos/evento/<%= evento.id %>" class="boton_comprar">Comprar</a>
+                  </div>
+                  <div class="lugar">
+                    <h1>Lugar</h1>
+                    <h2>
+                      <%= evento.lugar %>
+                    </h2>
+                  </div>
+                  <div class="fecha">
+                    <h1>Fecha</h1>
+                    <h2>
+                      <%= new Date(evento.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' }) %>
+                    </h2>
+                  </div>
+                  <div class="hora">
+                    <h1>Hora</h1>
+                    <h2>
+                      <%= evento.hora %>
+                    </h2>
                   </div>
                 </div>
-                <% }); %>
-                  <% } else { %>
-                    <div class="no-eventos">
-                      <h2>No hay eventos disponibles en este momento</h2>
-                      <p>Intente más tarde o contacte al administrador</p>
-                    </div>
-                    <% } %>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <div class="no-eventos">
+              <h2>No hay eventos disponibles en este momento</h2>
+              <p>Intente más tarde o contacte al administrador</p>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Paginación en un contenedor separado -->
+        <div class="contenedor-paginacion">
+          <% if (paginacion && paginacion.total > 1) { %>
+            <div class="paginacion">
+              <% if (paginacion.hasPrev) { %>
+                <a href="/eventos?page=<%= paginacion.actual - 1 %><%= filtros?.busqueda ? '&busqueda=' + filtros.busqueda : '' %><%= filtros?.lugar ? '&lugar=' + filtros.lugar : '' %><%= filtros?.categoria ? '&categoria=' + filtros.categoria : '' %>" class="btn-pagina">&laquo; Anterior</a>
+              <% } %>
+              
+              <span class="pagina-actual">Página <%= paginacion.actual %> de <%= paginacion.total %></span>
+              
+              <% if (paginacion.hasNext) { %>
+                <a href="/eventos?page=<%= paginacion.actual + 1 %><%= filtros?.busqueda ? '&busqueda=' + filtros.busqueda : '' %><%= filtros?.lugar ? '&lugar=' + filtros.lugar : '' %><%= filtros?.categoria ? '&categoria=' + filtros.categoria : '' %>" class="btn-pagina">Siguiente &raquo;</a>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
       </div>
 
       <!-------------------------------------------FIN Eventos---------------------------------------------->
