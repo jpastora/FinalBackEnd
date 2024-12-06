@@ -79,7 +79,7 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
             });
             
             document.getElementById('EditarEventoForm').reset();
-            document.getElementById('previewImagen').src = '/img/eventoCategoria6.png';
+            document.getElementById('previewImagen').src = '/uploads/eventos/1733172139529-10.jpg';
             delete e.target.dataset.eventoId;
             cargarEventos();
             
