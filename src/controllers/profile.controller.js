@@ -2,6 +2,7 @@ const Ticket = require('../models/tickets');
 const Orden = require('../models/orden');
 const Evento = require('../models/evento');
 const User = require('../models/user'); // Añadir esta importación
+const QRCode = require('qrcode');
 
 const getMisTickets = async (req, res) => {
     try {
@@ -82,14 +83,14 @@ const getTicketDetail = async (req, res) => {
             });
         }
 
-        // Generar el QR code con datos mínimos y seguros
+        // Generar QR como data URL
         const qrData = {
             id: ticket._id.toString(),
             numero: ticket.numeroTicket
         };
         
-        const qrCodeUrl = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=L|1&chl=${encodeURIComponent(JSON.stringify(qrData))}`;
-        
+        const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(qrData));
+
         console.log('URL del QR code:', qrCodeUrl);
 
         res.render('user/ticketDetalle.html', {
