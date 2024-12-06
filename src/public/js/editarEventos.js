@@ -104,26 +104,36 @@ document.getElementById('EditarEventoForm').addEventListener('submit', async (e)
     }
 });
 
+let paginaActual = 1;
+
 // Función mejorada para cargar eventos
-async function cargarEventos(busqueda = '') {
+async function cargarEventos(busqueda = '', pagina = 1) {
     try {
-        console.log('Iniciando carga de eventos...'); // Debug
-        const response = await fetch(`/admin/eventos/listar?busqueda=${encodeURIComponent(busqueda)}`);
+        console.log('Cargando eventos...', { busqueda, pagina });
+        const response = await fetch(`/admin/eventos/listar?busqueda=${encodeURIComponent(busqueda)}&page=${pagina}`);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log('Datos recibidos:', data); // Debug
+        console.log('Datos recibidos:', data);
         
         const tbody = document.getElementById('listaEventosBody');
-        if (!tbody) {
-            console.error('No se encontró el elemento listaEventosBody');
+        const contenedorLista = document.querySelector('.listaEventos');
+        
+        if (!tbody || !contenedorLista) {
+            console.error('No se encontraron elementos necesarios');
             return;
         }
 
         tbody.innerHTML = '';
+        
+        // Eliminar paginador existente si hay uno
+        const paginadorExistente = document.querySelector('.paginacion');
+        if (paginadorExistente) {
+            paginadorExistente.remove();
+        }
         
         if (data.success && data.eventos && data.eventos.length > 0) {
             data.eventos.forEach(evento => {
@@ -135,7 +145,11 @@ async function cargarEventos(busqueda = '') {
                                  class="evento-imagen"
                                  onerror="this.src='/img/default-event.jpg'">
                         </td>
-                        <td>${evento.nombre || ''}</td>
+                        <td>
+                            <a href="/eventos/evento/${evento._id}" class="evento-link">
+                                ${evento.nombre || ''}
+                            </a>
+                        </td>
                         <td>${evento.fecha ? new Date(evento.fecha).toLocaleDateString() : ''}</td>
                         <td>${evento.lugar || ''}</td>
                         <td>${evento.categoria || ''}</td>
@@ -152,6 +166,20 @@ async function cargarEventos(busqueda = '') {
                     </tr>
                 `;
             });
+
+            // Agregar paginación después de la tabla
+            const paginacionHTML = `
+                <div class="paginacion">
+                    ${data.paginacion.hasPrev ? 
+                        `<button onclick="cambiarPagina(${data.paginacion.actual - 1})">Anterior</button>` : 
+                        '<button disabled>Anterior</button>'}
+                    <span>Página ${data.paginacion.actual} de ${data.paginacion.total}</span>
+                    ${data.paginacion.hasNext ? 
+                        `<button onclick="cambiarPagina(${data.paginacion.actual + 1})">Siguiente</button>` : 
+                        '<button disabled>Siguiente</button>'}
+                </div>
+            `;
+            contenedorLista.insertAdjacentHTML('beforeend', paginacionHTML);
         } else {
             tbody.innerHTML = `
                 <tr>
@@ -170,6 +198,18 @@ async function cargarEventos(busqueda = '') {
             confirmButtonColor: '#d94423'
         });
     }
+}
+
+function cambiarPagina(nuevaPagina) {
+    paginaActual = nuevaPagina;
+    const busqueda = document.getElementById('searchInput')?.value.trim() || '';
+    cargarEventos(busqueda, paginaActual);
+}
+
+function buscarEventos() {
+    paginaActual = 1; // Resetear a la primera página al buscar
+    const busqueda = document.getElementById('searchInput')?.value.trim() || '';
+    cargarEventos(busqueda, paginaActual);
 }
 
 // Función para confirmar eliminación
@@ -201,11 +241,6 @@ if (searchInput) {
             buscarEventos();
         }, 300);
     });
-}
-
-function buscarEventos() {
-    const busqueda = searchInput?.value.trim() || '';
-    cargarEventos(busqueda);
 }
 
 // Asegurarse de cargar eventos cuando se carga la página

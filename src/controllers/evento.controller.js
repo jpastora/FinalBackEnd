@@ -230,6 +230,8 @@ const obtenerProximosEventos = async () => {
 const listarEventosAdmin = async (req, res) => {
     try {
         const { busqueda } = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10;
         let query = {};
 
         if (busqueda) {
@@ -242,11 +244,14 @@ const listarEventosAdmin = async (req, res) => {
             };
         }
 
+        const totalEventos = await Evento.countDocuments(query);
+        const totalPaginas = Math.ceil(totalEventos / limit);
+        
         const eventos = await Evento.find(query)
             .sort({ fecha: 1 })
-            .lean(); // Usar lean() para mejor rendimiento
-        
-        console.log('Eventos encontrados:', eventos.length); // Debug
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .lean();
 
         const eventosFormateados = eventos.map(evento => ({
             _id: evento._id,
@@ -261,16 +266,22 @@ const listarEventosAdmin = async (req, res) => {
             numerotickets: evento.numerotickets
         }));
 
-        return res.json({ 
-            success: true, 
-            eventos: eventosFormateados 
+        return res.json({
+            success: true,
+            eventos: eventosFormateados,
+            paginacion: {
+                actual: page,
+                total: totalPaginas,
+                hasNext: page < totalPaginas,
+                hasPrev: page > 1
+            }
         });
     } catch (error) {
         console.error('Error en listarEventosAdmin:', error);
-        return res.status(500).json({ 
-            success: false, 
+        return res.status(500).json({
+            success: false,
             mensaje: 'Error al listar eventos',
-            error: error.message 
+            error: error.message
         });
     }
 };
