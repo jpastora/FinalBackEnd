@@ -49,21 +49,21 @@
         <!-------------------------------------------Contraseña--------------------------------------------->
 
         <div class="perfilContrasena" id="Perfil__Usuario">
-            <form class="formularioContrasena" id="Formulario__Contrasena">
+            <form class="formularioContrasena" id="Formulario__Contrasena" method="POST" action="/perfil/actualizar-contrasena">
                 <div class="campoFormulario" id="Campo__Antigua">
                     <label for="antiguaContrasena">Antigua contraseña:</label>
-                    <input type="password" id="antiguaContrasena">
+                    <input type="password" id="antiguaContrasena" name="antiguaContrasena" required>
                 </div>
                 <div class="campoFormulario" id="Campo__Nueva">
                     <label for="nuevaContrasena">Nueva contraseña:</label>
-                    <input type="password" id="nuevaContrasena">
+                    <input type="password" id="nuevaContrasena" name="nuevaContrasena" required>
                 </div>
                 <div class="campoFormulario" id="Campo__Repetir">
                     <label for="repetirContrasena">Repetir contraseña:</label>
-                    <input type="password" id="repetirContrasena">
+                    <input type="password" id="repetirContrasena" name="repetirContrasena" required>
                 </div>
                 <div class="botonesFormulario" id="Botones__Formulario">
-                    <button type="submit" class="botonEnviar" id="Boton__Enviar">Enviar</button>
+                    <button type="submit" class="botonEnviar" id="Boton__Enviar">Cambiar Contraseña</button>
                     <button type="reset" class="botonBorrar" id="Boton__Borrar">Borrar</button>
                 </div>
             </form>
@@ -76,7 +76,7 @@
     <!-------------------------------------------Footer---------------------------------------------->
 
     <%- include('../partials/footer') %>
-
+    <script src="../js/seguridad.js" defer></script>
     <!-------------------------------------------Fin Footer---------------------------------------------->
 
 </body>
