@@ -81,7 +81,6 @@ body {
 .contenedorPrincipal {
     display: flex;
     flex: 1;
-   
 }
 
 .barraLateral {
@@ -111,12 +110,12 @@ body {
 }
 
 .contenedorDatos {
-    flex: 1;
     padding: 20px;
     background-color: #ffffff;
-    margin: 20px;
+    margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto; 
 }
 
 .barraLateral :hover{
@@ -126,13 +125,13 @@ body {
    }   
 
 .filtrosBusqueda {
-    background-color: #f4f4f4; 
     margin-top: 70px;
     font-size: 15px;
     margin-left: 0;
     padding: 20px;
-    border: 1px solid #e0e0e0;
     border-radius: 5px;
+    min-width: 600px; 
+
 }
 
 .campoBusqueda {
@@ -166,7 +165,7 @@ body {
 }
 
 .botonBuscar:hover {
-    background-color: #86a641;
+    background-color: #6c8f2e;
 }
 
 .filtro label {
@@ -191,10 +190,12 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow-x: auto; 
+    width: 800px;
+
 }
 
 table {
-    width: 100%; 
+    min-width: 600px; 
     border-collapse: collapse; 
     min-width: 600px; 
 }
@@ -282,7 +283,7 @@ th {
 }
 
 .edit-btn {
-    background-color: #86a641;
+    background-color: #6c8f2e;
     color: white;
 }
 
@@ -315,7 +316,7 @@ th {
 }
 
 .paginacion button:hover {
-    background-color: #86a641;
+    background-color: #6c8f2e;
 }
 
 .paginacion span {
@@ -354,5 +355,5 @@ th {
 }
 
 #editUserForm button:hover {
-    background-color: #86a641;
+    background-color: #6c8f2e;
 }
