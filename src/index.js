@@ -40,6 +40,13 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 
+// Agregar middleware para debugging de rutas
+app.use((req, res, next) => {
+    console.log('Ruta solicitada:', req.path);
+    console.log('Vista a renderizar:', req.path.replace('.html', ''));
+    next();
+});
+
 // Middleware para variables globales
 app.use((req, res, next) => {
     res.locals.currentUrl = req.originalUrl;
@@ -47,6 +54,13 @@ app.use((req, res, next) => {
     res.locals.user = req.session?.user || null;
     res.locals.userRole = req.session?.user?.rol || null;
     console.log('User Role:', res.locals.userRole); // Para debugging
+    next();
+});
+
+// Middleware para debugging de sesión y usuario
+app.use((req, res, next) => {
+    console.log('Sesión actual:', req.session);
+    console.log('Usuario en sesión:', req.session.user);
     next();
 });
 

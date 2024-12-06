@@ -4,6 +4,7 @@ const eventoController = require('../controllers/evento.controller');
 const userController = require('../controllers/user.controller');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/profiles/' });
+const { checkUserRole } = require('../middleware/auth');
 
 // Asegurarse que esta ruta esté antes de las rutas con parámetros
 router.get('/eventos/listar', eventoController.listarEventosAdmin);
@@ -11,12 +12,25 @@ router.get('/eventos/listar', eventoController.listarEventosAdmin);
 router.get('/eventos/:id', eventoController.obtenerEventoPorId);
 router.delete('/eventos/:id', eventoController.eliminarEvento);
 
-router.get('/', (req, res) => {
-    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
+// Rutas protegidas con verificación de rol de administrador
+router.get('/', checkUserRole('admin'), (req, res) => {
+    res.render('admin/adminDatosPers', { title: 'Datos Personales' });
 });
 
-router.get('/datos-personales', (req, res) => {
-    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
+router.get('/datos-personales', checkUserRole('admin'), async (req, res) => {
+    try {
+        const userData = req.session.user || null;
+        res.render('admin/adminDatosPers', { 
+            title: 'Datos Personales',
+            userData: userData
+        });
+    } catch (error) {
+        console.error('Error al obtener datos del usuario:', error);
+        res.status(500).render('error', {
+            title: 'Error',
+            message: 'Error al cargar los datos personales'
+        });
+    }
 });
 
 router.get('/seguridad', (req, res) => {
@@ -27,39 +41,12 @@ router.get('/metodos-pago', (req, res) => {
     res.render('admin/adminMetodosPago.html', { title: 'Métodos de Pago' });
 });
 
-router.get('/usuarios', (req, res) => {
-    res.render('admin/administrarUsuarios.html', { title: 'Administrar Usuarios' });
-});
-
-router.get('/eventos', (req, res) => {
-    res.render('admin/adminEventos.html', { title: 'Administrar Eventos' });
-});
-
-router.get('/editar-evento', (req, res) => {
-    res.render('admin/adminEditarEventos.html', { title: 'Editar Evento' });
-});
-
-router.get('/crear-evento', (req, res) => {
-    res.render('admin/adminCrearEvento.html', { title: 'Crear Evento' });
-});
-
-const { checkUserRole } = require('../middleware/auth');
-
-// Protected routes with admin role check
-router.get('/', checkUserRole('admin'), (req, res) => {
-    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
-});
-
-router.get('/datos-personales', checkUserRole('admin'), (req, res) => {
-    res.render('admin/adminDatosPers.html', { title: 'Datos Personales' });
-});
-
 router.get('/usuarios', checkUserRole('admin'), (req, res) => {
-    res.render('admin/administrarUsuarios.html', { title: 'Administrar Usuarios' });
+    res.render('admin/administrarUsuarios', { title: 'Administrar Usuarios' });
 });
 
 router.get('/eventos', checkUserRole('admin'), (req, res) => {
-    res.render('admin/adminEventos.html', { title: 'Administrar Eventos' });
+    res.render('admin/adminEventos', { title: 'Administrar Eventos' });
 });
 
 router.get('/editar-evento', checkUserRole('admin'), (req, res) => {
