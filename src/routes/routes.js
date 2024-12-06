@@ -3,6 +3,6 @@ const router = express.Router();
 const { getUserData } = require('../controllers/controller');
 
 // Route to render the adminDatosPers page
-router.get('/admin/perfil', getUserData);
+router.get('/admin/datos-personales', getUserData);
 
 module.exports = router;

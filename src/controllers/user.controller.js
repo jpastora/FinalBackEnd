@@ -6,7 +6,7 @@ const getUserProfile = async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
-        res.render('adminDatosPers', { userData: user });
+        res.render('../views/admin/adminDatosPers', { userData: user });
     } catch (error) {
         console.error('Error fetching user data:', error);
         res.status(500).send('Internal Server Error');
