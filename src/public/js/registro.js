@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     await Swal.fire({
                         icon: 'success',
                         title: '¡Registro exitoso!',
-                        text: 'Tu cuenta ha sido creada correctamente',
+                        text: 'Tu cuenta ha sido creada correctamente. Por favor, revisa tu correo electrónico.',
                         confirmButtonColor: '#db4437'
                     });
                     window.location.href = '/auth/login';
