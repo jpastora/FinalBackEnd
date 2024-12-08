@@ -5,6 +5,7 @@ const authController = require('../controllers/auth.controller');  // Correct im
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const { sendPasswordResetEmail } = require('../config/mailer');
 
 router.get('/profile', authController.getUserData);
 
@@ -47,60 +48,39 @@ router.post('/register', async (req, res) => {
 router.post('/recuperar-contrasena', async (req, res) => {
     try {
         const { email } = req.body;
-        
-        if (!email) {
-            return res.status(400).json({
-                success: false,
-                message: 'El correo electrónico es requerido'
-            });
-        }
+        const user = await User.findOne({ email });
 
-        const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'No existe una cuenta con ese correo electrónico'
+            return res.status(404).json({ 
+                success: false, 
+                message: 'No se encontró una cuenta con ese correo electrónico' 
             });
         }
 
         // Generar contraseña temporal
         const tempPassword = Math.random().toString(36).slice(-8);
         const hashedPassword = await bcrypt.hash(tempPassword, 10);
-        
+
         // Actualizar contraseña en la base de datos
         user.password = hashedPassword;
         await user.save();
 
-        const mailerSend = new MailerSend({
-            apiKey: process.env.MAILERSEND_API_KEY
-        });
+        // Enviar email con la contraseña temporal
+        const emailSent = await sendPasswordResetEmail(user, tempPassword);
 
-        const sentFrom = new Sender('MS_9LuM3X@trial-351ndgwe0kqgzqx8.mlsender.net', 'VibeTickets');
-        const recipients = [new Recipient(user.email)];
-
-        const emailData = {
-            from: sentFrom,
-            to: recipients,
-            subject: 'Recuperación de Contraseña - VibeTickets',
-            html: `
-                <h1>Recuperación de Contraseña</h1>
-                <p>Tu nueva contraseña temporal es: <strong>${tempPassword}</strong></p>
-                <p>Por favor, cambia tu contraseña después de iniciar sesión.</p>
-            `
-        };
-
-        await mailerSend.email.send(emailData);
-
-        res.json({
-            success: true,
-            message: 'Se ha enviado una nueva contraseña a tu correo electrónico'
-        });
-
+        if (emailSent) {
+            res.json({ 
+                success: true, 
+                message: 'Se ha enviado un correo con las instrucciones para recuperar tu contraseña' 
+            });
+        } else {
+            throw new Error('Error al enviar el correo');
+        }
     } catch (error) {
         console.error('Error en recuperación de contraseña:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Error al procesar la recuperación de contraseña'
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error al procesar la recuperación de contraseña' 
         });
     }
 });

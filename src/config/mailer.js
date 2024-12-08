@@ -1,7 +1,7 @@
 const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
 
 const mailerSend = new MailerSend({
-    apiKey: process.env.MAILERSEND_API_KEY || 'mlsn.63a3c27299ea23c6376b823107554664a07911864ad75b64217aea286416da4c'
+    apiKey: 'mlsn.63a3c27299ea23c6376b823107554664a07911864ad75b64217aea286416da4c'
 });
 
 async function sendConfirmationEmail(user) {
@@ -46,14 +46,18 @@ async function sendPasswordResetEmail(user, tempPassword) {
             .setSubject("Recuperación de Contraseña - VibeTickets")
             .setHtml(`
                 <h1>Recuperación de Contraseña</h1>
+                <p>Hola,</p>
+                <p>Has solicitado recuperar tu contraseña.</p>
                 <p>Tu nueva contraseña temporal es: <strong>${tempPassword}</strong></p>
-                <p>Por favor, cambia tu contraseña después de iniciar sesión.</p>
+                <p>Por favor, cambia tu contraseña inmediatamente después de iniciar sesión.</p>
+                <p>Si no solicitaste este cambio, por favor ignora este mensaje.</p>
             `);
 
-        await mailerSend.email.send(emailParams);
+        const response = await mailerSend.email.send(emailParams);
+        console.log('Email enviado:', response);
         return true;
     } catch (error) {
-        console.error("Error enviando email de recuperación:", error);
+        console.error("Error detallado al enviar email:", error.response || error);
         return false;
     }
 }
